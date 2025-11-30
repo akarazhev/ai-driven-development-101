@@ -1,0 +1,33 @@
+version: "3.9"
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      # Allow both dev (5173) and containerized frontend (8080)
+      cors_origins: '["http://localhost:5173","http://localhost:8080","http://localhost"]'
+      database_url: sqlite:////data/app.db
+      media_dir: /storage/media
+      provider: stub
+      scheduler_interval_seconds: 5
+    volumes:
+      - data:/data
+      - media:/storage/media
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      args:
+        VITE_API_BASE: http://localhost:8000
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+
+volumes:
+  data:
+  media:
