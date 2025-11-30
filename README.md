@@ -185,3 +185,16 @@ docker run --rm -p 8080:80 social-frontend
   - Ensure `podman machine start` before running compose commands.
 - Slow or stale frontend
   - Rebuild frontend: `docker compose build frontend` (or Podman equivalent).
+
+## Course documentation
+
+- Overview: [doc/course/README.md](doc/course/README.md)
+- Chapters
+  1. [01. Introduction to AI](doc/course/01-introduction-to-ai/README.md)
+  2. [02. Agents](doc/course/02-agents/README.md)
+  3. [03. Setup Cursor AI](doc/course/03-setup-cursor-ai/README.md)
+  4. [04. Setup contex 7](doc/course/04-setup-contex-7/README.md)
+  5. [05. AI-Driven Software Development](doc/course/05-ai-driven-software-development/README.md)
+  6. [06. Project: Social Media Automation App](doc/course/06-project-social-media-automation-app/README.md)
+
+- Additional: [Course init brief](doc/ai/init-course.md)
