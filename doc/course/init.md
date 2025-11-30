@@ -26,7 +26,7 @@ Take the following roles:
 
 - As the `expert technical course writer` create a basic structure of the course in the `doc/course` directory. 
   Each chapter should be in separate directory. The course will start with the introduction to AI, agents, then how to 
-  configure the `cursor.ai` IDE, then how to configure `contex 7`. Next chapter will be about how to use AI to build 
+  configure the `cursor.ai` editor, then how to configure `contex 7`. Next chapter will be about how to use AI to build 
   software. Then we will build a web application that will automate posting to the social media texts and images. We are 
   going to follow best practices and design patterns.
 - As the `expert course writer` double-check your proposal and make sure that they are correct and haven't missed
