@@ -1,4 +1,4 @@
-# Issue 01: Create a basic structure for `AI-Driven Development Course`.
+# Init: Create a basic structure for `AI-Driven Development Course`.
 
 In this `ai-driven-development-101` project let's create a basic structure for a course about `AI-Driven Development` 
 that will teach how to use AI to build software.
