@@ -1,225 +1,276 @@
 # 06. Project: Social Media Automation App
 
-Build a provider-agnostic web application to compose, schedule, and publish text and images to
-social platforms. Use AI for content drafting, variant generation, and quality checks while
-maintaining safety, privacy, and compliance. The design favors clear boundaries, testability,
-and an adapter pattern to integrate with chosen providers.
+Build a full-stack web application to compose, schedule, and publish content to social platforms. This project demonstrates how to use AI assistance throughout the entire development lifecycle, from planning to deployment.
+
+**This project is technology-agnostic** - you can use any backend (Python, Node.js, Java, Go, etc.) and any frontend (React, Vue, Angular, etc.) that you're comfortable with.
 
 ## Learning objectives
 
-- Translate product requirements into a shippable architecture
-- Implement, test, and iterate with AI assistance
+- Apply all skills from previous chapters to build a complete application
+- Use AI for planning, design, implementation, testing, and deployment
 - Follow best practices and design patterns
+- Build a production-ready application with AI assistance
 
 ## Prerequisites
 
-- Chapters 01–05 completed
+- Chapters 00-05 completed (or 00-03, 05 if you skipped 04)
+- Cursor set up and working
+- Familiarity with your chosen technology stack
+- Basic understanding of web development
 
-## Outline
+## Project overview
 
-- Requirements and user stories
-- Non-goals and constraints
-- Architecture and data model
-- Provider adapter pattern
-- Scheduling and background processing
-- AI-assisted content generation
-- UI flows and accessibility
-- Security, privacy, and compliance
-- Testing strategy and evaluation
-- Observability (logs/metrics/traces)
-- Deployment and configuration
+You'll build a social media automation app that allows users to:
+- Compose posts with text and images
+- Schedule posts for future publication
+- Publish posts immediately
+- View post status and retry failed posts
+- Use AI to generate post variants and alt text
 
-## Milestones
+## Project structure
 
-- M1: Project scaffold and environment
-- M2: Core posting flows
-- M3: AI-assisted content generation
-- M4: Polishing, tests, and deployment
+The project is divided into 4 milestones, each building on the previous one:
+
+1. **[M1: Project Scaffold](./06.1-milestone-1-scaffold.md)** - Set up project structure and basic infrastructure
+2. **[M2: Core Posting Flows](./06.2-milestone-2-core-flows.md)** - Implement core functionality
+3. **[M3: AI-Assisted Content Generation](./06.3-milestone-3-ai-features.md)** - Add AI features
+4. **[M4: Polishing and Deployment](./06.4-milestone-4-polishing.md)** - Testing, documentation, and deployment
+
+## Architecture overview
+
+### Components
+
+- **Backend API**: RESTful API for posts, media, schedules, and provider operations
+- **Frontend UI**: Web interface for composing, scheduling, and viewing posts
+- **Provider Adapters**: Interface to integrate with social platforms (stub provider for development)
+- **Scheduler**: Background worker for scheduled publishing and retries
+- **Storage**: Database for posts/media/schedules; file storage for media
+- **AI Module**: Content generation helpers
+
+### Technology choices
+
+**You choose**:
+- Backend framework (FastAPI, Express, Spring Boot, etc.)
+- Frontend framework (React, Vue, Angular, etc.)
+- Database (PostgreSQL, MySQL, SQLite for dev, etc.)
+- Language (Python, JavaScript/TypeScript, Java, Go, etc.)
+
+**Recommendation**: Use what you know best. The patterns and prompts work with any stack.
 
 ## Requirements and user stories
 
 ### Core user stories
 
-- As a content manager, I can connect a social platform account so the app can post on my behalf.
-- As a content manager, I can compose a post (text + 0–4 images) and preview how it will render.
-- As a content manager, I can schedule a post for a future time or post immediately.
-- As a content manager, I can view status (queued, posted, failed) and retry failures safely.
-- As a content manager, I can request AI to suggest post variants or improve tone/clarity.
-- As a content manager, I can ensure accessibility by providing or generating alt text for images.
+- As a content manager, I can compose a post (text + 0–4 images) and preview how it will render
+- As a content manager, I can schedule a post for a future time or post immediately
+- As a content manager, I can view status (queued, posted, failed) and retry failures safely
+- As a content manager, I can request AI to suggest post variants or improve tone/clarity
+- As a content manager, I can ensure accessibility by providing or generating alt text for images
 
-### Non-goals and constraints (initial scope)
+### Non-goals (initial scope)
 
-- Multi-tenant auth/UIs beyond a single team is out of scope for the first release.
-- Cross-platform analytics and comments/replies are out of scope initially.
-- Rate limits and platform content policies must be respected; avoid automation that violates terms.
+- Multi-tenant authentication (single user/team for now)
+- Cross-platform analytics
+- Comments/replies management
+- Real social media integrations (use stub provider)
 
-## Architecture overview
+## Data model
 
-- Web API/backend (Python 3.13): endpoints for posts, media, schedules, and provider operations.
-- UI (minimal to moderate): compose/preview, queue view, and status.
-- Provider adapters: boundary to integrate with chosen platforms via a common interface.
-- Scheduler/worker: background task runner for scheduled publishing and retries.
-- Storage: relational DB for posts/media/schedules; object store or filesystem for media in dev.
-- AI module: content prompting helpers and evaluation.
+### Core entities
 
-### Provider adapter pattern
+- **MediaAsset**: id, filename, content_type, size, storage_path, alt_text
+- **Post**: id, text, created_at, updated_at, author_id
+- **PostMedia**: post_id, media_id, position (junction table)
+- **Schedule**: id, post_id, scheduled_at, status, attempt_count, last_error
+- **PublishLog**: id, post_id, provider, external_id, status, message, created_at
 
-- Define an interface for actions: authenticate/configure, create_post(text, media, options), get_status(id), etc.
-- Implement a stub provider for local dev that simulates responses and failure modes.
-- Add real providers later by implementing the same interface behind a configuration flag.
+### Relationships
 
-## Data model (logical)
+- Post → PostMedia → MediaAsset (one-to-many)
+- Post → Schedule (one-to-many)
+- Post → PublishLog (one-to-many)
 
-- User: id, name, role
-- ProviderAccount: id, provider, display_name, credentials_ref, created_at
-- MediaAsset: id, filename, content_type, size, storage_ref, alt_text
-- Post: id, text, created_at, updated_at, author_id
-- PostMedia: post_id, media_id, position
-- Schedule: id, post_id, scheduled_at, status, attempt_count, last_error
-- PublishLog: id, post_id, provider_account_id, external_id, status, message, created_at
+## API endpoints
 
-## API sketch (example routes)
+### Media
+- `POST /api/media` - Upload media file
+- `GET /api/media/{id}` - Get media metadata
 
-- POST /api/media: upload media; returns MediaAsset
-- POST /api/posts: create draft post (text + media refs)
-- GET /api/posts/{id}: get post with media
-- POST /api/schedules: schedule a post for a time
-- GET /api/schedules/{id}: get schedule status
-- POST /api/providers/{account_id}/publish: publish now
-- GET /api/providers/{account_id}/status/{external_id}: fetch provider status
+### Posts
+- `POST /api/posts` - Create post
+- `GET /api/posts/{id}` - Get post with media
+- `GET /api/posts` - List posts
 
-## AI-assisted content generation
+### Schedules
+- `POST /api/schedules` - Schedule a post
+- `GET /api/schedules` - List schedules
+- `GET /api/schedules/{id}` - Get schedule status
 
-### Social copy prompt template
+### Publishing
+- `POST /api/providers/default/publish` - Publish post immediately
+- `GET /api/providers/default/status/{external_id}` - Get publish status
 
-```text
-Role: Social copywriter
-Task: Produce 3 short variants (max 200 chars) for the following message
-Constraints:
-- Respect platform tone guidelines and avoid sensitive claims
-- Include 1 relevant hashtag when appropriate
-Inputs: [original message]
-Output format: JSON array of strings
-Evaluation: Content is clear, non-duplicative, and policy-safe
-```
+### AI
+- `POST /api/ai/variants` - Generate post variants
+- `POST /api/ai/alt-text` - Generate alt text for image
 
-### Image alt-text template
+## Design patterns
+
+### Provider Adapter Pattern
+
+Use an adapter pattern to abstract social media providers:
 
 ```text
-Role: Accessibility assistant
-Task: Write concise, descriptive alt text for an image
-Constraints:
-- 1 sentence, 8–20 words; avoid speculation
-Inputs: [brief image description]
-Output: Plain sentence
-Evaluation: Helpful and accurate without extra marketing language
+BaseProvider interface:
+- publish(text, media_paths) -> (external_id, message)
+- get_status(external_id) -> status
+
+StubProvider (for development):
+- Simulates publishing
+- Returns mock external_id
+- Can simulate failures for testing
 ```
 
-## Security, privacy, and compliance
+This allows you to:
+- Test without real API calls
+- Switch providers easily
+- Add real providers later
 
-- Never store provider secrets in the repository; use environment variables or secret managers.
-- Apply least privilege to tokens and rotate regularly.
-- Validate and sanitize inputs; enforce media size/type limits.
-- Redact secrets/PII from logs; implement structured logging with safe fields only.
-- Respect platform policies and rate limits; implement backoff and retries.
+## Security and compliance
 
-## Testing strategy and evaluation
+### Best practices
 
-- Unit tests: services, validators, and adapter interfaces with a stub provider.
-- Integration tests: API endpoints against an in-memory or test database.
-- E2E tests: happy path for compose → schedule → publish (using stub provider).
-- Evaluation: small golden set of messages to compare AI variants for clarity and policy safety.
+- **Never store secrets in code**: Use environment variables
+- **Validate all inputs**: Sanitize user input
+- **Enforce file size/type limits**: Prevent abuse
+- **Redact secrets from logs**: Don't log sensitive data
+- **Respect rate limits**: Implement backoff strategies
 
-## Observability
+### Privacy
 
-- Structured logs with correlation/request IDs.
-- Metrics: posts_created, posts_published, publish_failures, retry_count, queue_latency.
-- Traces (optional): per-request spans for publish flows.
+- Don't store PII unnecessarily
+- Use secure storage for credentials
+- Implement proper access controls
+- Follow data protection regulations
 
-## Deployment notes
+## Testing strategy
 
-- Configuration via environment variables; provide a sample .env.example (no secrets).
-- SQLite for local dev; document how to switch to another DB for staging/prod.
-- Store media in local filesystem for dev; document a cloud storage option without committing keys.
+### Test types
 
-## Milestones
+1. **Unit tests**: Individual functions/components
+2. **Integration tests**: API endpoints with test database
+3. **E2E tests**: Complete user flows
+4. **AI evaluation**: Test AI output quality
 
-- M1: Project scaffold and environment
-- M2: Core posting flows
-- M3: AI-assisted content generation
-- M4: Polishing, tests, and deployment
+### Testing with stub provider
 
-### Acceptance criteria per milestone
+Use stub provider for:
+- Development (no API keys needed)
+- Testing (predictable behavior)
+- CI/CD (no external dependencies)
 
-M1: Project scaffold and environment
+## Getting started
 
-- Repo structure with backend, adapters, scheduler, tests, and docs folders
-- Health endpoint and initial DB migration
-- Stub provider implemented; basic compose/schedule models ready
+1. **Choose your stack**: Pick backend and frontend technologies
+2. **Start with M1**: Follow [Milestone 1 guide](./06.1-milestone-1-scaffold.md)
+3. **Work incrementally**: Complete each milestone before moving on
+4. **Use AI throughout**: Apply patterns from previous chapters
 
-M2: Core posting flows
+## Milestones overview
 
-- Create post with text and media; preview UI available
-- Schedule and immediate publish flows via stub provider
-- Retry mechanism with backoff; status dashboard
+### M1: Project Scaffold (Week 1)
+- Set up project structure
+- Configure development environment
+- Create database schema
+- Implement health endpoint
+- Create stub provider
 
-M3: AI-assisted content generation
+**Deliverable**: Working project scaffold with health check
 
-- Prompt helpers for copy variants and alt text
-- Evaluation notes and parameter defaults checked in docs
-- Safety checks integrated (length limits, basic policy flags)
+### M2: Core Posting Flows (Week 2)
+- Implement media upload
+- Create post endpoints
+- Build scheduling system
+- Create basic UI
+- Implement publish flow
 
-M4: Polishing, tests, and deployment
+**Deliverable**: Can create, schedule, and publish posts
 
-- Test suite covering core flows; CI pipeline running
-- Structured logs and minimal metrics
-- Deployment guide and rollback plan documented
+### M3: AI Features (Week 3)
+- Add AI variant generation
+- Implement alt text generation
+- Add AI prompts to UI
+- Test AI output quality
 
-## Deliverables
+**Deliverable**: AI-assisted content generation working
 
-- Working application with README and setup guide
-- Architecture and adapter documentation
-- API sketch/spec and example requests
-- Test results (unit/integration/e2e) and evaluation notes
-- Usage guide with screenshots and limitations
+### M4: Polishing (Week 4)
+- Write comprehensive tests
+- Add error handling
+- Improve UI/UX
+- Document everything
+- Deploy application
 
-## Exercises
+**Deliverable**: Production-ready application
 
-### Exercise 1: Scaffold and health check
+## Tips for success
 
-- Create repo structure and a health endpoint; add first migration.
-- Implement the stub provider with basic responses and a failure toggle.
+### Use AI effectively
 
-### Exercise 2: Compose and schedule
+- **Plan first**: Use AI to break down each milestone
+- **Small steps**: Implement one feature at a time
+- **Test constantly**: Verify each change works
+- **Refine prompts**: Improve prompts based on results
+- **Review everything**: Don't accept AI output blindly
 
-- Implement draft creation with text + media; add schedule endpoint.
-- Build a minimal compose/preview UI; validate inputs and alt text.
+### Stay organized
 
-### Exercise 3: Publish and retry
+- **Commit frequently**: Small, focused commits
+- **Document decisions**: Why you made certain choices
+- **Track progress**: Check off milestones as you complete them
+- **Ask for help**: Use AI when stuck
 
-- Implement publish-now and scheduled publish via stub provider.
-- Add retry/backoff and a status dashboard; log correlation IDs.
+### Quality matters
 
-### Exercise 4: AI assistance
+- **Write tests**: Test as you build
+- **Handle errors**: Don't ignore error cases
+- **Follow patterns**: Use consistent code style
+- **Review code**: Check AI output before committing
 
-- Add copy-variant and alt-text helpers using the templates above.
-- Record an evaluation note comparing 2–3 prompts/params.
+## Troubleshooting
 
-### Exercise 5: Hardening and docs
+### Common issues
 
-- Add input validation, rate limiting (if applicable), and structured logging.
-- Write the deployment guide and sample .env.example.
+**Problem**: AI suggests wrong technology patterns
+- **Solution**: Provide more context about your stack, use project rules
 
-## Knowledge check (self-assessment)
+**Problem**: Tests fail after AI changes
+- **Solution**: Always run tests, refine prompts to include test requirements
 
-- What boundaries separate adapters from business logic and the API?
-- How do you test publishing flows without calling real provider APIs?
-- Which safeguards help keep content within platform policies?
-- What metrics best indicate health of scheduling and publish jobs?
+**Problem**: AI changes too much code
+- **Solution**: Select specific code, be explicit about scope
+
+**Problem**: Deployment issues
+- **Solution**: Test locally first, use staging environment
+
+## Knowledge check
+
+Before starting, ensure you can:
+
+- [ ] Write effective prompts (Chapter 01)
+- [ ] Break down complex tasks (Chapter 02)
+- [ ] Use Cursor effectively (Chapter 03)
+- [ ] Apply development workflows (Chapter 05)
+- [ ] Create project rules (Chapter 00)
+
+## Next steps
+
+Ready to start? Begin with **[Milestone 1: Project Scaffold](./06.1-milestone-1-scaffold.md)**
 
 ## References
 
-- Provider API documentation for the platforms you choose
-- Secure secrets management and logging guidelines
-- Python logging and structured logging patterns
-- Accessibility guidance for alt text (e.g., W3C)
+- Your chosen technology stack documentation
+- REST API design best practices
+- Database design patterns
+- Security best practices (OWASP)
+- Accessibility guidelines (WCAG)
