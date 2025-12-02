@@ -1,6 +1,7 @@
 # 03. Setup Cursor AI
 
-Step-by-step guide to setting up Cursor for effective AI pair programming. Learn how to install, configure, and use Cursor to maximize your productivity with AI assistance.
+Step-by-step guide to setting up Cursor for effective AI pair programming. Learn how to install, configure, and use
+Cursor to maximize your productivity with AI assistance.
 
 ## Learning objectives
 
@@ -43,9 +44,9 @@ Step-by-step guide to setting up Cursor for effective AI pair programming. Learn
 1. Launch Cursor
 2. Sign in with your account (create one if needed)
 3. Verify AI features are enabled:
-   - Look for AI chat icon in sidebar
-   - Check that "Composer" feature is available
-   - Confirm you can access AI suggestions
+    - Look for AI chat icon in sidebar
+    - Check that "Composer" feature is available
+    - Confirm you can access AI suggestions
 
 **Screenshot placeholder**: [Add screenshot of Cursor welcome screen with AI features visible]
 
@@ -71,6 +72,7 @@ If this works, installation is successful!
 ### Step 2: Trust the workspace
 
 When opening a project, Cursor may ask:
+
 - "Do you trust the authors of the files in this folder?"
 - Click "Yes, I trust the authors"
 
@@ -99,20 +101,20 @@ Cursor works with any technology stack. Here's how to configure it:
 ### For any project:
 
 1. **Select interpreter/runtime** (if applicable):
-   - For Python: Select Python interpreter
-   - For Node.js: Ensure Node is in PATH
-   - For Java: Configure JDK
-   - For other languages: Configure as needed
+    - For Python: Select Python interpreter
+    - For Node.js: Ensure Node is in PATH
+    - For Java: Configure JDK
+    - For other languages: Configure as needed
 
 2. **Install dependencies**:
-   - Use your project's package manager
-   - Ensure dependencies are installed
-   - Cursor will use these for context
+    - Use your project's package manager
+    - Ensure dependencies are installed
+    - Cursor will use these for context
 
 3. **Configure build tools** (if needed):
-   - Set up your build system
-   - Configure test runners
-   - Cursor can help with these tasks
+    - Set up your build system
+    - Configure test runners
+    - Cursor can help with these tasks
 
 ### Example: Python project
 
@@ -124,6 +126,7 @@ pip install -r requirements.txt
 ```
 
 Then in Cursor:
+
 1. `Cmd+Shift+P` → "Python: Select Interpreter"
 2. Choose `.venv/bin/python`
 
@@ -200,6 +203,7 @@ Cursor will automatically detect Node.js if it's in your PATH.
 ❌ **Don't**: Ask AI to rewrite entire files at once
 
 **Example**:
+
 - ✅ "Add error handling to this function"
 - ❌ "Refactor this entire module"
 
@@ -209,6 +213,7 @@ Cursor will automatically detect Node.js if it's in your PATH.
 ❌ **Don't**: Ask AI to find and modify code without context
 
 **How**:
+
 1. Select the code block
 2. Press `Cmd+K` / `Ctrl+K`
 3. Type your request
@@ -220,6 +225,7 @@ Cursor will automatically detect Node.js if it's in your PATH.
 ❌ **Don't**: Accept changes blindly
 
 **Check**:
+
 - Are changes what you asked for?
 - Did AI modify unrelated code?
 - Are there any obvious bugs?
@@ -230,6 +236,7 @@ Cursor will automatically detect Node.js if it's in your PATH.
 ❌ **Don't**: "Fix this"
 
 **Better prompts include**:
+
 - What to do (specific task)
 - Where to do it (file/function)
 - How to do it (constraints, patterns)
@@ -247,6 +254,7 @@ Cursor will automatically detect Node.js if it's in your PATH.
 ❌ **Don't**: Paste API keys, passwords, tokens
 
 **Example**:
+
 - ✅ "Use API_KEY from environment variables"
 - ❌ "API key is abc123xyz"
 
@@ -261,6 +269,7 @@ Cursor offers different AI models. Choose based on your needs:
 - **GPT-3.5**: Faster, good for simple tasks
 
 **How to change**:
+
 1. Open settings (`Cmd+,` / `Ctrl+,`)
 2. Search for "Model"
 3. Select your preferred model
@@ -341,6 +350,7 @@ Evaluation: Bug fixed, test passes
 **Symptoms**: No AI suggestions, chat doesn't respond
 
 **Solutions**:
+
 1. Check internet connection
 2. Verify you're signed in
 3. Restart Cursor
@@ -352,6 +362,7 @@ Evaluation: Bug fixed, test passes
 **Symptoms**: AI takes very long to respond or times out
 
 **Solutions**:
+
 1. Reduce context window size
 2. Select smaller code blocks
 3. Simplify your prompt
@@ -363,6 +374,7 @@ Evaluation: Bug fixed, test passes
 **Symptoms**: AI modifies files you didn't ask it to change
 
 **Solutions**:
+
 1. Select specific code before prompting
 2. Add constraint: "Only modify [specific files]"
 3. Be more explicit about scope
@@ -374,6 +386,7 @@ Evaluation: Bug fixed, test passes
 **Symptoms**: Suggestions don't match your project patterns
 
 **Solutions**:
+
 1. Provide more context in prompt
 2. Reference existing code patterns
 3. Use project rules (see Chapter 00)
@@ -385,6 +398,7 @@ Evaluation: Bug fixed, test passes
 **Symptoms**: Cursor doesn't seem to understand your codebase
 
 **Solutions**:
+
 1. Wait for indexing to complete (check status)
 2. Re-index: `Cmd+Shift+P` → "Index Workspace"
 3. Check `.cursorignore` file (may be excluding files)
@@ -396,6 +410,7 @@ Evaluation: Bug fixed, test passes
 **Symptoms**: "Authentication failed" or "Please sign in"
 
 **Solutions**:
+
 1. Sign out and sign back in
 2. Check your account status
 3. Verify subscription/plan (if applicable)
@@ -407,6 +422,7 @@ Evaluation: Bug fixed, test passes
 **Symptoms**: AI suggests code that doesn't work or is incorrect
 
 **Solutions**:
+
 1. Always test AI-generated code
 2. Provide more specific constraints
 3. Reference working examples from your codebase
@@ -418,6 +434,7 @@ Evaluation: Bug fixed, test passes
 **Symptoms**: File search or navigation doesn't work
 
 **Solutions**:
+
 1. Wait for indexing to complete
 2. Check if files are in `.gitignore` or `.cursorignore`
 3. Re-index workspace
@@ -431,6 +448,7 @@ Evaluation: Bug fixed, test passes
 **Goal**: Get Cursor fully configured
 
 **Steps**:
+
 1. Install Cursor
 2. Sign in
 3. Open your project
@@ -446,6 +464,7 @@ Evaluation: Bug fixed, test passes
 **Goal**: Use AI to modify code
 
 **Steps**:
+
 1. Open a file in your project
 2. Select a function
 3. Press `Cmd+K` / `Ctrl+K`
@@ -460,6 +479,7 @@ Evaluation: Bug fixed, test passes
 **Goal**: Learn Cursor's key features
 
 **Steps**:
+
 1. Try AI chat (`Cmd+L` / `Ctrl+L`)
 2. Try Composer (`Cmd+I` / `Ctrl+I`)
 3. Try inline suggestions (just type and wait)
@@ -473,6 +493,7 @@ Evaluation: Bug fixed, test passes
 **Goal**: Set up Cursor for your technology
 
 **Steps**:
+
 1. Identify your tech stack
 2. Configure interpreter/runtime if needed
 3. Install project dependencies
@@ -503,7 +524,7 @@ After completing this chapter, you should be able to:
 ✅ Code selection with AI works  
 ✅ You can modify code using AI  
 ✅ Cursor understands your codebase (indexing complete)  
-✅ You know how to troubleshoot common issues  
+✅ You know how to troubleshoot common issues
 
 **If all of these work**, you're ready for Chapter 04!
 
