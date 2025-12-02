@@ -6,7 +6,7 @@ ENV NG_APP_API_BASE=${NG_APP_API_BASE}
 COPY frontend/package.json frontend/package-lock.json* ./
 RUN npm ci
 COPY frontend ./
-RUN node replace-env.js
+RUN sed -i "s|apiBase: '.*'|apiBase: '${NG_APP_API_BASE}'|g" src/environments/environment.prod.ts
 RUN npm run build
 
 FROM nginx:alpine AS runtime

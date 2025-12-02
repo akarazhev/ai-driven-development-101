@@ -7,8 +7,8 @@ services:
     ports:
       - "8000:8000"
     environment:
-      # Allow both dev (5173) and containerized frontend (8080)
-      cors_origins: '["http://localhost:5173","http://localhost:8080","http://localhost"]'
+      # Allow both dev (4200) and containerized frontend (8080)
+      cors_origins: '["http://localhost:4200","http://localhost:8080","http://localhost"]'
       database_url: sqlite:////data/app.db
       media_dir: /storage/media
       provider: stub

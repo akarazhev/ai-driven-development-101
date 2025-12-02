@@ -5,7 +5,7 @@ Full-stack Social Media Automation App implementing the course project (Chapter 
 ## Stack
 
 - Backend: FastAPI, SQLModel (SQLite), Uvicorn, pydantic-settings
-- Frontend: React + Vite + TypeScript + TailwindCSS
+- Frontend: Angular 20 + TypeScript + TailwindCSS
 
 ## Prerequisites
 
@@ -35,10 +35,12 @@ uvicorn backend.main:app --reload --port 8000
 ```bash
 cd frontend
 npm install
-npm run dev
+npm start
+# or
+ng serve
 ```
 
-Open http://localhost:5173 and ensure the backend is running on http://localhost:8000.
+Open http://localhost:4200 and ensure the backend is running on http://localhost:8000.
 
 ## Project structure
 
@@ -53,7 +55,7 @@ backend/
   config.py       # settings via .env
 frontend/
   src/pages/      # Compose, Schedules
-  src/App.tsx     # routing
+  src/app/        # app component and routing
 data/             # sqlite database (gitignored)
 storage/media/    # uploaded media (gitignored)
 ```
@@ -133,7 +135,7 @@ The repo includes Dockerfiles for backend and frontend and a docker-compose.yml 
 - frontend
   - Image: built from frontend/Dockerfile
   - Port: 8080 (host -> container)
-  - Build arg: `VITE_API_BASE=http://localhost:8000` so the browser calls the backend via host port 8000.
+  - Build arg: `NG_APP_API_BASE=http://localhost:8000` so the browser calls the backend via host port 8000.
 
 ### Customizing configuration
 
@@ -144,7 +146,7 @@ The repo includes Dockerfiles for backend and frontend and a docker-compose.yml 
   - `scheduler_interval_seconds` (default `5`)
   - `cors_origins` JSON array of allowed origins
 - Frontend API base
-  - Set at build time via compose `build.args.VITE_API_BASE` (default `http://localhost:8000`).
+  - Set at build time via compose `build.args.NG_APP_API_BASE` (default `http://localhost:8000`).
   - Change when deploying behind another host/port, then rebuild the frontend image.
 
 ### Build images manually (optional)
@@ -160,7 +162,7 @@ docker run --rm -p 8000:8000 \
 
 # Frontend image
 docker build -t social-frontend \
-  --build-arg VITE_API_BASE=http://localhost:8000 \
+  --build-arg NG_APP_API_BASE=http://localhost:8000 \
   -f frontend/Dockerfile .
 docker run --rm -p 8080:80 social-frontend
 ```
@@ -177,8 +179,8 @@ docker run --rm -p 8080:80 social-frontend
 - CORS blocked
   - Add your origin to `cors_origins` in docker-compose.yml and recreate containers.
 - Frontend cannot reach backend
-  - Ensure backend is mapped to host port 8000 and frontend is built with `VITE_API_BASE` pointing to `http://localhost:8000`.
-  - Rebuild the frontend image after changing `VITE_API_BASE`.
+  - Ensure backend is mapped to host port 8000 and frontend is built with `NG_APP_API_BASE` pointing to `http://localhost:8000`.
+  - Rebuild the frontend image after changing `NG_APP_API_BASE`.
 - Podman on SELinux hosts (Linux)
   - If you bind host directories instead of volumes, append `:Z` to volume mounts for proper labeling.
 - macOS Podman
