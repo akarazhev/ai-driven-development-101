@@ -122,7 +122,9 @@ dispatch(increment());
 ```python
 # ❌ DON'T include initialization code like this:
 from flask import Flask
+
 app = Flask(__name__)
+
 
 # ✅ DO include usage patterns like this:
 # Use route decorators with proper error handling
@@ -143,13 +145,13 @@ def get_users():
 - Consider performance implications
 - Address security concerns where relevant
 - Include testing strategies for the library
-```
 
 ## Customization Tips
 
 ### For Frontend Projects
 
 Add these categories:
+
 - Component libraries specific to your framework
 - Styling solutions you use
 - Form libraries
@@ -158,6 +160,7 @@ Add these categories:
 ### For Backend Projects
 
 Add these categories:
+
 - ORM patterns (SQLAlchemy, TypeORM, Prisma, etc.)
 - API frameworks (Express, FastAPI, Spring, etc.)
 - Database patterns
@@ -166,6 +169,7 @@ Add these categories:
 ### For Full-Stack Projects
 
 Include both frontend and backend categories, organized by area:
+
 - `.cursor/rules/frontend/` for frontend libraries
 - `.cursor/rules/backend/` for backend libraries
 - `.cursor/rules/shared/` for shared utilities
@@ -183,6 +187,7 @@ Include both frontend and backend categories, organized by area:
 ## Expected Output
 
 After running the prompt, you should get:
+
 - Multiple rule files (one per significant library)
 - Proper metadata for each rule
 - Organized in appropriate folders
@@ -191,6 +196,7 @@ After running the prompt, you should get:
 ## Next Steps
 
 After generating rules:
+
 1. Review each rule for accuracy
 2. Test rules by asking AI to use the libraries
 3. Refine rules based on your team's preferences

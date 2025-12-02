@@ -1,6 +1,8 @@
 # 00. Rules and Prompt Optimization
 
-Learn how to create and manage Cursor rules to simplify your prompts and maintain consistency across projects. This chapter teaches you to build a rule-based system that makes AI assistance more effective and reduces repetitive prompting.
+Learn how to create and manage Cursor rules to simplify your prompts and maintain consistency across projects. This
+chapter teaches you to build a rule-based system that makes AI assistance more effective and reduces repetitive
+prompting.
 
 ## Learning objectives
 
@@ -29,7 +31,8 @@ Learn how to create and manage Cursor rules to simplify your prompts and maintai
 
 ## What are Cursor rules?
 
-Cursor rules are configuration files that define how AI should behave in your project. They act as persistent context that:
+Cursor rules are configuration files that define how AI should behave in your project. They act as persistent context
+that:
 
 - **Reduce prompt complexity**: Instead of repeating instructions in every prompt, define them once in a rule
 - **Maintain consistency**: Ensure AI follows your project's patterns and conventions
@@ -121,6 +124,7 @@ Rules should be organized by area of focus, not by library:
 **File naming**: `{area-of-focus}-{type}.mdc`
 
 Examples:
+
 - `.cursor/rules/global/rule-generation-always.mdc`
 - `.cursor/rules/frontend/component-patterns-auto.mdc`
 - `.cursor/rules/state/redux-patterns-agent.mdc`
@@ -131,6 +135,7 @@ Examples:
 ### Step 1: Choose the rule type
 
 Ask yourself:
+
 - Should this apply to everything? → Always
 - Should this apply to specific file types? → Auto-Apply
 - Should this apply based on context? → Agent Select
@@ -254,7 +259,7 @@ After generating each rule, specify which metadata should be used:
 ✅ **Keep descriptions clear**: For Agent Select rules, be specific about when to apply  
 ✅ **Use examples**: Include valid and invalid examples for clarity  
 ✅ **Organize by area**: Group related rules, not by library  
-✅ **Keep rules focused**: One rule per concern, not everything in one file  
+✅ **Keep rules focused**: One rule per concern, not everything in one file
 
 ### Don'ts
 
@@ -262,7 +267,7 @@ After generating each rule, specify which metadata should be used:
 ❌ **Don't create duplicates**: Check existing rules first  
 ❌ **Don't mix concerns**: Keep rules focused on one area  
 ❌ **Don't use vague descriptions**: Agent Select rules need clear criteria  
-❌ **Don't forget metadata**: Always set correct `alwaysApply`, `globs`, `description`  
+❌ **Don't forget metadata**: Always set correct `alwaysApply`, `globs`, `description`
 
 ## Common patterns
 
