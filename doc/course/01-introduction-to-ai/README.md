@@ -1,8 +1,10 @@
 # 01. Introduction to AI-Assisted Development
 
-A practical guide to using AI assistants for software development. Learn how to write effective prompts, understand AI capabilities and limitations, and integrate AI into your daily workflow.
+A practical guide to using AI assistants for software development. Learn how to write effective prompts, understand AI
+capabilities and limitations, and integrate AI into your daily workflow.
 
-This chapter focuses on **practical skills** you can use immediately: writing better prompts, evaluating AI output, and building effective workflows.
+This chapter focuses on **practical skills** you can use immediately: writing better prompts, evaluating AI output, and
+building effective workflows.
 
 ## Learning objectives
 
@@ -29,7 +31,8 @@ This chapter focuses on **practical skills** you can use immediately: writing be
 
 ## What is AI-assisted development?
 
-AI-assisted development means using AI tools (like Cursor) to help you write code faster and better. Think of AI as a **pair programmer** that:
+AI-assisted development means using AI tools (like Cursor) to help you write code faster and better. Think of AI as a *
+*pair programmer** that:
 
 - Understands your codebase context
 - Suggests implementations based on patterns
@@ -37,7 +40,8 @@ AI-assisted development means using AI tools (like Cursor) to help you write cod
 - Generates boilerplate and tests
 - Explains complex code
 
-**Key insight**: AI doesn't replace your thinking—it amplifies it. You still need to understand what you're building, but AI handles the repetitive parts.
+**Key insight**: AI doesn't replace your thinking—it amplifies it. You still need to understand what you're building,
+but AI handles the repetitive parts.
 
 ## The prompt template that works
 
@@ -72,6 +76,7 @@ Write code to count words.
 ```
 
 **Problems**:
+
 - Too vague
 - No context about language or requirements
 - No constraints or style preferences
@@ -94,6 +99,7 @@ Evaluation: Function handles "Hello,  world!" → returns 2
 ```
 
 **Why it's better**:
+
 - Clear role and task
 - Specific constraints prevent unwanted behavior
 - Handles edge cases
@@ -190,6 +196,7 @@ AI output isn't always perfect on the first try. Use this iterative process:
 ### Step 1: Define success criteria
 
 Before asking AI, know what "done" looks like:
+
 - What should the code do?
 - What edge cases must it handle?
 - What tests should pass?
@@ -202,6 +209,7 @@ Execute your prompt and capture the output.
 ### Step 3: Evaluate against criteria
 
 Compare output to your success criteria:
+
 - ✅ Does it meet requirements?
 - ✅ Are edge cases handled?
 - ✅ Does it follow project patterns?
@@ -210,6 +218,7 @@ Compare output to your success criteria:
 ### Step 4: Refine and repeat
 
 If output doesn't meet criteria:
+
 - Identify specific gaps
 - Add constraints to address them
 - Provide examples of desired behavior
@@ -218,6 +227,7 @@ If output doesn't meet criteria:
 **Example iteration**:
 
 **First attempt**:
+
 ```text
 Create a function to validate email addresses.
 ```
@@ -225,6 +235,7 @@ Create a function to validate email addresses.
 **Output**: Basic regex, no error handling
 
 **Refined prompt**:
+
 ```text
 Role: Senior developer
 Task: Create email validation function
@@ -246,11 +257,13 @@ Evaluation:
 ### ⚠️ Never include secrets
 
 **❌ Bad**:
+
 ```text
 Connect to database: postgresql://user:password123@host/db
 ```
 
 **✅ Good**:
+
 ```text
 Connect to database using environment variables:
 - DB_HOST from process.env
@@ -347,6 +360,7 @@ Evaluation: All tests pass, edge cases covered
 **Goal**: Create a utility function using AI
 
 **Steps**:
+
 1. Choose a simple function (e.g., format currency, validate phone number, slugify text)
 2. Write a prompt using the template
 3. Run it in Cursor
@@ -360,11 +374,13 @@ Evaluation: All tests pass, edge cases covered
 **Goal**: Improve a vague prompt
 
 **Starting prompt**:
+
 ```text
 Make the code better.
 ```
 
 **Your task**:
+
 - Identify what's wrong with this prompt
 - Rewrite it using the template
 - Include specific constraints and evaluation criteria
@@ -375,6 +391,7 @@ Make the code better.
 **Goal**: Use AI to find and fix a bug
 
 **Steps**:
+
 1. Create a simple function with an intentional bug
 2. Write a debugging prompt
 3. Let AI identify and fix the issue
@@ -385,6 +402,7 @@ Make the code better.
 **Goal**: Implement a complete feature using AI
 
 **Steps**:
+
 1. Choose a small feature (e.g., "add validation to form field")
 2. Write a comprehensive prompt
 3. Implement with AI assistance
@@ -407,7 +425,8 @@ Before moving to the next chapter, verify you can:
 
 **Problem**: AI gives generic solutions that don't fit your project
 
-**Solution**: 
+**Solution**:
+
 - Add more context about your project structure
 - Reference existing code patterns
 - Specify your technology stack
@@ -418,6 +437,7 @@ Before moving to the next chapter, verify you can:
 **Problem**: AI modifies unrelated files or makes unnecessary changes
 
 **Solution**:
+
 - Add constraint: "Only modify [specific files]"
 - Use: "Minimal change, preserve existing behavior"
 - Select specific code before prompting
@@ -428,6 +448,7 @@ Before moving to the next chapter, verify you can:
 **Problem**: Generated code doesn't work or has errors
 
 **Solution**:
+
 - Always test AI output
 - Add evaluation criteria to prompt
 - Request error handling in constraints
@@ -438,6 +459,7 @@ Before moving to the next chapter, verify you can:
 **Problem**: AI suggests solutions that don't match your architecture
 
 **Solution**:
+
 - Provide more context in "Inputs" section
 - Reference existing similar code
 - Specify your patterns explicitly
@@ -451,7 +473,7 @@ After completing this chapter, you should be able to:
 ✅ Get useful output from AI on first try  
 ✅ Refine prompts when output isn't perfect  
 ✅ Avoid common mistakes (secrets, invalid code)  
-✅ Use ready-made templates for common tasks  
+✅ Use ready-made templates for common tasks
 
 **If you can do all of these**, you're ready for Chapter 02!
 
