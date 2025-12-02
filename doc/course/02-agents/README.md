@@ -1,6 +1,7 @@
 # 02. When to Use AI for Complex Tasks
 
-Learn when AI assistance is most valuable and how to break down complex tasks into manageable prompts. This chapter focuses on practical decision-making: when to use AI, when to code manually, and how to structure complex requests.
+Learn when AI assistance is most valuable and how to break down complex tasks into manageable prompts. This chapter
+focuses on practical decision-making: when to use AI, when to code manually, and how to structure complex requests.
 
 ## Learning objectives
 
@@ -28,24 +29,28 @@ Learn when AI assistance is most valuable and how to break down complex tasks in
 ### ✅ AI is great for:
 
 **Repetitive tasks**
+
 - Writing boilerplate code
 - Creating similar components/functions
 - Generating tests
 - Refactoring similar patterns
 
 **Learning and exploration**
+
 - Understanding unfamiliar code
 - Learning new libraries/frameworks
 - Getting examples of patterns
 - Exploring different approaches
 
 **Debugging assistance**
+
 - Analyzing error messages
 - Finding potential issues
 - Suggesting fixes
 - Explaining complex code
 
 **Code generation**
+
 - Creating utilities from specifications
 - Implementing standard patterns
 - Writing documentation
@@ -54,23 +59,27 @@ Learn when AI assistance is most valuable and how to break down complex tasks in
 ### ❌ AI struggles with:
 
 **Highly specific business logic**
+
 - Domain-specific rules
 - Complex state machines
 - Custom algorithms
 - Project-specific patterns not in codebase
 
 **Real-time debugging**
+
 - Runtime issues that need live inspection
 - Performance problems requiring profiling
 - Race conditions and timing issues
 
 **Architectural decisions**
+
 - System design choices
 - Technology selection
 - Scalability decisions
 - Team preferences
 
 **When you don't understand the problem**
+
 - If you can't explain it clearly, AI can't help
 - Vague requirements lead to wrong solutions
 - Need domain knowledge first
@@ -90,6 +99,7 @@ Complex tasks often fail with AI because they're too large. The solution: **brea
 ### Example: Building a feature
 
 **❌ Too complex**:
+
 ```text
 Build a user authentication system with login, registration, password reset, 
 email verification, OAuth integration, and session management.
@@ -98,6 +108,7 @@ email verification, OAuth integration, and session management.
 **✅ Broken down**:
 
 **Step 1**: Create user model/schema
+
 ```text
 Role: Backend developer
 Task: Create user data model
@@ -110,6 +121,7 @@ Output format: Model definition
 ```
 
 **Step 2**: Implement registration endpoint
+
 ```text
 Role: Backend developer  
 Task: Create user registration endpoint
@@ -123,6 +135,7 @@ Output format: Endpoint code with validation
 ```
 
 **Step 3**: Implement login endpoint
+
 ```text
 Role: Backend developer
 Task: Create login endpoint
@@ -195,6 +208,7 @@ You can combine steps when:
 ### Scenario 1: Adding a new API endpoint
 
 **Breakdown**:
+
 1. Define data model (if needed)
 2. Create route/controller
 3. Add validation
@@ -204,6 +218,7 @@ You can combine steps when:
 7. Update documentation
 
 **Prompt structure**:
+
 ```text
 Role: Backend developer
 Task: Add [endpoint name] API endpoint
@@ -231,6 +246,7 @@ Evaluation: Endpoint works, tests pass, follows patterns
 ### Scenario 2: Refactoring a large component
 
 **Breakdown**:
+
 1. Understand current structure
 2. Identify refactoring goals
 3. Extract smaller pieces
@@ -239,6 +255,7 @@ Evaluation: Endpoint works, tests pass, follows patterns
 6. Verify behavior unchanged
 
 **Prompt structure**:
+
 ```text
 Role: Code refactoring specialist
 Task: Refactor [component name] for [goal: readability/maintainability/performance]
@@ -268,6 +285,7 @@ Evaluation: All tests pass, code improved, behavior identical
 ### Scenario 3: Debugging a complex issue
 
 **Breakdown**:
+
 1. Reproduce the issue
 2. Identify affected code
 3. Analyze root cause
@@ -276,6 +294,7 @@ Evaluation: All tests pass, code improved, behavior identical
 6. Verify no regressions
 
 **Prompt structure**:
+
 ```text
 Role: Debugging specialist
 Task: Fix [issue description]
@@ -425,6 +444,7 @@ Evaluation: Issue resolved, test added
 **Task**: "Build a blog system with posts, comments, user management, and search"
 
 **Your assignment**:
+
 1. Break this into 5-7 smaller steps
 2. Write a prompt for the first step
 3. Identify what context each step needs
@@ -437,6 +457,7 @@ Evaluation: Issue resolved, test added
 **Choose a small feature** (e.g., "add pagination to list view")
 
 **Steps**:
+
 1. Break it into 2-3 steps
 2. Implement step 1 with AI
 3. Test step 1
@@ -449,6 +470,7 @@ Evaluation: Issue resolved, test added
 **Goal**: Refactor code using structured approach
 
 **Steps**:
+
 1. Find a function/component that needs refactoring
 2. Write a refactoring prompt with clear steps
 3. Execute with AI
@@ -460,6 +482,7 @@ Evaluation: Issue resolved, test added
 **Goal**: Use AI to debug a real issue
 
 **Steps**:
+
 1. Find or create a bug in your code
 2. Write a debugging prompt
 3. Let AI identify and fix
@@ -483,6 +506,7 @@ Before moving forward, verify you can:
 **Problem**: AI implements part of a feature but misses important parts
 
 **Solution**:
+
 - Break task into smaller, more specific steps
 - Add explicit checklist in constraints
 - Review output and ask for missing pieces separately
@@ -492,6 +516,7 @@ Before moving forward, verify you can:
 **Problem**: When asking for one thing, AI modifies many files
 
 **Solution**:
+
 - Be explicit: "Only modify [specific files]"
 - Add constraint: "Don't change [unrelated areas]"
 - Select specific code before prompting
@@ -501,6 +526,7 @@ Before moving forward, verify you can:
 **Problem**: Generated code doesn't match your architecture
 
 **Solution**:
+
 - Provide more examples of existing patterns
 - Reference specific files in inputs
 - Add constraint: "Follow exact pattern from [file]"
@@ -511,6 +537,7 @@ Before moving forward, verify you can:
 **Problem**: AI loses track of steps or combines them incorrectly
 
 **Solution**:
+
 - Do steps one at a time instead of all at once
 - Provide clear step numbers and dependencies
 - Test each step before moving on
@@ -524,7 +551,7 @@ After completing this chapter, you should be able to:
 ✅ Break complex tasks into manageable steps  
 ✅ Structure multi-step prompts effectively  
 ✅ Avoid common pitfalls  
-✅ Apply templates to real development scenarios  
+✅ Apply templates to real development scenarios
 
 **If you can do all of these**, you're ready for Chapter 03!
 
