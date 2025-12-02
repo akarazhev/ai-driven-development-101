@@ -1,8 +1,10 @@
 # 06. Project: Social Media Automation App
 
-Build a full-stack web application to compose, schedule, and publish content to social platforms. This project demonstrates how to use AI assistance throughout the entire development lifecycle, from planning to deployment.
+Build a full-stack web application to compose, schedule, and publish content to social platforms. This project
+demonstrates how to use AI assistance throughout the entire development lifecycle, from planning to deployment.
 
-**This project is technology-agnostic** - you can use any backend (Python, Node.js, Java, Go, etc.) and any frontend (React, Vue, Angular, etc.) that you're comfortable with.
+**This project is technology-agnostic** - you can use any backend (Python, Node.js, Java, Go, etc.) and any frontend (
+React, Vue, Angular, etc.) that you're comfortable with.
 
 ## Learning objectives
 
@@ -21,6 +23,7 @@ Build a full-stack web application to compose, schedule, and publish content to 
 ## Project overview
 
 You'll build a social media automation app that allows users to:
+
 - Compose posts with text and images
 - Schedule posts for future publication
 - Publish posts immediately
@@ -50,6 +53,7 @@ The project is divided into 4 milestones, each building on the previous one:
 ### Technology choices
 
 **You choose**:
+
 - Backend framework (FastAPI, Express, Spring Boot, etc.)
 - Frontend framework (React, Vue, Angular, etc.)
 - Database (PostgreSQL, MySQL, SQLite for dev, etc.)
@@ -93,24 +97,29 @@ The project is divided into 4 milestones, each building on the previous one:
 ## API endpoints
 
 ### Media
+
 - `POST /api/media` - Upload media file
 - `GET /api/media/{id}` - Get media metadata
 
 ### Posts
+
 - `POST /api/posts` - Create post
 - `GET /api/posts/{id}` - Get post with media
 - `GET /api/posts` - List posts
 
 ### Schedules
+
 - `POST /api/schedules` - Schedule a post
 - `GET /api/schedules` - List schedules
 - `GET /api/schedules/{id}` - Get schedule status
 
 ### Publishing
+
 - `POST /api/providers/default/publish` - Publish post immediately
 - `GET /api/providers/default/status/{external_id}` - Get publish status
 
 ### AI
+
 - `POST /api/ai/variants` - Generate post variants
 - `POST /api/ai/alt-text` - Generate alt text for image
 
@@ -132,6 +141,7 @@ StubProvider (for development):
 ```
 
 This allows you to:
+
 - Test without real API calls
 - Switch providers easily
 - Add real providers later
@@ -165,6 +175,7 @@ This allows you to:
 ### Testing with stub provider
 
 Use stub provider for:
+
 - Development (no API keys needed)
 - Testing (predictable behavior)
 - CI/CD (no external dependencies)
@@ -179,6 +190,7 @@ Use stub provider for:
 ## Milestones overview
 
 ### M1: Project Scaffold (Week 1)
+
 - Set up project structure
 - Configure development environment
 - Create database schema
@@ -188,6 +200,7 @@ Use stub provider for:
 **Deliverable**: Working project scaffold with health check
 
 ### M2: Core Posting Flows (Week 2)
+
 - Implement media upload
 - Create post endpoints
 - Build scheduling system
@@ -197,6 +210,7 @@ Use stub provider for:
 **Deliverable**: Can create, schedule, and publish posts
 
 ### M3: AI Features (Week 3)
+
 - Add AI variant generation
 - Implement alt text generation
 - Add AI prompts to UI
@@ -205,6 +219,7 @@ Use stub provider for:
 **Deliverable**: AI-assisted content generation working
 
 ### M4: Polishing (Week 4)
+
 - Write comprehensive tests
 - Add error handling
 - Improve UI/UX
@@ -242,15 +257,19 @@ Use stub provider for:
 ### Common issues
 
 **Problem**: AI suggests wrong technology patterns
+
 - **Solution**: Provide more context about your stack, use project rules
 
 **Problem**: Tests fail after AI changes
+
 - **Solution**: Always run tests, refine prompts to include test requirements
 
 **Problem**: AI changes too much code
+
 - **Solution**: Select specific code, be explicit about scope
 
 **Problem**: Deployment issues
+
 - **Solution**: Test locally first, use staging environment
 
 ## Knowledge check
