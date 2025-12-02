@@ -1,6 +1,7 @@
 # 05. AI-Driven Software Development
 
-A practical playbook for using AI across the entire software development lifecycle. Learn repeatable workflows, effective prompt patterns, and best practices for building production-quality software with AI assistance.
+A practical playbook for using AI across the entire software development lifecycle. Learn repeatable workflows,
+effective prompt patterns, and best practices for building production-quality software with AI assistance.
 
 ## Learning objectives
 
@@ -41,6 +42,7 @@ A practical playbook for using AI across the entire software development lifecyc
 ❌ **Don't**: Use vague requirements
 
 **Example**:
+
 - ✅ "Function returns user object with id, name, email fields"
 - ❌ "Make it work"
 
@@ -72,17 +74,20 @@ A practical playbook for using AI across the entire software development lifecyc
 **Goal**: Define what you're building
 
 **Activities**:
+
 - Break feature into small tasks
 - Define acceptance criteria
 - Identify dependencies
 - Plan implementation order
 
 **AI can help**:
+
 - Break down complex features
 - Suggest implementation approach
 - Identify potential issues
 
 **Prompt example**:
+
 ```text
 Role: Technical architect
 Task: Break down [feature name] into implementable tasks
@@ -102,11 +107,13 @@ Evaluation: Tasks are clear, ordered, and testable
 **When to skip**: Simple features that follow existing patterns
 
 **AI can help**:
+
 - Draft design documents
 - Suggest architecture patterns
 - Identify risks
 
 **Prompt example**:
+
 ```text
 Role: Tech lead
 Task: Draft design for [feature name]
@@ -124,11 +131,13 @@ Evaluation: Design addresses goals and has concrete acceptance criteria
 **Goal**: Write the code
 
 **AI can help**:
+
 - Generate implementation
 - Follow existing patterns
 - Handle edge cases
 
 **Prompt example**:
+
 ```text
 Role: Senior developer
 Task: Implement [specific feature/task]
@@ -147,11 +156,13 @@ Evaluation: [Specific acceptance criteria]
 **Goal**: Verify it works
 
 **AI can help**:
+
 - Write tests
 - Identify edge cases
 - Create test data
 
 **Prompt example**:
+
 ```text
 Role: Test engineer
 Task: Write tests for [feature/function]
@@ -169,11 +180,13 @@ Evaluation: Tests pass and cover all scenarios
 **Goal**: Ensure quality and correctness
 
 **AI can help**:
+
 - Review code for issues
 - Suggest improvements
 - Check for security problems
 
 **Prompt example**:
+
 ```text
 Role: Code reviewer
 Task: Review this code for correctness, security, and quality
@@ -191,11 +204,13 @@ Evaluation: Actionable feedback, no false positives
 **Goal**: Improve based on feedback
 
 **AI can help**:
+
 - Implement suggested improvements
 - Refactor for clarity
 - Optimize performance
 
 **Prompt example**:
+
 ```text
 Role: Refactoring specialist
 Task: Improve [specific aspect] of this code
@@ -213,11 +228,13 @@ Evaluation: Tests pass, code improved, no regressions
 **Goal**: Update documentation
 
 **AI can help**:
+
 - Write documentation
 - Update README
 - Create examples
 
 **Prompt example**:
+
 ```text
 Role: Technical writer
 Task: Document [feature/API/function]
@@ -455,6 +472,7 @@ Evaluation: Feedback is actionable and prioritized
 ### Example 1: Adding user authentication
 
 **Step 1: Plan**
+
 ```text
 Role: Technical architect
 Task: Break down user authentication into implementable tasks
@@ -466,6 +484,7 @@ Output: List of tasks with acceptance criteria
 ```
 
 **Step 2: Implement registration**
+
 ```text
 Role: Backend developer
 Task: Implement user registration endpoint
@@ -479,6 +498,7 @@ Output: Registration endpoint + tests
 ```
 
 **Step 3: Implement login**
+
 ```text
 Role: Backend developer
 Task: Implement login endpoint
@@ -496,6 +516,7 @@ Continue with remaining steps...
 ### Example 2: Creating a data table component
 
 **Step 1: Design**
+
 ```text
 Role: Frontend architect
 Task: Design data table component
@@ -508,6 +529,7 @@ Output: Component design
 ```
 
 **Step 2: Implement**
+
 ```text
 Role: Frontend developer
 Task: Implement data table component
@@ -523,6 +545,7 @@ Output: Component + tests + styles
 ### Example 3: Refactoring a large function
 
 **Step 1: Analyze**
+
 ```text
 Role: Code analyst
 Task: Analyze this function and suggest refactoring approach
@@ -535,6 +558,7 @@ Output: Refactoring plan
 ```
 
 **Step 2: Refactor**
+
 ```text
 Role: Refactoring specialist
 Task: Refactor function based on analysis
@@ -558,6 +582,7 @@ Output: Refactored code + updated tests
 ### AI for testing
 
 **Write tests**:
+
 ```text
 Role: Test engineer
 Task: Write unit tests for [function/component]
@@ -570,6 +595,7 @@ Output: Test file
 ```
 
 **Identify edge cases**:
+
 ```text
 Role: QA specialist
 Task: Identify edge cases for [feature]
@@ -591,6 +617,7 @@ Output: List of edge cases to test
 ### Security practices
 
 ✅ **Do**:
+
 - Never paste secrets in prompts
 - Use environment variables
 - Validate all inputs
@@ -598,6 +625,7 @@ Output: List of edge cases to test
 - Review security-sensitive code carefully
 
 ❌ **Don't**:
+
 - Hardcode credentials
 - Trust AI-generated security code without review
 - Skip security reviews
@@ -617,6 +645,7 @@ Output: List of edge cases to test
 **Problem**: AI modifies unrelated files or makes unnecessary changes
 
 **Solutions**:
+
 - Select specific code before prompting
 - Add constraint: "Only modify [specific files]"
 - Be explicit about scope
@@ -627,6 +656,7 @@ Output: List of edge cases to test
 **Problem**: AI-generated code has bugs or doesn't compile
 
 **Solutions**:
+
 - Always test AI output
 - Provide more specific constraints
 - Reference working examples
@@ -638,6 +668,7 @@ Output: List of edge cases to test
 **Problem**: AI suggests code that doesn't match your architecture
 
 **Solutions**:
+
 - Provide more context about your patterns
 - Reference existing code examples
 - Use project rules (Chapter 00)
@@ -648,6 +679,7 @@ Output: List of edge cases to test
 **Problem**: AI doesn't write enough tests or tests are wrong
 
 **Solutions**:
+
 - Explicitly request comprehensive tests
 - Provide examples of existing tests
 - Specify test coverage requirements
@@ -658,6 +690,7 @@ Output: List of edge cases to test
 **Problem**: AI-generated documentation is missing information
 
 **Solutions**:
+
 - Specify what documentation is needed
 - Provide examples of existing docs
 - Request specific sections
@@ -670,6 +703,7 @@ Output: List of edge cases to test
 **Goal**: Implement a feature using the full workflow
 
 **Steps**:
+
 1. Choose a small feature
 2. Plan using AI
 3. Design (if needed)
@@ -686,6 +720,7 @@ Output: List of edge cases to test
 **Goal**: Practice test-driven development with AI
 
 **Steps**:
+
 1. Write tests first (using AI)
 2. Implement to make tests pass (using AI)
 3. Refactor (using AI)
@@ -698,6 +733,7 @@ Output: List of edge cases to test
 **Goal**: Refactor code using AI assistance
 
 **Steps**:
+
 1. Identify code to refactor
 2. Analyze with AI
 3. Plan refactoring
@@ -712,6 +748,7 @@ Output: List of edge cases to test
 **Goal**: Fix a bug using AI
 
 **Steps**:
+
 1. Reproduce bug
 2. Debug with AI
 3. Fix with AI
@@ -742,7 +779,7 @@ After completing this chapter, you should be able to:
 ✅ Write comprehensive tests with AI  
 ✅ Review and refine AI-generated code  
 ✅ Follow security and quality practices  
-✅ Troubleshoot common AI development issues  
+✅ Troubleshoot common AI development issues
 
 **If you can do all of these**, you're ready for Chapter 06 (the final project)!
 
