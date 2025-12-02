@@ -1,8 +1,10 @@
 # 04. Optional: Enhanced Context with contex 7
 
-> **This chapter is optional**. Cursor's built-in context is sufficient for most use cases. Only proceed if you need enhanced context management for large codebases or specific workflows.
+> **This chapter is optional**. Cursor's built-in context is sufficient for most use cases. Only proceed if you need
+> enhanced context management for large codebases or specific workflows.
 
-This chapter covers setting up contex 7, an optional tool that can enhance context management in Cursor. If you're just starting, you can skip this chapter and return to it later if needed.
+This chapter covers setting up contex 7, an optional tool that can enhance context management in Cursor. If you're just
+starting, you can skip this chapter and return to it later if needed.
 
 ## Learning objectives
 
@@ -33,7 +35,8 @@ This chapter covers setting up contex 7, an optional tool that can enhance conte
 - **Simple architecture**: Single repository, straightforward structure
 - **Learning phase**: Don't add complexity until you need it
 
-**Recommendation**: Complete Chapters 00-03 and 05 first. Return to this chapter only if you find Cursor's context limiting.
+**Recommendation**: Complete Chapters 00-03 and 05 first. Return to this chapter only if you find Cursor's context
+limiting.
 
 ## Quick setup (if needed)
 
@@ -83,6 +86,7 @@ This chapter covers setting up contex 7, an optional tool that can enhance conte
 ### Issue: contex 7 not working
 
 **Solutions**:
+
 - Check installation
 - Verify configuration
 - Review logs
@@ -91,6 +95,7 @@ This chapter covers setting up contex 7, an optional tool that can enhance conte
 ### Issue: Too much context
 
 **Solutions**:
+
 - Tighten include/exclude patterns
 - Reduce scope
 - Focus on specific areas
@@ -98,6 +103,7 @@ This chapter covers setting up contex 7, an optional tool that can enhance conte
 ### Issue: Integration issues
 
 **Solutions**:
+
 - Check Cursor extension (if using)
 - Verify API/CLI access
 - Review integration documentation
@@ -153,11 +159,13 @@ If using contex 7, verify:
 ## Checkpoint: Should you continue?
 
 **You can skip this chapter if**:
+
 - ✅ Cursor's built-in context works for you
 - ✅ Your project is small to medium size
 - ✅ You're still learning the basics
 
 **Continue with this chapter if**:
+
 - ✅ You have a very large codebase
 - ✅ You need cross-repository context
 - ✅ Your team requires contex 7
@@ -172,4 +180,5 @@ If using contex 7, verify:
 
 ---
 
-**Next**: If you skipped this chapter, proceed to [Chapter 05: AI-Driven Software Development](./05-ai-driven-software-development/README.md)
+**Next**: If you skipped this chapter, proceed
+to [Chapter 05: AI-Driven Software Development](./05-ai-driven-software-development/README.md)
