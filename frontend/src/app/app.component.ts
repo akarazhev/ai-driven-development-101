@@ -8,7 +8,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
     <div class="min-h-screen flex flex-col">
       <header class="bg-white border-b">
         <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
-          <h1 class="text-lg font-semibold">Social Media Automation</h1>
+          <h1 class="text-lg font-semibold">Confluence Publisher</h1>
           <nav class="flex gap-4 text-sm">
             <a routerLink="/" routerLinkActive="text-blue-600 font-medium" 
                [routerLinkActiveOptions]="{exact: true}"
@@ -26,7 +26,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
         <router-outlet></router-outlet>
       </main>
       <footer class="border-t bg-white text-xs text-gray-500">
-        <div class="max-w-5xl mx-auto px-4 py-3">© {{ currentYear }} Social App</div>
+        <div class="max-w-5xl mx-auto px-4 py-3">© {{ currentYear }} Confluence Publisher</div>
       </footer>
     </div>
   `

@@ -1,6 +1,6 @@
 # ai-driven-development-101
 
-Full-stack Social Media Automation App implementing the course project (Chapter 06).
+Full-stack Confluence Publisher App implementing the course project (Chapter 06).
 
 ## Stack
 
@@ -38,32 +38,32 @@ Open http://localhost:4200 and ensure the backend is running on http://localhost
 
 ```
 backend/
-  src/main/java/com/socialmedia/automation/
-    controller/     # REST controllers (Post, Media, Schedule, Provider, AI)
-    service/        # Business logic (PostService, MediaService, PublishService, ScheduleService)
+  src/main/java/com/confluence/publisher/
+    controller/     # REST controllers (Page, Attachment, Schedule, Confluence, AI)
+    service/        # Business logic (PageService, AttachmentService, PublishService, ScheduleService)
     repository/     # JPA repositories
-    entity/         # JPA entities (Post, MediaAsset, Schedule, PublishLog, etc.)
+    entity/         # JPA entities (Page, Attachment, Schedule, PublishLog, etc.)
     dto/            # Request/Response DTOs
-    provider/       # Provider adapter pattern (BaseProvider, StubProvider)
-    scheduler/      # Background scheduler for queued posts
+    provider/       # Provider adapter pattern (BaseProvider, ConfluenceStubProvider)
+    scheduler/      # Background scheduler for queued pages
     config/         # Spring configuration and properties
     exception/      # Global exception handling
   src/main/resources/
     application.yml # Application configuration
 frontend/
-  src/pages/      # Compose, Schedules
+  src/pages/      # ComposePage, Schedules
   src/app/        # app component and routing
 data/             # sqlite database (gitignored)
-storage/media/    # uploaded media (gitignored)
+storage/attachments/ # uploaded files (gitignored)
 ```
 
 ## API quickstart
 
 - Health: GET /api/health
-- Upload media: POST /api/media (multipart: file, alt_text?)
-- Create post: POST /api/posts { text, media_ids }
-- Publish now: POST /api/providers/default/publish { post_id }
-- Schedule: POST /api/schedules { post_id, scheduled_at? }
+- Upload attachment: POST /api/attachments (multipart: file, description?)
+- Create page: POST /api/pages { title, content, spaceKey, attachmentIds }
+- Publish now: POST /api/confluence/publish { pageId }
+- Schedule: POST /api/schedules { pageId, scheduledAt? }
 - List schedules: GET /api/schedules
 
 ## Tests
@@ -75,8 +75,9 @@ cd backend
 
 ## Notes
 
-- The provider is a stub by default; add real providers via the adapter interface.
-- For production, configure a proper database and storage, secure secrets, and harden CORS.
+- The Confluence provider is a stub by default; configure real Confluence API integration for production.
+- For production, configure a proper database and storage, secure API tokens, and harden CORS.
+- Confluence URL and space configuration available via environment variables.
 
 ## Containerization (Docker/Podman)
 
@@ -127,8 +128,10 @@ The repo includes Dockerfiles for backend and frontend and a docker-compose.yml 
   - Env (set in compose):
     - `SPRING_PROFILES_ACTIVE=docker`
     - `APP_DATABASE_URL=jdbc:sqlite:///data/app.db`
-    - `APP_MEDIA_DIR=/storage/media`
-    - `APP_PROVIDER=stub`
+    - `APP_ATTACHMENT_DIR=/storage/attachments`
+    - `APP_CONFLUENCE_URL=https://your-domain.atlassian.net`
+    - `APP_CONFLUENCE_DEFAULT_SPACE=DEV`
+    - `APP_PROVIDER=confluence-stub`
     - `APP_SCHEDULER_INTERVAL_SECONDS=5`
     - `APP_CORS_ORIGINS=http://localhost:4200,http://localhost:8080,http://localhost:5173`
 - frontend
@@ -140,8 +143,11 @@ The repo includes Dockerfiles for backend and frontend and a docker-compose.yml 
 
 - Backend environment variables (Spring Boot properties with `APP_` prefix):
   - `APP_DATABASE_URL` (default `jdbc:sqlite:./data/app.db` in dev, `jdbc:sqlite:///data/app.db` in container)
-  - `APP_MEDIA_DIR` (default `storage/media`, container uses `/storage/media`)
-  - `APP_PROVIDER` (`stub` by default)
+  - `APP_ATTACHMENT_DIR` (default `storage/attachments`, container uses `/storage/attachments`)
+  - `APP_CONFLUENCE_URL` (Confluence instance URL)
+  - `APP_CONFLUENCE_DEFAULT_SPACE` (default Confluence space key)
+  - `APP_CONFLUENCE_API_TOKEN` (API token for authentication)
+  - `APP_PROVIDER` (`confluence-stub` by default)
   - `APP_SCHEDULER_INTERVAL_SECONDS` (default `5`)
   - `APP_CORS_ORIGINS` comma-separated list of allowed origins
 - Frontend API base
@@ -152,24 +158,24 @@ The repo includes Dockerfiles for backend and frontend and a docker-compose.yml 
 
 ```bash
 # Backend image
-docker build -t social-backend -f backend/Dockerfile .
+docker build -t confluence-backend -f backend/Dockerfile .
 docker run --rm -p 8080:8080 \
   -e APP_DATABASE_URL=jdbc:sqlite:///data/app.db \
-  -e APP_MEDIA_DIR=/storage/media \
-  -v social_data:/data -v social_media:/storage/media \
-  social-backend
+  -e APP_ATTACHMENT_DIR=/storage/attachments \
+  -v confluence_data:/data -v confluence_attachments:/storage/attachments \
+  confluence-backend
 
 # Frontend image
-docker build -t social-frontend \
+docker build -t confluence-frontend \
   --build-arg NG_APP_API_BASE=http://localhost:8080 \
   -f frontend/Dockerfile .
-docker run --rm -p 8080:80 social-frontend
+docker run --rm -p 8080:80 confluence-frontend
 ```
 
 ### Data persistence
 
-- Compose uses named volumes: `data` for the SQLite DB and `media` for uploaded files.
-- Remove volumes with `docker compose down -v` (or `podman compose down -v`). This will delete your DB and uploaded media.
+- Compose uses named volumes: `data` for the SQLite DB and `attachments` for uploaded files.
+- Remove volumes with `docker compose down -v` (or `podman compose down -v`). This will delete your DB and uploaded attachments.
 
 ### Troubleshooting
 
@@ -196,7 +202,7 @@ docker run --rm -p 8080:80 social-frontend
   3. [03. Setup Cursor AI](doc/course/03-setup-cursor-ai/README.md)
   4. [04. Setup contex 7](doc/course/04-setup-contex-7/README.md)
   5. [05. AI-Driven Software Development](doc/course/05-ai-driven-software-development/README.md)
-  6. [06. Project: Social Media Automation App](doc/course/06-project-social-media-automation-app/README.md)
+  6. [06. Project: Confluence Publisher App](doc/course/06-project-confluence-publisher-app/README.md)
 
 ### Additional resources
 
