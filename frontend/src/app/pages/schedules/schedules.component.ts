@@ -33,10 +33,10 @@ import { ApiService, Schedule } from '../../services/api.service';
             @for (row of rows(); track row.id) {
               <tr [class]="$even ? 'bg-gray-50' : 'bg-white'">
                 <td class="p-2 border-b">{{ row.id }}</td>
-                <td class="p-2 border-b">{{ row.page_id }}</td>
+                <td class="p-2 border-b">{{ row.pageId }}</td>
                 <td class="p-2 border-b">{{ row.status }}</td>
-                <td class="p-2 border-b">{{ formatDate(row.scheduled_at) }}</td>
-                <td class="p-2 border-b">{{ row.attempt_count }}</td>
+                <td class="p-2 border-b">{{ formatDate(row.scheduledAt) }}</td>
+                <td class="p-2 border-b">{{ row.attemptCount }}</td>
               </tr>
             }
           </tbody>

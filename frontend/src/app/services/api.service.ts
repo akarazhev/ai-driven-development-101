@@ -10,10 +10,10 @@ export interface Attachment {
 
 export interface Schedule {
   id: number;
-  page_id: number;
+  pageId: number;
   status: string;
-  scheduled_at: string;
-  attempt_count: number;
+  scheduledAt: string;
+  attemptCount: number;
 }
 
 export interface ContentImprovementResponse {
@@ -59,16 +59,16 @@ export class ApiService {
       content, 
       spaceKey,
       parentPageId,
-      attachment_ids: attachmentIds 
+      attachmentIds 
     });
   }
 
   publishNow(pageId: number) {
-    return this.http.post<PublishResponse>(this.api('/confluence/publish'), { page_id: pageId });
+    return this.http.post<PublishResponse>(this.api('/confluence/publish'), { pageId });
   }
 
   schedulePage(pageId: number) {
-    return this.http.post<Schedule>(this.api('/schedules'), { page_id: pageId });
+    return this.http.post<Schedule>(this.api('/schedules'), { pageId });
   }
 
   getSchedules() {
