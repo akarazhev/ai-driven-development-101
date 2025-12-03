@@ -26,8 +26,8 @@ public class DataInitializer implements CommandLineRunner {
             Files.createDirectories(Paths.get(dbDir));
         }
         
-        // Ensure media directory exists
-        Files.createDirectories(Paths.get(appProperties.getMediaDir()));
+        // Ensure attachment directory exists
+        Files.createDirectories(Paths.get(appProperties.getAttachmentDir()));
         
         log.info("Initialized data directories");
     }

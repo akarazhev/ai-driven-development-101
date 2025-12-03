@@ -14,18 +14,18 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class AttachmentController {
     
-    private final AttachmentService mediaService;
+    private final AttachmentService attachmentService;
     
     @PostMapping
     public ResponseEntity<AttachmentUploadResponse> uploadAttachment(
             @RequestParam("file") MultipartFile file,
-            @RequestParam(value = "alt_text", required = false) String altText) {
+            @RequestParam(value = "description", required = false) String description) {
         
-        Attachment asset = mediaService.uploadAttachment(file, altText);
+        Attachment attachment = attachmentService.uploadAttachment(file, description);
         AttachmentUploadResponse response = AttachmentUploadResponse.builder()
-                .id(asset.getId())
-                .filename(asset.getFilename())
-                .altText(asset.getAltText())
+                .id(attachment.getId())
+                .filename(attachment.getFilename())
+                .description(attachment.getDescription())
                 .build();
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }

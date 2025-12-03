@@ -20,25 +20,25 @@ import java.util.UUID;
 @Slf4j
 public class AttachmentService {
     
-    private final AttachmentRepository mediaAssetRepository;
+    private final AttachmentRepository attachmentRepository;
     private final AppProperties appProperties;
     
     @Transactional
-    public Attachment uploadMedia(MultipartFile file, String description) {
+    public Attachment uploadAttachment(MultipartFile file, String description) {
         try {
-            Path mediaDir = Paths.get(appProperties.getMediaDir());
-            Files.createDirectories(mediaDir);
+            Path attachmentDir = Paths.get(appProperties.getAttachmentDir());
+            Files.createDirectories(attachmentDir);
             
             String originalFilename = file.getOriginalFilename();
             String suffix = originalFilename != null && originalFilename.contains(".")
                     ? originalFilename.substring(originalFilename.lastIndexOf("."))
                     : "";
             String filename = UUID.randomUUID().toString().replace("-", "") + suffix;
-            Path filePath = mediaDir.resolve(filename);
+            Path filePath = attachmentDir.resolve(filename);
             
             Files.write(filePath, file.getBytes());
             
-            Attachment asset = MediaAsset.builder()
+            Attachment attachment = Attachment.builder()
                     .filename(originalFilename != null ? originalFilename : "unknown")
                     .contentType(file.getContentType() != null ? file.getContentType() : "application/octet-stream")
                     .size(file.getSize())
@@ -46,10 +46,10 @@ public class AttachmentService {
                     .description(description)
                     .build();
             
-            return mediaAssetRepository.save(asset);
+            return attachmentRepository.save(attachment);
         } catch (IOException e) {
-            log.error("Failed to upload media", e);
-            throw new RuntimeException("Failed to upload media: " + e.getMessage(), e);
+            log.error("Failed to upload attachment", e);
+            throw new RuntimeException("Failed to upload attachment: " + e.getMessage(), e);
         }
     }
 }
