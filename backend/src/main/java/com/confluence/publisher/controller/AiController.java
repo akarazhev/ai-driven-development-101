@@ -17,9 +17,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AiController {
     
-    @PostMapping("/variants")
-    public ResponseEntity<ContentImprovementResponse> variants(@Valid @RequestBody ContentImprovementRequest request) {
-        String base = request.getMessage().strip();
+    @PostMapping("/improve-content")
+    public ResponseEntity<ContentImprovementResponse> improveContent(@Valid @RequestBody ContentImprovementRequest request) {
+        String base = request.getContent().strip();
         List<String> outs = new ArrayList<>();
         
         if (!base.isEmpty()) {
@@ -34,29 +34,29 @@ public class AiController {
             }
         }
         
-        List<String> variants = outs.stream()
+        List<String> suggestions = outs.stream()
                 .filter(s -> !s.isEmpty())
                 .limit(3)
                 .toList();
         
         ContentImprovementResponse response = ContentImprovementResponse.builder()
-                .variants(variants)
+                .suggestions(suggestions)
                 .build();
         return ResponseEntity.ok(response);
     }
     
-    @PostMapping("/alt-text")
-    public ResponseEntity<AttachmentDescriptionResponse> altText(@RequestBody AttachmentDescriptionRequest request) {
+    @PostMapping("/generate-description")
+    public ResponseEntity<AttachmentDescriptionResponse> generateDescription(@RequestBody AttachmentDescriptionRequest request) {
         String desc = request.getDescription() != null 
                 ? request.getDescription().strip() 
                 : "";
         if (desc.isEmpty()) {
-            desc = "Image";
+            desc = "Document attachment";
         }
-        String altText = desc.length() > 120 ? desc.substring(0, 120) : desc;
+        String description = desc.length() > 120 ? desc.substring(0, 120) : desc;
         
         AttachmentDescriptionResponse response = AttachmentDescriptionResponse.builder()
-                .altText(altText)
+                .description(description)
                 .build();
         return ResponseEntity.ok(response);
     }

@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class ContentImprovementRequest {
     
-    @NotBlank(content = "Message is required")
+    @NotBlank(message = "Content is required")
     private String content;
 }
 
