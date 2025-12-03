@@ -1,60 +1,60 @@
 # Confluence Publisher - Spring Boot Backend
 
-Современный Spring Boot бекенд для приложения публикации страниц в Confluence.
+Modern Spring Boot backend for publishing pages to Confluence application.
 
-## Технологический стек
+## Technology Stack
 
-- **Spring Boot 3.2.0** - современный фреймворк
-- **Java 21** - последняя LTS версия
-- **Gradle 8.5** - система сборки
-- **Spring Data JPA** - работа с БД
-- **SQLite** - база данных
-- **Lombok** - уменьшение boilerplate кода
-- **Bean Validation** - валидация данных
+- **Spring Boot 3.2.0** - modern framework
+- **Java 21** - latest LTS version
+- **Gradle 8.5** - build system
+- **Spring Data JPA** - database operations
+- **SQLite** - database
+- **Lombok** - reduces boilerplate code
+- **Bean Validation** - data validation
 
-## Архитектура
+## Architecture
 
-Проект следует лучшим практикам Spring Boot:
+The project follows Spring Boot best practices:
 
-- **Слоистая архитектура**: Controllers → Services → Repositories → Entities
-- **DTO паттерн**: отдельные классы для запросов/ответов
-- **Dependency Injection**: через конструкторы (Lombok @RequiredArgsConstructor)
-- **Транзакционность**: @Transactional на уровне сервисов
-- **Обработка ошибок**: GlobalExceptionHandler
-- **Конфигурация**: через @ConfigurationProperties
-- **Планировщик**: Spring @Scheduled
+- **Layered architecture**: Controllers → Services → Repositories → Entities
+- **DTO pattern**: separate classes for requests/responses
+- **Dependency Injection**: through constructors (Lombok @RequiredArgsConstructor)
+- **Transactional**: @Transactional at service level
+- **Error handling**: GlobalExceptionHandler
+- **Configuration**: through @ConfigurationProperties
+- **Scheduler**: Spring @Scheduled
 
-## Структура проекта
+## Project Structure
 
 ```
 src/main/java/com/confluence/publisher/
-├── controller/      # REST контроллеры
-├── service/         # Бизнес-логика
-├── repository/      # Spring Data JPA репозитории
-├── entity/          # JPA сущности
+├── controller/      # REST controllers
+├── service/         # Business logic
+├── repository/      # Spring Data JPA repositories
+├── entity/          # JPA entities
 ├── dto/             # Data Transfer Objects
-├── config/          # Конфигурационные классы
-├── exception/       # Обработка исключений
-├── provider/        # Провайдеры Confluence
-└── scheduler/       # Планировщик задач
+├── config/          # Configuration classes
+├── exception/       # Exception handling
+├── provider/        # Confluence providers
+└── scheduler/       # Task scheduler
 ```
 
 ## API Endpoints
 
-- `GET /api/health` - проверка здоровья
-- `POST /api/pages` - создание страницы
-- `GET /api/pages/{id}` - получение страницы
-- `POST /api/attachments` - загрузка вложений
-- `POST /api/schedules` - создание расписания
-- `GET /api/schedules/{id}` - получение расписания
-- `GET /api/schedules` - список расписаний
-- `POST /api/confluence/publish` - публикация страницы в Confluence
-- `POST /api/ai/improve-content` - улучшение контента
-- `POST /api/ai/generate-summary` - генерация summary
+- `GET /api/health` - health check
+- `POST /api/pages` - create page
+- `GET /api/pages/{id}` - get page
+- `POST /api/attachments` - upload attachment
+- `POST /api/schedules` - create schedule
+- `GET /api/schedules/{id}` - get schedule
+- `GET /api/schedules` - list schedules
+- `POST /api/confluence/publish` - publish page to Confluence
+- `POST /api/ai/improve-content` - improve content
+- `POST /api/ai/generate-summary` - generate summary
 
-## Запуск
+## Running
 
-### Локально
+### Locally
 
 ```bash
 ./gradlew bootRun
@@ -66,26 +66,25 @@ src/main/java/com/confluence/publisher/
 docker-compose up backend
 ```
 
-## Конфигурация
+## Configuration
 
-Настройки в `application.yml`:
+Settings in `application.yml`:
 
-- `app.database-url` - URL базы данных
-- `app.attachment-dir` - директория для вложений
-- `app.confluence-url` - URL Confluence instance
-- `app.confluence-default-space` - пространство Confluence по умолчанию
-- `app.confluence-api-token` - API токен для аутентификации
-- `app.cors-origins` - разрешенные источники CORS
-- `app.provider` - провайдер публикаций (confluence-stub)
-- `app.scheduler-interval-seconds` - интервал проверки расписания
+- `app.database-url` - database URL
+- `app.attachment-dir` - attachments directory
+- `app.confluence-url` - Confluence instance URL
+- `app.confluence-default-space` - default Confluence space
+- `app.confluence-api-token` - API token for authentication
+- `app.cors-origins` - allowed CORS origins
+- `app.provider` - publication provider (confluence-stub)
+- `app.scheduler-interval-seconds` - schedule check interval
 
-## Особенности
+## Features
 
-- ✅ Современный Spring Boot 3.x
-- ✅ Java 21 с новыми возможностями
-- ✅ Типобезопасная конфигурация
-- ✅ Валидация входных данных
-- ✅ Централизованная обработка ошибок
-- ✅ Логирование через SLF4J
-- ✅ Готовность к production (Docker, health checks)
-
+- ✅ Modern Spring Boot 3.x
+- ✅ Java 21 with new features
+- ✅ Type-safe configuration
+- ✅ Input data validation
+- ✅ Centralized error handling
+- ✅ Logging through SLF4J
+- ✅ Production ready (Docker, health checks)
