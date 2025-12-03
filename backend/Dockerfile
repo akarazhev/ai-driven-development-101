@@ -4,14 +4,14 @@ FROM gradle:8.5-jdk21 AS build
 WORKDIR /app
 
 # Copy Gradle files
-COPY build.gradle.kts settings.gradle.kts gradle.properties ./
-COPY gradle ./gradle
+COPY backend/build.gradle.kts backend/settings.gradle.kts backend/gradle.properties ./
+COPY backend/gradle ./gradle
 
 # Download dependencies (cached layer)
 RUN gradle dependencies --no-daemon || true
 
 # Copy source code
-COPY src ./src
+COPY backend/src ./src
 
 # Build application
 RUN gradle build --no-daemon -x test
@@ -22,7 +22,7 @@ FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 
 # Create directories for data and attachments
-RUN mkdir -p /data /storage/attachments
+RUN mkdir -p /data /storage/attachments /app/data
 
 # Copy built JAR
 COPY --from=build /app/build/libs/confluence-publisher.jar app.jar

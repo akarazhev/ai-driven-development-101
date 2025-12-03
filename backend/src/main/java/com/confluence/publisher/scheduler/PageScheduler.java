@@ -29,7 +29,7 @@ public class PageScheduler {
         
         for (Schedule schedule : queuedSchedules) {
             try {
-                PublishLog publishLog = publishService.publishPost(schedule.getPageId());
+                PublishLog publishLog = publishService.publishPage(schedule.getPageId());
                 scheduleService.updateScheduleStatus(schedule, "posted", null);
                 log.debug("Successfully published page {} for schedule {}", schedule.getPageId(), schedule.getId());
             } catch (Exception e) {

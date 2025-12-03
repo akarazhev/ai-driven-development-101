@@ -32,9 +32,10 @@ public class PageService {
                 .build();
         page = pageRepository.save(page);
         
+        final Long savedPageId = page.getId();
         List<PageAttachment> pageAttachmentList = IntStream.range(0, attachmentIds.size())
                 .mapToObj(i -> PageAttachment.builder()
-                        .pageId(page.getId())
+                        .pageId(savedPageId)
                         .attachmentId(attachmentIds.get(i))
                         .position(i)
                         .build())

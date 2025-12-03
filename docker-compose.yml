@@ -27,7 +27,7 @@ services:
       args:
         NG_APP_API_BASE: http://localhost:8080
     ports:
-      - "8080:80"
+      - "4200:80"
     depends_on:
       - backend
 
