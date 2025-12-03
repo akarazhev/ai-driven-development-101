@@ -21,17 +21,17 @@ FROM eclipse-temurin:21-jre-alpine
 
 WORKDIR /app
 
-# Create directories for data and media
-RUN mkdir -p /data /storage/media
+# Create directories for data and attachments
+RUN mkdir -p /data /storage/attachments
 
 # Copy built JAR
-COPY --from=build /app/build/libs/social-media-automation.jar app.jar
+COPY --from=build /app/build/libs/confluence-publisher.jar app.jar
 
 # Default environment variables (can be overridden)
 ENV SPRING_PROFILES_ACTIVE=docker \
     APP_DATABASE_URL=jdbc:sqlite:///data/app.db \
-    APP_MEDIA_DIR=/storage/media \
-    APP_PROVIDER=stub \
+    APP_ATTACHMENT_DIR=/storage/attachments \
+    APP_PROVIDER=confluence-stub \
     APP_SCHEDULER_INTERVAL_SECONDS=5
 
 EXPOSE 8080
