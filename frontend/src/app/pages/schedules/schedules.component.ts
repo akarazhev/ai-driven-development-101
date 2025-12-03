@@ -10,7 +10,7 @@ import { ApiService, Schedule } from '../../services/api.service';
   template: `
     <div class="space-y-3">
       <div class="flex items-center justify-between">
-        <h2 class="text-base font-semibold">Schedules</h2>
+        <h2 class="text-base font-semibold">Publication Schedules</h2>
         <button 
           (click)="load()" 
           [disabled]="busy()" 
@@ -23,7 +23,7 @@ import { ApiService, Schedule } from '../../services/api.service';
           <thead>
             <tr class="bg-gray-50 text-gray-700">
               <th class="text-left p-2 border-b">ID</th>
-              <th class="text-left p-2 border-b">Post</th>
+              <th class="text-left p-2 border-b">Page ID</th>
               <th class="text-left p-2 border-b">Status</th>
               <th class="text-left p-2 border-b">Scheduled</th>
               <th class="text-left p-2 border-b">Attempts</th>
@@ -33,7 +33,7 @@ import { ApiService, Schedule } from '../../services/api.service';
             @for (row of rows(); track row.id) {
               <tr [class]="$even ? 'bg-gray-50' : 'bg-white'">
                 <td class="p-2 border-b">{{ row.id }}</td>
-                <td class="p-2 border-b">{{ row.post_id }}</td>
+                <td class="p-2 border-b">{{ row.page_id }}</td>
                 <td class="p-2 border-b">{{ row.status }}</td>
                 <td class="p-2 border-b">{{ formatDate(row.scheduled_at) }}</td>
                 <td class="p-2 border-b">{{ row.attempt_count }}</td>

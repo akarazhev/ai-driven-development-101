@@ -20,7 +20,7 @@ Markdown and organized by chapters, one folder per chapter.
    enhanced context for large codebases
 5. [05 - AI-Driven Software Development](./05-ai-driven-software-development/README.md) - Practical workflows and
    patterns
-6. [06 - Project: Social Media Automation App](./06-project-social-media-automation-app/README.md) - Full-stack project
+6. [06 - Project: Confluence Publisher App](./06-project-confluence-publisher-app/README.md) - Full-stack project
    implementation
 
 ## How to use this course

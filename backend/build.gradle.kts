@@ -4,7 +4,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.4"
 }
 
-group = "com.socialmedia"
+group = "com.confluence"
 version = "1.0.0"
 java.sourceCompatibility = JavaVersion.VERSION_21
 
@@ -51,6 +51,6 @@ tasks.jar {
 }
 
 tasks.bootJar {
-    archiveFileName.set("social-media-automation.jar")
+    archiveFileName.set("confluence-publisher.jar")
 }
 

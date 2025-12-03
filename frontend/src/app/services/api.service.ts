@@ -2,26 +2,27 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
-export interface Media {
+export interface Attachment {
   id: number;
   filename: string;
-  alt_text?: string;
+  description?: string;
 }
 
 export interface Schedule {
   id: number;
-  post_id: number;
+  page_id: number;
   status: string;
   scheduled_at: string;
   attempt_count: number;
 }
 
-export interface VariantsResponse {
-  variants: string[];
+export interface ContentImprovementResponse {
+  suggestions: string[];
 }
 
-export interface PostResponse {
+export interface PageResponse {
   id: number;
+  title: string;
 }
 
 export interface PublishResponse {
@@ -39,29 +40,35 @@ export class ApiService {
     return `${this.apiBase}/api${path}`;
   }
 
-  uploadMedia(file: File, altText?: string) {
+  uploadAttachment(file: File, description?: string) {
     const formData = new FormData();
     formData.append('file', file);
-    if (altText) {
-      formData.append('alt_text', altText);
+    if (description) {
+      formData.append('description', description);
     }
-    return this.http.post<Media>(this.api('/media'), formData);
+    return this.http.post<Attachment>(this.api('/attachments'), formData);
   }
 
-  generateVariants(message: string) {
-    return this.http.post<VariantsResponse>(this.api('/ai/variants'), { message });
+  improveContent(content: string) {
+    return this.http.post<ContentImprovementResponse>(this.api('/ai/improve-content'), { content });
   }
 
-  createPost(text: string, mediaIds: number[]) {
-    return this.http.post<PostResponse>(this.api('/posts'), { text, media_ids: mediaIds });
+  createPage(title: string, content: string, spaceKey: string, attachmentIds: number[], parentPageId?: number) {
+    return this.http.post<PageResponse>(this.api('/pages'), { 
+      title, 
+      content, 
+      spaceKey,
+      parentPageId,
+      attachment_ids: attachmentIds 
+    });
   }
 
-  publishNow(postId: number) {
-    return this.http.post<PublishResponse>(this.api('/providers/default/publish'), { post_id: postId });
+  publishNow(pageId: number) {
+    return this.http.post<PublishResponse>(this.api('/confluence/publish'), { page_id: pageId });
   }
 
-  schedulePost(postId: number) {
-    return this.http.post<Schedule>(this.api('/schedules'), { post_id: postId });
+  schedulePage(pageId: number) {
+    return this.http.post<Schedule>(this.api('/schedules'), { page_id: pageId });
   }
 
   getSchedules() {

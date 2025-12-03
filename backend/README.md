@@ -1,6 +1,6 @@
-# Social Media Automation - Spring Boot Backend
+# Confluence Publisher - Spring Boot Backend
 
-Современный Spring Boot бекенд для приложения автоматизации публикаций в социальных сетях.
+Современный Spring Boot бекенд для приложения публикации страниц в Confluence.
 
 ## Технологический стек
 
@@ -27,7 +27,7 @@
 ## Структура проекта
 
 ```
-src/main/java/com/socialmedia/automation/
+src/main/java/com/confluence/publisher/
 ├── controller/      # REST контроллеры
 ├── service/         # Бизнес-логика
 ├── repository/      # Spring Data JPA репозитории
@@ -35,22 +35,22 @@ src/main/java/com/socialmedia/automation/
 ├── dto/             # Data Transfer Objects
 ├── config/          # Конфигурационные классы
 ├── exception/       # Обработка исключений
-├── provider/        # Провайдеры публикаций
+├── provider/        # Провайдеры Confluence
 └── scheduler/       # Планировщик задач
 ```
 
 ## API Endpoints
 
 - `GET /api/health` - проверка здоровья
-- `POST /api/posts` - создание поста
-- `GET /api/posts/{id}` - получение поста
-- `POST /api/media` - загрузка медиа
+- `POST /api/pages` - создание страницы
+- `GET /api/pages/{id}` - получение страницы
+- `POST /api/attachments` - загрузка вложений
 - `POST /api/schedules` - создание расписания
 - `GET /api/schedules/{id}` - получение расписания
 - `GET /api/schedules` - список расписаний
-- `POST /api/providers/{accountId}/publish` - публикация поста
-- `POST /api/ai/variants` - генерация вариантов текста
-- `POST /api/ai/alt-text` - генерация alt-текста
+- `POST /api/confluence/publish` - публикация страницы в Confluence
+- `POST /api/ai/improve-content` - улучшение контента
+- `POST /api/ai/generate-summary` - генерация summary
 
 ## Запуск
 
@@ -71,9 +71,12 @@ docker-compose up backend
 Настройки в `application.yml`:
 
 - `app.database-url` - URL базы данных
-- `app.media-dir` - директория для медиафайлов
+- `app.attachment-dir` - директория для вложений
+- `app.confluence-url` - URL Confluence instance
+- `app.confluence-default-space` - пространство Confluence по умолчанию
+- `app.confluence-api-token` - API токен для аутентификации
 - `app.cors-origins` - разрешенные источники CORS
-- `app.provider` - провайдер публикаций (stub)
+- `app.provider` - провайдер публикаций (confluence-stub)
 - `app.scheduler-interval-seconds` - интервал проверки расписания
 
 ## Особенности

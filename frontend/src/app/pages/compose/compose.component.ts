@@ -2,7 +2,7 @@ import { Component, signal, computed, inject, ChangeDetectionStrategy } from '@a
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
-import { ApiService, Media } from '../../services/api.service';
+import { ApiService, Attachment } from '../../services/api.service';
 
 @Component({
   selector: 'app-compose',
@@ -11,50 +11,64 @@ import { ApiService, Media } from '../../services/api.service';
   template: `
     <div class="space-y-8">
       <section class="space-y-3">
-        <h2 class="text-base font-semibold">Compose</h2>
+        <h2 class="text-base font-semibold">Create Confluence Page</h2>
+        <input
+          type="text"
+          class="w-full border rounded p-3 focus:outline-none focus:ring"
+          placeholder="Page title..."
+          [value]="title()"
+          (input)="title.set($any($event.target).value)"
+        />
+        <input
+          type="text"
+          class="w-full border rounded p-2 text-sm focus:outline-none focus:ring"
+          placeholder="Space key (e.g., DEV, DOCS)"
+          [value]="spaceKey()"
+          (input)="spaceKey.set($any($event.target).value)"
+        />
         <textarea
           class="w-full border rounded p-3 focus:outline-none focus:ring"
-          rows="4"
-          placeholder="Write your post..."
-          [value]="text()"
-          (input)="text.set($any($event.target).value)"
+          rows="8"
+          placeholder="Page content..."
+          [value]="content()"
+          (input)="content.set($any($event.target).value)"
         ></textarea>
         <div class="flex gap-2">
           <button 
-            (click)="makeVariants()" 
-            [disabled]="busy() || !text()" 
+            (click)="improvContent()" 
+            [disabled]="busy() || !content()" 
             class="px-3 py-2 bg-blue-600 text-white rounded disabled:opacity-50">
-            Generate variants
+            Improve content
           </button>
           <button 
-            (click)="createPost()" 
-            [disabled]="busy() || !text()" 
+            (click)="createPage()" 
+            [disabled]="busy() || !title() || !content() || !spaceKey()" 
             class="px-3 py-2 bg-green-600 text-white rounded disabled:opacity-50">
-            Create post
+            Create page
           </button>
           <button 
             (click)="publishNow()" 
-            [disabled]="busy() || !postId()" 
+            [disabled]="busy() || !pageId()" 
             class="px-3 py-2 bg-purple-600 text-white rounded disabled:opacity-50">
             Publish now
           </button>
           <button 
             (click)="schedule()" 
-            [disabled]="busy() || !postId()" 
+            [disabled]="busy() || !pageId()" 
             class="px-3 py-2 bg-amber-600 text-white rounded disabled:opacity-50">
             Schedule
           </button>
         </div>
-        @if (variants().length > 0) {
+        @if (suggestions().length > 0) {
           <div class="bg-white border rounded p-3">
-            <h3 class="font-medium mb-2">Variants</h3>
+            <h3 class="font-medium mb-2">Content Suggestions</h3>
             <ul class="list-disc pl-5 space-y-1">
-              @for (variant of variants(); track $index) {
+              @for (suggestion of suggestions(); track $index) {
                 <li>
                   <button 
                     class="text-blue-600 hover:underline" 
-                    (click)="text.set(variant)">
-                    {{ variant }}
+                    (click)="content.set(suggestion)">
+                    {{ suggestion.substring(0, 100) }}...
                   </button>
                 </li>
               }
@@ -64,11 +78,10 @@ import { ApiService, Media } from '../../services/api.service';
       </section>
 
       <section class="space-y-3">
-        <h2 class="text-base font-semibold">Media</h2>
+        <h2 class="text-base font-semibold">Attachments</h2>
         <input 
           type="file" 
           multiple 
-          accept="image/*" 
           (change)="onFiles($event)"
           #fileInput
         />
@@ -78,11 +91,11 @@ import { ApiService, Media } from '../../services/api.service';
               <div class="flex items-center gap-2 text-sm">
                 <div class="text-gray-600">{{ file.name }}</div>
                 <input 
-                  #altInput
+                  #descInput
                   class="border rounded p-1 flex-1" 
-                  placeholder="Alt text (optional)"
-                  [value]="altTexts()[idx]"
-                  (input)="updateAltText(idx, $any($event.target).value)"
+                  placeholder="Description (optional)"
+                  [value]="descriptions()[idx]"
+                  (input)="updateDescription(idx, $any($event.target).value)"
                 />
               </div>
             }
@@ -94,15 +107,15 @@ import { ApiService, Media } from '../../services/api.service';
             </button>
           </div>
         }
-        @if (media().length > 0) {
+        @if (attachments().length > 0) {
           <div class="bg-white border rounded p-3">
-            <h3 class="font-medium mb-2">Attached</h3>
+            <h3 class="font-medium mb-2">Attached Files</h3>
             <ul class="list-disc pl-5 text-sm space-y-1">
-              @for (m of media(); track m.id) {
+              @for (att of attachments(); track att.id) {
                 <li>
-                  {{ m.filename }} 
-                  @if (m.alt_text) {
-                    (alt: {{ m.alt_text }})
+                  {{ att.filename }} 
+                  @if (att.description) {
+                    ({{ att.description }})
                   }
                 </li>
               }
@@ -116,13 +129,15 @@ import { ApiService, Media } from '../../services/api.service';
 export class ComposeComponent {
   private apiService = inject(ApiService);
 
-  text = signal('');
+  title = signal('');
+  content = signal('');
+  spaceKey = signal('DEV');
   files = signal<File[]>([]);
-  altTexts = signal<string[]>([]);
-  media = signal<Media[]>([]);
+  descriptions = signal<string[]>([]);
+  attachments = signal<Attachment[]>([]);
   busy = signal(false);
-  variants = signal<string[]>([]);
-  postId = signal<number | null>(null);
+  suggestions = signal<string[]>([]);
+  pageId = signal<number | null>(null);
   scheduleId = signal<number | null>(null);
 
   canUpload = computed(() => this.files().length > 0);
@@ -131,32 +146,32 @@ export class ComposeComponent {
     const input = event.target as HTMLInputElement;
     if (input.files) {
       this.files.set(Array.from(input.files));
-      this.altTexts.set(new Array(input.files.length).fill(''));
+      this.descriptions.set(new Array(input.files.length).fill(''));
     }
   }
 
-  updateAltText(index: number, value: string) {
-    const altTexts = [...this.altTexts()];
-    altTexts[index] = value;
-    this.altTexts.set(altTexts);
+  updateDescription(index: number, value: string) {
+    const descriptions = [...this.descriptions()];
+    descriptions[index] = value;
+    this.descriptions.set(descriptions);
   }
 
   async uploadAll() {
     if (this.files().length === 0) return;
     this.busy.set(true);
     try {
-      const uploaded: Media[] = [];
+      const uploaded: Attachment[] = [];
       for (let i = 0; i < this.files().length; i++) {
         const file = this.files()[i];
-        const altText = this.altTexts()[i];
-        const result = await firstValueFrom(this.apiService.uploadMedia(file, altText || undefined));
+        const description = this.descriptions()[i];
+        const result = await firstValueFrom(this.apiService.uploadAttachment(file, description || undefined));
         if (result) {
           uploaded.push(result);
         }
       }
-      this.media.update(prev => [...prev, ...uploaded]);
+      this.attachments.update(prev => [...prev, ...uploaded]);
       this.files.set([]);
-      this.altTexts.set([]);
+      this.descriptions.set([]);
     } catch (e) {
       console.error(e);
       alert('Upload failed');
@@ -165,49 +180,51 @@ export class ComposeComponent {
     }
   }
 
-  async makeVariants() {
+  async improvContent() {
     this.busy.set(true);
     try {
-      const result = await firstValueFrom(this.apiService.generateVariants(this.text()));
+      const result = await firstValueFrom(this.apiService.improveContent(this.content()));
       if (result) {
-        this.variants.set(result.variants ?? []);
+        this.suggestions.set(result.suggestions ?? []);
       }
     } catch (e) {
       console.error(e);
-      alert('Variant generation failed');
+      alert('Content improvement failed');
     } finally {
       this.busy.set(false);
     }
   }
 
-  async createPost() {
+  async createPage() {
     this.busy.set(true);
     try {
-      const result = await firstValueFrom(this.apiService.createPost(
-        this.text(),
-        this.media().map(m => m.id)
+      const result = await firstValueFrom(this.apiService.createPage(
+        this.title(),
+        this.content(),
+        this.spaceKey(),
+        this.attachments().map(a => a.id)
       ));
       if (result) {
-        this.postId.set(result.id);
-        alert('Post created');
+        this.pageId.set(result.id);
+        alert('Page created');
       }
     } catch (e) {
       console.error(e);
-      alert('Post creation failed');
+      alert('Page creation failed');
     } finally {
       this.busy.set(false);
     }
   }
 
   async publishNow() {
-    const postId = this.postId();
-    if (!postId) {
-      alert('Create a post first');
+    const pageId = this.pageId();
+    if (!pageId) {
+      alert('Create a page first');
       return;
     }
     this.busy.set(true);
     try {
-      const result = await firstValueFrom(this.apiService.publishNow(postId));
+      const result = await firstValueFrom(this.apiService.publishNow(pageId));
       if (result) {
         alert(`Published with status: ${result.status}`);
       }
@@ -220,14 +237,14 @@ export class ComposeComponent {
   }
 
   async schedule() {
-    const postId = this.postId();
-    if (!postId) {
-      alert('Create a post first');
+    const pageId = this.pageId();
+    if (!pageId) {
+      alert('Create a page first');
       return;
     }
     this.busy.set(true);
     try {
-      const result = await firstValueFrom(this.apiService.schedulePost(postId));
+      const result = await firstValueFrom(this.apiService.schedulePage(pageId));
       if (result) {
         this.scheduleId.set(result.id);
         alert('Scheduled');

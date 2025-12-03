@@ -9,13 +9,16 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: docker
       APP_DATABASE_URL: jdbc:sqlite:///data/app.db
-      APP_MEDIA_DIR: /storage/media
-      APP_PROVIDER: stub
+      APP_ATTACHMENT_DIR: /storage/attachments
+      APP_CONFLUENCE_URL: https://your-domain.atlassian.net
+      APP_CONFLUENCE_DEFAULT_SPACE: DEV
+      APP_CONFLUENCE_API_TOKEN: ${CONFLUENCE_API_TOKEN:-}
+      APP_PROVIDER: confluence-stub
       APP_SCHEDULER_INTERVAL_SECONDS: 5
       APP_CORS_ORIGINS: 'http://localhost:4200,http://localhost:8080,http://localhost:5173'
     volumes:
       - data:/data
-      - media:/storage/media
+      - attachments:/storage/attachments
 
   frontend:
     build:
@@ -30,4 +33,4 @@ services:
 
 volumes:
   data:
-  media:
+  attachments:
