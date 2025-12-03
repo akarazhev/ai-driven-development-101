@@ -1,6 +1,0 @@
-fastapi
-uvicorn[standard]
-sqlmodel
-pydantic-settings
-python-multipart
-pytest

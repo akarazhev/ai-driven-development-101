@@ -5,14 +5,14 @@ services:
       context: .
       dockerfile: backend/Dockerfile
     ports:
-      - "8000:8000"
+      - "8080:8080"
     environment:
-      # Allow both dev (4200) and containerized frontend (8080)
-      cors_origins: '["http://localhost:4200","http://localhost:8080","http://localhost"]'
-      database_url: sqlite:////data/app.db
-      media_dir: /storage/media
-      provider: stub
-      scheduler_interval_seconds: 5
+      SPRING_PROFILES_ACTIVE: docker
+      APP_DATABASE_URL: jdbc:sqlite:///data/app.db
+      APP_MEDIA_DIR: /storage/media
+      APP_PROVIDER: stub
+      APP_SCHEDULER_INTERVAL_SECONDS: 5
+      APP_CORS_ORIGINS: 'http://localhost:4200,http://localhost:8080,http://localhost:5173'
     volumes:
       - data:/data
       - media:/storage/media
@@ -22,7 +22,7 @@ services:
       context: .
       dockerfile: frontend/Dockerfile
       args:
-        NG_APP_API_BASE: http://localhost:8000
+        NG_APP_API_BASE: http://localhost:8080
     ports:
       - "8080:80"
     depends_on:

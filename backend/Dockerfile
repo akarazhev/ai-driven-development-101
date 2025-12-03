@@ -1,23 +1,40 @@
-# Backend Dockerfile
-FROM python:3.13-slim AS runtime
-
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1
+# Build stage
+FROM gradle:8.5-jdk21 AS build
 
 WORKDIR /app
 
-# Install deps
-COPY requirements.txt /app/requirements.txt
-RUN pip install --no-cache-dir -r /app/requirements.txt
+# Copy Gradle files
+COPY build.gradle.kts settings.gradle.kts gradle.properties ./
+COPY gradle ./gradle
 
-# Copy app
-COPY backend /app/backend
+# Download dependencies (cached layer)
+RUN gradle dependencies --no-daemon || true
 
-# Default environment (override via compose)
-ENV database_url=sqlite:////data/app.db \
-    media_dir=/storage/media \
-    provider=stub \
-    scheduler_interval_seconds=5
+# Copy source code
+COPY src ./src
 
-EXPOSE 8000
-CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Build application
+RUN gradle build --no-daemon -x test
+
+# Runtime stage
+FROM eclipse-temurin:21-jre-alpine
+
+WORKDIR /app
+
+# Create directories for data and media
+RUN mkdir -p /data /storage/media
+
+# Copy built JAR
+COPY --from=build /app/build/libs/social-media-automation.jar app.jar
+
+# Default environment variables (can be overridden)
+ENV SPRING_PROFILES_ACTIVE=docker \
+    APP_DATABASE_URL=jdbc:sqlite:///data/app.db \
+    APP_MEDIA_DIR=/storage/media \
+    APP_PROVIDER=stub \
+    APP_SCHEDULER_INTERVAL_SECONDS=5
+
+EXPOSE 8080
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
+

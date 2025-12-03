@@ -1,0 +1,8 @@
+app:
+  database-url: jdbc:sqlite:///data/app.db
+  media-dir: /storage/media
+  cors-origins:
+    - http://localhost:4200
+    - http://localhost:8080
+    - http://localhost:5173
+
