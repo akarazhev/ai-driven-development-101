@@ -29,11 +29,11 @@ public class PageScheduler {
         
         for (Schedule schedule : queuedSchedules) {
             try {
-                PublishLog log = publishService.publishPost(schedule.getPostId());
+                PublishLog publishLog = publishService.publishPost(schedule.getPageId());
                 scheduleService.updateScheduleStatus(schedule, "posted", null);
-                log.debug("Successfully published page {} for schedule {}", schedule.getPostId(), schedule.getId());
+                log.debug("Successfully published page {} for schedule {}", schedule.getPageId(), schedule.getId());
             } catch (Exception e) {
-                log.error("Failed to publish page {} for schedule {}", schedule.getPostId(), schedule.getId(), e);
+                log.error("Failed to publish page {} for schedule {}", schedule.getPageId(), schedule.getId(), e);
                 scheduleService.updateScheduleStatus(schedule, "failed", e.getMessage());
             }
         }
