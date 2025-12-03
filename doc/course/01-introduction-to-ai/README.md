@@ -483,3 +483,8 @@ After completing this chapter, you should be able to:
 - Your project's coding standards
 - Your organization's AI usage guidelines
 - Prompt engineering best practices
+
+## Resources
+
+- [Cursor Learn — Official Course](https://cursor.com/learn)
+- [Cursor Directory: Rules](https://cursor.directory/rules)

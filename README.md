@@ -197,3 +197,8 @@ docker run --rm -p 8080:80 social-frontend
   4. [04. Setup contex 7](doc/course/04-setup-contex-7/README.md)
   5. [05. AI-Driven Software Development](doc/course/05-ai-driven-software-development/README.md)
   6. [06. Project: Social Media Automation App](doc/course/06-project-social-media-automation-app/README.md)
+
+### Additional resources
+
+- [Cursor Learn — Official Course](https://cursor.com/learn)
+- [Cursor Directory: Rules](https://cursor.directory/rules)

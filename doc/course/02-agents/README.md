@@ -560,3 +560,8 @@ After completing this chapter, you should be able to:
 - Chapter 01: Basic prompting skills
 - Your project's architecture and patterns
 - Cursor documentation on complex workflows
+
+## Resources
+
+- [Cursor Learn — Official Course](https://cursor.com/learn)
+- [Cursor Directory: Rules](https://cursor.directory/rules)

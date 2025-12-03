@@ -293,3 +293,8 @@ Ready to start? Begin with **[Milestone 1: Project Scaffold](./06.1-milestone-1-
 - Database design patterns
 - Security best practices (OWASP)
 - Accessibility guidelines (WCAG)
+
+## Resources
+
+- [Cursor Learn — Official Course](https://cursor.com/learn)
+- [Cursor Directory: Rules](https://cursor.directory/rules)

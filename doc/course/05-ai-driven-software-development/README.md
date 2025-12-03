@@ -789,3 +789,8 @@ After completing this chapter, you should be able to:
 - Your organization's coding standards
 - Security best practices (OWASP, etc.)
 - Your technology stack documentation
+
+## Resources
+
+- [Cursor Learn — Official Course](https://cursor.com/learn)
+- [Cursor Directory: Rules](https://cursor.directory/rules)
