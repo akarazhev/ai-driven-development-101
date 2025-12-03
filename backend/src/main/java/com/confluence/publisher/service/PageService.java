@@ -18,54 +18,60 @@ import java.util.stream.IntStream;
 @RequiredArgsConstructor
 public class PageService {
     
-    private final PageRepository postRepository;
-    private final PageAttachmentRepository postMediaRepository;
-    private final AttachmentRepository mediaAssetRepository;
+    private final PageRepository pageRepository;
+    private final PageAttachmentRepository pageAttachmentRepository;
+    private final AttachmentRepository attachmentRepository;
     
     @Transactional
-    public Page createPost(String text, List<Long> mediaIds) {
-        Page post = Post.builder()
-                .text(text)
+    public Page createPage(String title, String content, String spaceKey, Long parentPageId, List<Long> attachmentIds) {
+        Page page = Page.builder()
+                .title(title)
+                .content(content)
+                .spaceKey(spaceKey)
+                .parentPageId(parentPageId)
                 .build();
-        post = postRepository.save(page);
+        page = pageRepository.save(page);
         
-        List<PostMedia> postMediaList = IntStream.range(0, mediaIds.size())
-                .mapToObj(i -> PostMedia.builder()
-                        .postId(page.getId())
-                        .mediaId(mediaIds.get(i))
+        List<PageAttachment> pageAttachmentList = IntStream.range(0, attachmentIds.size())
+                .mapToObj(i -> PageAttachment.builder()
+                        .pageId(page.getId())
+                        .attachmentId(attachmentIds.get(i))
                         .position(i)
                         .build())
                 .toList();
         
-        postMediaRepository.saveAll(postMediaList);
-        return post;
+        pageAttachmentRepository.saveAll(pageAttachmentList);
+        return page;
     }
     
     @Transactional(readOnly = true)
-    public PageResponse getPost(Long postId) {
-        Page post = postRepository.findById(postId)
-                .orElseThrow(() -> new RuntimeException("Post not found: " + postId));
+    public PageResponse getPage(Long pageId) {
+        Page page = pageRepository.findById(pageId)
+                .orElseThrow(() -> new RuntimeException("Page not found: " + pageId));
         
-        List<PostMedia> postMediaList = postMediaRepository.findByPostIdOrderByPosition(postId);
-        List<PageResponse.MediaInfo> media = postMediaList.stream()
-                .map(pm -> {
-                    MediaAsset asset = mediaAssetRepository.findById(pm.getMediaId()).orElse(null);
-                    if (asset != null) {
-                        return PageResponse.MediaInfo.builder()
-                                .id(asset.getId())
-                                .filename(asset.getFilename())
-                                .altText(asset.getAltText())
+        List<PageAttachment> pageAttachmentList = pageAttachmentRepository.findByPageIdOrderByPosition(pageId);
+        List<PageResponse.AttachmentInfo> attachments = pageAttachmentList.stream()
+                .map(pa -> {
+                    Attachment attachment = attachmentRepository.findById(pa.getAttachmentId()).orElse(null);
+                    if (attachment != null) {
+                        return PageResponse.AttachmentInfo.builder()
+                                .id(attachment.getId())
+                                .filename(attachment.getFilename())
+                                .description(attachment.getDescription())
                                 .build();
                     }
                     return null;
                 })
-                .filter(m -> m != null)
+                .filter(a -> a != null)
                 .toList();
         
         return PageResponse.builder()
                 .id(page.getId())
-                .text(page.getText())
-                .media(media)
+                .title(page.getTitle())
+                .content(page.getContent())
+                .spaceKey(page.getSpaceKey())
+                .parentPageId(page.getParentPageId())
+                .attachments(attachments)
                 .build();
     }
 }

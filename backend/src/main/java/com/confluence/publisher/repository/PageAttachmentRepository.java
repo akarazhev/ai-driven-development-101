@@ -11,9 +11,9 @@ import java.util.List;
 @Repository
 public interface PageAttachmentRepository extends JpaRepository<PageAttachment, Long> {
     
-    @Query("SELECT pm FROM PageAttachment pm WHERE pm.pageId = :pageId ORDER BY pm.position")
-    List<PageAttachment> findByPostIdOrderByPosition(@Param("pageId") Long pageId);
+    @Query("SELECT pa FROM PageAttachment pa WHERE pa.pageId = :pageId ORDER BY pa.position")
+    List<PageAttachment> findByPageIdOrderByPosition(@Param("pageId") Long pageId);
     
-    void deleteByPostId(Long pageId);
+    void deleteByPageId(Long pageId);
 }
 

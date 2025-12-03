@@ -16,16 +16,15 @@ public class ConfluenceController {
     
     private final PublishService publishService;
     
-    @PostMapping("/{accountId}/publish")
+    @PostMapping("/publish")
     public ResponseEntity<PublishResponse> publishNow(
-            @PathVariable String accountId,
             @Valid @RequestBody ConfluencePublishRequest request) {
         
-        PublishLog log = publishService.publishPost(request.getPostId());
+        PublishLog publishLog = publishService.publishPage(request.getPageId());
         PublishResponse response = PublishResponse.builder()
-                .logId(log.getId())
-                .status(log.getStatus())
-                .externalId(log.getExternalId())
+                .logId(publishLog.getId())
+                .status(publishLog.getStatus())
+                .confluencePageId(publishLog.getConfluencePageId())
                 .build();
         return ResponseEntity.ok(response);
     }

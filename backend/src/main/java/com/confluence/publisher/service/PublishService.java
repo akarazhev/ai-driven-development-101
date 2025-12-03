@@ -23,39 +23,46 @@ import java.util.stream.Collectors;
 @Slf4j
 public class PublishService {
     
-    private final PageRepository postRepository;
-    private final PageAttachmentRepository postMediaRepository;
-    private final AttachmentRepository mediaAssetRepository;
+    private final PageRepository pageRepository;
+    private final PageAttachmentRepository pageAttachmentRepository;
+    private final AttachmentRepository attachmentRepository;
     private final PublishLogRepository publishLogRepository;
     private final ProviderFactory providerFactory;
     
     @Transactional
-    public PublishLog publishPost(Long pageId) {
-        Page post = postRepository.findById(pageId)
-                .orElseThrow(() -> new RuntimeException("Post not found: " + pageId));
+    public PublishLog publishPage(Long pageId) {
+        Page page = pageRepository.findById(pageId)
+                .orElseThrow(() -> new RuntimeException("Page not found: " + pageId));
         
-        List<PostMedia> postMediaList = postMediaRepository.findByPostIdOrderByPosition(pageId);
-        List<String> mediaPaths = postMediaList.stream()
-                .map(pm -> {
-                    MediaAsset asset = mediaAssetRepository.findById(pm.getMediaId())
+        List<PageAttachment> pageAttachmentList = pageAttachmentRepository.findByPageIdOrderByPosition(pageId);
+        List<String> attachmentPaths = pageAttachmentList.stream()
+                .map(pa -> {
+                    Attachment attachment = attachmentRepository.findById(pa.getAttachmentId())
                             .orElse(null);
-                    return asset != null ? asset.getStoragePath() : null;
+                    return attachment != null ? attachment.getStoragePath() : null;
                 })
                 .filter(path -> path != null)
                 .collect(Collectors.toList());
         
         BaseProvider provider = providerFactory.getProvider();
-        BaseProvider.ProviderResult result = provider.publish(post.getText(), mediaPaths);
+        BaseProvider.ProviderResult result = provider.publishPage(
+            page.getSpaceKey(),
+            page.getTitle(),
+            page.getContent(),
+            page.getParentPageId(),
+            attachmentPaths
+        );
         
-        PublishLog log = PublishLog.builder()
+        PublishLog publishLog = PublishLog.builder()
                 .pageId(pageId)
                 .provider(providerFactory.getProviderName())
-                .externalId(result.externalId())
-                .status("posted")
+                .spaceKey(page.getSpaceKey())
+                .confluencePageId(result.confluencePageId())
+                .status("published")
                 .message(result.message())
                 .build();
         
-        return publishLogRepository.save(log);
+        return publishLogRepository.save(publishLog);
     }
 }
 

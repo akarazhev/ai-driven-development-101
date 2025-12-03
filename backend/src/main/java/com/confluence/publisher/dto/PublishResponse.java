@@ -13,6 +13,6 @@ public class PublishResponse {
     
     private Long logId;
     private String status;
-    private String externalId;
+    private String confluencePageId;
 }
 

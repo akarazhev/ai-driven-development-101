@@ -14,7 +14,7 @@ import java.time.Instant;
 public class ScheduleResponse {
     
     private Long id;
-    private Long postId;
+    private Long pageId;
     private String status;
     private Instant scheduledAt;
     private Integer attemptCount;

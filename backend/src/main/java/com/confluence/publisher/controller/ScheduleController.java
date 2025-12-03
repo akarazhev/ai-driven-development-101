@@ -23,7 +23,7 @@ public class ScheduleController {
     @PostMapping
     public ResponseEntity<ScheduleResponse> createSchedule(@Valid @RequestBody ScheduleCreateRequest request) {
         Schedule schedule = scheduleService.createSchedule(
-                request.getPostId(),
+                request.getPageId(),
                 request.getScheduledAt()
         );
         ScheduleResponse response = toResponse(schedule);
@@ -48,7 +48,7 @@ public class ScheduleController {
     private ScheduleResponse toResponse(Schedule schedule) {
         return ScheduleResponse.builder()
                 .id(schedule.getId())
-                .pageId(schedule.getPostId())
+                .pageId(schedule.getPageId())
                 .status(schedule.getStatus())
                 .scheduledAt(schedule.getScheduledAt())
                 .attemptCount(schedule.getAttemptCount())
