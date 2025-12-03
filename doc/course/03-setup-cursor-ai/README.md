@@ -534,3 +534,4 @@ After completing this chapter, you should be able to:
 - [Cursor documentation](https://docs.cursor.sh)
 - [Cursor keyboard shortcuts](https://docs.cursor.sh/shortcuts)
 - Your project's technology documentation
+- [Cursor Learn — Official Course](https://cursor.com/learn)

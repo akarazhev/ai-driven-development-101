@@ -28,3 +28,8 @@ Markdown and organized by chapters, one folder per chapter.
 - Start at chapter 01 and proceed in order.
 - Each chapter provides learning objectives, an outline, and hands-on exercises.
 - Keep assets (images) within the respective chapter folder.
+
+## Additional resources
+
+- [Cursor Learn — Official Course](https://cursor.com/learn)
+- [Cursor Directory: Rules](https://cursor.directory/rules)
