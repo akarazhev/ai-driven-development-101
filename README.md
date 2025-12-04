@@ -1,4 +1,4 @@
-# ai-driven-development-101
+# AI-Driven-Development-101
 
 Full-stack Confluence Publisher App implementing the course project (Chapter 06).
 
