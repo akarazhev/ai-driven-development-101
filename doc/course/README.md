@@ -9,6 +9,12 @@ Markdown and organized by chapters, one folder per chapter.
 - **Goal**: Enable developers to work as senior full-stack developers using AI assistance, regardless of their
   technology stack
 
+## Authors
+
+- Alexey Mikhalchenkov
+- Klim Izmaikov
+- Andrey Karazhev
+
 ## Syllabus
 
 0. [00 - Rules and Prompt Optimization](./00-rules-and-prompt-optimization/README.md) - Create and manage Cursor rules

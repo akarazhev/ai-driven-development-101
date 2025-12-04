@@ -183,6 +183,12 @@ Use stub provider for:
 
 ## Getting started
 
+Before you start development:
+
+- Clone this course Git repository locally to access the project description and reference materials.
+- Create your own separate Git repository for the Confluence Publisher App implementation and do all application
+  development there (do not commit your app code into this course repo).
+
 1. **Choose your stack**: Pick backend and frontend technologies
 2. **Start with M1**: Follow [Milestone 1 guide](./06.1-milestone-1-scaffold.md)
 3. **Work incrementally**: Complete each milestone before moving on
