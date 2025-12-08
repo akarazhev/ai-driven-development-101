@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<h1 id="introduction-to-ai-assisted-development">01. Introduction to
+AI-Assisted Development</h1>
+<p>A practical guide to using AI assistants for software development.
+Learn how to write effective prompts, understand AI capabilities and
+limitations, and integrate AI into your daily workflow.</p>
+<p>This chapter focuses on <strong>practical skills</strong> you can use
+immediately: writing better prompts, evaluating AI output, and building
+effective workflows.</p>
+<h2 id="learning-objectives">Learning objectives</h2>
+<ul>
+<li>Write effective prompts using a proven template</li>
+<li>Understand when AI helps and when it doesn’t</li>
+<li>Evaluate AI output and iterate on prompts</li>
+<li>Apply safety practices: avoid secrets, validate output</li>
+<li>Build a habit of prompt refinement and testing</li>
+</ul>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Cursor editor installed (see Chapter 03)</li>
+<li>Basic familiarity with your technology stack</li>
+<li>Understanding of your project structure</li>
+</ul>
+<h2 id="outline">Outline</h2>
+<ul>
+<li>What is AI-assisted development?</li>
+<li>The prompt template that works</li>
+<li>Good vs bad prompts (with examples)</li>
+<li>The evaluation loop: test, refine, repeat</li>
+<li>Safety and best practices</li>
+<li>Ready-to-use prompt examples</li>
+</ul>
+<h2 id="what-is-ai-assisted-development">What is AI-assisted
+development?</h2>
+<p>AI-assisted development means using AI tools (like Cursor) to help
+you write code faster and better. Think of AI as a <em> </em>pair
+programmer** that:</p>
+<ul>
+<li>Understands your codebase context</li>
+<li>Suggests implementations based on patterns</li>
+<li>Helps debug and refactor code</li>
+<li>Generates boilerplate and tests</li>
+<li>Explains complex code</li>
+</ul>
+<p><strong>Key insight</strong>: AI doesn’t replace your thinking—it
+amplifies it. You still need to understand what you’re building, but AI
+handles the repetitive parts.</p>
+<h2 id="the-prompt-template-that-works">The prompt template that
+works</h2>
+<p>After analyzing thousands of successful prompts, this template
+consistently produces better results:</p>
+<pre class="text"><code>Role: [who is the assistant?]
+Task: [what to produce?]
+Constraints: [rules on style, scope, limits]
+Inputs: [data/context the model must use]
+Steps: [optional short plan]
+Output format: [e.g., code file, JSON, markdown]
+Evaluation: [acceptance criteria or tests]</code></pre>
+<h3 id="why-this-template-works">Why this template works</h3>
+<ul>
+<li><strong>Role</strong>: Sets context and expertise level</li>
+<li><strong>Task</strong>: Clear, specific goal</li>
+<li><strong>Constraints</strong>: Prevents scope creep and unwanted
+changes</li>
+<li><strong>Inputs</strong>: Provides necessary context</li>
+<li><strong>Steps</strong>: Breaks down complex tasks</li>
+<li><strong>Output format</strong>: Ensures usable results</li>
+<li><strong>Evaluation</strong>: Defines success criteria</li>
+</ul>
+<h2 id="good-vs-bad-prompts">Good vs bad prompts</h2>
+<h3 id="bad-prompt">❌ Bad prompt</h3>
+<pre class="text"><code>Write code to count words.</code></pre>
+<p><strong>Problems</strong>:</p>
+<ul>
+<li>Too vague</li>
+<li>No context about language or requirements</li>
+<li>No constraints or style preferences</li>
+<li>No way to evaluate success</li>
+</ul>
+<h3 id="good-prompt">✅ Good prompt</h3>
+<pre class="text"><code>Role: Senior software engineer
+Task: Implement a function to count words in a text string
+Constraints:
+- Use your preferred language (TypeScript, Python, Java, etc.)
+- Include type hints/annotations
+- Ignore punctuation, treat multiple whitespace as one separator
+- Handle edge cases (empty string, null, etc.)
+- Add a brief docstring/comment
+Inputs: Text string to process
+Output format: Complete function code with example usage
+Evaluation: Function handles &quot;Hello,  world!&quot; → returns 2</code></pre>
+<p><strong>Why it’s better</strong>:</p>
+<ul>
+<li>Clear role and task</li>
+<li>Specific constraints prevent unwanted behavior</li>
+<li>Handles edge cases</li>
+<li>Includes evaluation criteria</li>
+<li>Technology-agnostic</li>
+</ul>
+<h2 id="real-world-prompt-examples">Real-world prompt examples</h2>
+<h3 id="example-1-create-a-utility-function">Example 1: Create a utility
+function</h3>
+<pre class="text"><code>Role: Senior developer
+Task: Create a utility function to format dates in a user-friendly way
+Constraints:
+- Use your project&#39;s date library (moment, date-fns, etc.)
+- Support relative time (e.g., &quot;2 hours ago&quot;) and absolute format
+- Handle timezone correctly
+- Include error handling for invalid dates
+- Follow your project&#39;s code style
+Inputs: ISO date string
+Output format: Function code with JSDoc/TypeDoc comments
+Evaluation: 
+- &quot;2024-01-15T10:30:00Z&quot; → &quot;2 hours ago&quot; (if current time is 12:30)
+- Invalid date → returns &quot;Invalid date&quot; or throws appropriate error</code></pre>
+<h3 id="example-2-refactor-existing-code">Example 2: Refactor existing
+code</h3>
+<pre class="text"><code>Role: Code refactoring specialist
+Task: Improve readability and maintainability of this function
+Constraints:
+- Preserve exact behavior (no functional changes)
+- Improve variable names and structure
+- Add comments where logic is complex
+- Keep same performance characteristics
+- Follow project&#39;s coding standards
+Inputs: [paste function code here]
+Output format: Refactored code with brief explanation of changes
+Evaluation: 
+- All existing tests still pass
+- Code is more readable
+- No performance regression</code></pre>
+<h3 id="example-3-debug-an-issue">Example 3: Debug an issue</h3>
+<pre class="text"><code>Role: Debugging assistant
+Task: Identify root cause of this error
+Constraints:
+- Analyze error message and stack trace
+- Check related code files
+- Propose minimal fix (don&#39;t refactor unrelated code)
+- Explain why the error occurs
+Inputs: 
+- Error message: [paste error]
+- Stack trace: [paste trace]
+- Relevant files: [file paths]
+Output format: 
+1. Root cause explanation
+2. Minimal fix with code changes
+3. How to verify the fix
+Evaluation: Fix resolves the error without breaking existing functionality</code></pre>
+<h3 id="example-4-add-a-feature">Example 4: Add a feature</h3>
+<pre class="text"><code>Role: Full-stack developer
+Task: Add user authentication endpoint
+Constraints:
+- Follow existing API patterns in the project
+- Use project&#39;s authentication library
+- Include input validation
+- Add error handling
+- Write unit tests
+- Update API documentation
+Inputs: 
+- Existing auth patterns: [file paths]
+- API structure: [file paths]
+Output format: Complete implementation with tests
+Evaluation:
+- Endpoint works with valid credentials
+- Returns appropriate errors for invalid input
+- Tests pass
+- Follows project conventions</code></pre>
+<h2 id="the-evaluation-loop">The evaluation loop</h2>
+<p>AI output isn’t always perfect on the first try. Use this iterative
+process:</p>
+<h3 id="step-1-define-success-criteria">Step 1: Define success
+criteria</h3>
+<p>Before asking AI, know what “done” looks like:</p>
+<ul>
+<li>What should the code do?</li>
+<li>What edge cases must it handle?</li>
+<li>What tests should pass?</li>
+<li>What style/patterns should it follow?</li>
+</ul>
+<h3 id="step-2-run-the-prompt">Step 2: Run the prompt</h3>
+<p>Execute your prompt and capture the output.</p>
+<h3 id="step-3-evaluate-against-criteria">Step 3: Evaluate against
+criteria</h3>
+<p>Compare output to your success criteria:</p>
+<ul>
+<li>✅ Does it meet requirements?</li>
+<li>✅ Are edge cases handled?</li>
+<li>✅ Does it follow project patterns?</li>
+<li>✅ Are there any issues?</li>
+</ul>
+<h3 id="step-4-refine-and-repeat">Step 4: Refine and repeat</h3>
+<p>If output doesn’t meet criteria:</p>
+<ul>
+<li>Identify specific gaps</li>
+<li>Add constraints to address them</li>
+<li>Provide examples of desired behavior</li>
+<li>Run the prompt again</li>
+</ul>
+<p><strong>Example iteration</strong>:</p>
+<p><strong>First attempt</strong>:</p>
+<pre class="text"><code>Create a function to validate email addresses.</code></pre>
+<p><strong>Output</strong>: Basic regex, no error handling</p>
+<p><strong>Refined prompt</strong>:</p>
+<pre class="text"><code>Role: Senior developer
+Task: Create email validation function
+Constraints:
+- Return clear error messages for invalid formats
+- Handle edge cases (null, empty string, whitespace)
+- Use standard email regex pattern
+- Include type annotations
+Inputs: Email string
+Output format: Function with error handling
+Evaluation: 
+- Valid email → returns true
+- Invalid format → returns false with specific error message
+- Null/empty → returns false with appropriate error</code></pre>
+<h2 id="safety-and-best-practices">Safety and best practices</h2>
+<h3 id="never-include-secrets">⚠️ Never include secrets</h3>
+<p><strong>❌ Bad</strong>:</p>
+<pre class="text"><code>Connect to database: postgresql://user:password123@host/db</code></pre>
+<p><strong>✅ Good</strong>:</p>
+<pre class="text"><code>Connect to database using environment variables:
+- DB_HOST from process.env
+- DB_USER from process.env  
+- DB_PASSWORD from process.env</code></pre>
+<h3 id="validate-ai-output">✅ Validate AI output</h3>
+<ul>
+<li><strong>Run tests</strong>: Don’t trust code without testing</li>
+<li><strong>Review changes</strong>: Check diffs before committing</li>
+<li><strong>Verify logic</strong>: Understand what the code does</li>
+<li><strong>Check dependencies</strong>: Ensure new libraries are
+appropriate</li>
+</ul>
+<h3 id="use-version-control">✅ Use version control</h3>
+<ul>
+<li>Commit frequently</li>
+<li>Review AI-generated code before merging</li>
+<li>Keep prompts in commit messages for traceability</li>
+</ul>
+<h3 id="respect-licenses">✅ Respect licenses</h3>
+<ul>
+<li>Check licenses of AI-suggested code</li>
+<li>Don’t copy proprietary code</li>
+<li>Attribute when required</li>
+</ul>
+<h2 id="ready-to-use-prompt-templates">Ready-to-use prompt
+templates</h2>
+<h3 id="template-create-a-new-feature">Template: Create a new
+feature</h3>
+<pre class="text"><code>Role: [Your role - e.g., Senior Full-Stack Developer]
+Task: Implement [specific feature name]
+Constraints:
+- Follow existing patterns in [reference files]
+- Use [specific libraries/frameworks from project]
+- Include [specific requirements]
+- Handle [edge cases]
+Inputs: [Relevant context files]
+Output format: [Code files, tests, documentation]
+Evaluation: [Specific acceptance criteria]</code></pre>
+<h3 id="template-fix-a-bug">Template: Fix a bug</h3>
+<pre class="text"><code>Role: Debugging specialist
+Task: Fix [specific bug description]
+Constraints:
+- Minimal change (don&#39;t refactor unrelated code)
+- Preserve existing behavior for other cases
+- Add regression test
+Inputs: 
+- Error: [error message]
+- Code: [file paths]
+- Steps to reproduce: [description]
+Output format: Fix + test + explanation
+Evaluation: Bug is fixed, test passes, no regressions</code></pre>
+<h3 id="template-refactor-code">Template: Refactor code</h3>
+<pre class="text"><code>Role: Code quality specialist
+Task: Refactor [specific code] for [goal: readability/performance/maintainability]
+Constraints:
+- Preserve exact behavior
+- Improve [specific aspect]
+- Follow [project standards]
+- Keep same API/interface
+Inputs: [Code to refactor]
+Output format: Refactored code + explanation
+Evaluation: Tests pass, code is improved, no breaking changes</code></pre>
+<h3 id="template-write-tests">Template: Write tests</h3>
+<pre class="text"><code>Role: Test engineer
+Task: Write tests for [component/function]
+Constraints:
+- Use [testing framework from project]
+- Cover [nominal cases, edge cases, error cases]
+- Follow [project&#39;s testing patterns]
+Inputs: [Code to test]
+Output format: Test file with comprehensive coverage
+Evaluation: All tests pass, edge cases covered</code></pre>
+<h2 id="exercises">Exercises</h2>
+<h3 id="exercise-1-your-first-ai-prompt">Exercise 1: Your first AI
+prompt</h3>
+<p><strong>Goal</strong>: Create a utility function using AI</p>
+<p><strong>Steps</strong>:</p>
+<ol type="1">
+<li>Choose a simple function (e.g., format currency, validate phone
+number, slugify text)</li>
+<li>Write a prompt using the template</li>
+<li>Run it in Cursor</li>
+<li>Test the output</li>
+<li>Refine if needed</li>
+</ol>
+<p><strong>Deliverable</strong>: Working function + the prompt you
+used</p>
+<h3 id="exercise-2-refine-a-weak-prompt">Exercise 2: Refine a weak
+prompt</h3>
+<p><strong>Goal</strong>: Improve a vague prompt</p>
+<p><strong>Starting prompt</strong>:</p>
+<pre class="text"><code>Make the code better.</code></pre>
+<p><strong>Your task</strong>:</p>
+<ul>
+<li>Identify what’s wrong with this prompt</li>
+<li>Rewrite it using the template</li>
+<li>Include specific constraints and evaluation criteria</li>
+<li>Test the improved prompt</li>
+</ul>
+<h3 id="exercise-3-debug-with-ai">Exercise 3: Debug with AI</h3>
+<p><strong>Goal</strong>: Use AI to find and fix a bug</p>
+<p><strong>Steps</strong>:</p>
+<ol type="1">
+<li>Create a simple function with an intentional bug</li>
+<li>Write a debugging prompt</li>
+<li>Let AI identify and fix the issue</li>
+<li>Verify the fix works</li>
+</ol>
+<h3 id="exercise-4-build-a-small-feature">Exercise 4: Build a small
+feature</h3>
+<p><strong>Goal</strong>: Implement a complete feature using AI</p>
+<p><strong>Steps</strong>:</p>
+<ol type="1">
+<li>Choose a small feature (e.g., “add validation to form field”)</li>
+<li>Write a comprehensive prompt</li>
+<li>Implement with AI assistance</li>
+<li>Test and refine</li>
+<li>Document what worked and what didn’t</li>
+</ol>
+<h2 id="knowledge-check-self-assessment">Knowledge check
+(self-assessment)</h2>
+<p>Before moving to the next chapter, verify you can:</p>
+<ul class="task-list">
+<li><label><input type="checkbox" />Write a prompt using the
+template</label></li>
+<li><label><input type="checkbox" />Identify problems with weak
+prompts</label></li>
+<li><label><input type="checkbox" />Refine prompts based on
+output</label></li>
+<li><label><input type="checkbox" />Apply safety practices (no secrets,
+validate output)</label></li>
+<li><label><input type="checkbox" />Use the evaluation loop
+effectively</label></li>
+</ul>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="ai-output-is-too-generic">AI output is too generic</h3>
+<p><strong>Problem</strong>: AI gives generic solutions that don’t fit
+your project</p>
+<p><strong>Solution</strong>:</p>
+<ul>
+<li>Add more context about your project structure</li>
+<li>Reference existing code patterns</li>
+<li>Specify your technology stack</li>
+<li>Include examples of desired style</li>
+</ul>
+<h3 id="ai-changes-too-much-code">AI changes too much code</h3>
+<p><strong>Problem</strong>: AI modifies unrelated files or makes
+unnecessary changes</p>
+<p><strong>Solution</strong>:</p>
+<ul>
+<li>Add constraint: “Only modify [specific files]”</li>
+<li>Use: “Minimal change, preserve existing behavior”</li>
+<li>Select specific code before prompting</li>
+<li>Be explicit about scope</li>
+</ul>
+<h3 id="ai-output-has-bugs">AI output has bugs</h3>
+<p><strong>Problem</strong>: Generated code doesn’t work or has
+errors</p>
+<p><strong>Solution</strong>:</p>
+<ul>
+<li>Always test AI output</li>
+<li>Add evaluation criteria to prompt</li>
+<li>Request error handling in constraints</li>
+<li>Iterate: ask AI to fix specific issues</li>
+</ul>
+<h3 id="ai-doesnt-understand-context">AI doesn’t understand context</h3>
+<p><strong>Problem</strong>: AI suggests solutions that don’t match your
+architecture</p>
+<p><strong>Solution</strong>:</p>
+<ul>
+<li>Provide more context in “Inputs” section</li>
+<li>Reference existing similar code</li>
+<li>Specify your patterns explicitly</li>
+<li>Use project rules (see Chapter 00)</li>
+</ul>
+<h2 id="checkpoint-what-should-work">Checkpoint: What should work</h2>
+<p>After completing this chapter, you should be able to:</p>
+<p>✅ Write a clear, structured prompt<br />
+✅ Get useful output from AI on first try<br />
+✅ Refine prompts when output isn’t perfect<br />
+✅ Avoid common mistakes (secrets, invalid code)<br />
+✅ Use ready-made templates for common tasks</p>
+<p><strong>If you can do all of these</strong>, you’re ready for Chapter
+02!</p>
+<h2 id="references">References</h2>
+<ul>
+<li>Cursor documentation on prompting</li>
+<li>Your project’s coding standards</li>
+<li>Your organization’s AI usage guidelines</li>
+<li>Prompt engineering best practices</li>
+</ul>
+<h2 id="resources">Resources</h2>
+<ul>
+<li><a href="https://cursor.com/learn">Cursor Learn — Official
+Course</a></li>
+<li><a href="https://cursor.directory/rules">Cursor Directory:
+Rules</a></li>
+</ul>
+</body>
+</html>

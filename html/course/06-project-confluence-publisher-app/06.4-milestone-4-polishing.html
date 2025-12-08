@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>06.4-milestone-4-polishing</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<h1 id="m4-polishing-tests-and-deployment">M4: Polishing, Tests, and
+Deployment</h1>
+<p>Finalize your application: comprehensive testing, error handling,
+documentation, and deployment. Make it production-ready.</p>
+<h2 id="learning-objectives">Learning objectives</h2>
+<ul>
+<li>Write comprehensive test suite</li>
+<li>Improve error handling and user experience</li>
+<li>Document the application</li>
+<li>Deploy to a hosting platform</li>
+<li>Create deployment guide</li>
+</ul>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>M3 completed (all features working)</li>
+<li>Application is functional</li>
+<li>Basic tests in place</li>
+</ul>
+<h2 id="acceptance-criteria">Acceptance criteria</h2>
+<ul class="task-list">
+<li><label><input type="checkbox" />Comprehensive test suite (unit,
+integration, E2E)</label></li>
+<li><label><input type="checkbox" />Error handling throughout
+application</label></li>
+<li><label><input type="checkbox" />Documentation complete (README, API
+docs)</label></li>
+<li><label><input type="checkbox" />Application deployed and
+accessible</label></li>
+<li><label><input type="checkbox" />Deployment guide
+written</label></li>
+<li><label><input type="checkbox" />Code quality checks
+passing</label></li>
+</ul>
+<h2 id="step-by-step-guide">Step-by-step guide</h2>
+<h3 id="step-1-write-comprehensive-tests">Step 1: Write comprehensive
+tests</h3>
+<p><strong>Unit tests</strong>:</p>
+<pre class="text"><code>Role: Test engineer
+Task: Write comprehensive unit tests
+Constraints:
+- Cover: all services, utilities, helpers
+- Target: 80%+ code coverage
+- Use [your testing framework]
+- Follow existing test patterns
+- Include edge cases
+Inputs: [All service files]
+Output format: Complete unit test suite
+Evaluation: High coverage, all tests pass</code></pre>
+<p><strong>Integration tests</strong>:</p>
+<pre class="text"><code>Role: Test engineer
+Task: Write integration tests for API endpoints
+Constraints:
+- Test: all endpoints with real database
+- Test: error cases
+- Test: authentication (if added)
+- Use [your testing framework]
+- Clean up test data
+Inputs: [All API endpoints]
+Output format: Integration test suite
+Evaluation: All endpoints tested, tests pass</code></pre>
+<p><strong>E2E tests</strong>:</p>
+<pre class="text"><code>Role: Test engineer
+Task: Write E2E tests for user flows
+Constraints:
+- Test: complete user journeys
+- Test: upload → create → schedule → publish
+- Use [your E2E testing framework]
+- Test in real browser
+Inputs: [Application, test scenarios]
+Output format: E2E test suite
+Evaluation: All user flows work end-to-end</code></pre>
+<h3 id="step-2-improve-error-handling">Step 2: Improve error
+handling</h3>
+<p><strong>Backend error handling</strong>:</p>
+<pre class="text"><code>Role: Backend developer
+Task: Improve error handling throughout backend
+Constraints:
+- Add: try-catch blocks where needed
+- Return: appropriate HTTP status codes
+- Log: errors with context
+- Return: user-friendly error messages
+- Don&#39;t: expose internal errors
+Inputs: [All backend code]
+Output format: Improved error handling
+Evaluation: Errors handled gracefully, logged properly</code></pre>
+<p><strong>Frontend error handling</strong>:</p>
+<pre class="text"><code>Role: Frontend developer
+Task: Improve error handling in UI
+Constraints:
+- Show: user-friendly error messages
+- Handle: network errors
+- Handle: validation errors
+- Show: loading states
+- Provide: retry options
+- Use [your framework] patterns
+Inputs: [All frontend components]
+Output format: Improved error handling
+Evaluation: Errors shown clearly, users can recover</code></pre>
+<h3 id="step-3-improve-uiux">Step 3: Improve UI/UX</h3>
+<p><strong>Polish UI</strong>:</p>
+<pre class="text"><code>Role: Frontend developer
+Task: Polish user interface and experience
+Constraints:
+- Improve: visual design
+- Add: loading states
+- Add: success/error messages
+- Improve: accessibility
+- Make: responsive design
+- Use [your framework] patterns
+Inputs: [Current UI]
+Output format: Polished UI
+Evaluation: UI is professional, accessible, responsive</code></pre>
+<p><strong>Add features</strong>:</p>
+<ul>
+<li>Better error messages</li>
+<li>Loading indicators</li>
+<li>Success confirmations</li>
+<li>Form validation feedback</li>
+<li>Responsive design</li>
+<li>Accessibility improvements</li>
+</ul>
+<h3 id="step-4-write-documentation">Step 4: Write documentation</h3>
+<p><strong>README</strong>:</p>
+<pre class="text"><code>Role: Technical writer
+Task: Write comprehensive README
+Constraints:
+- Include: project description
+- Include: setup instructions
+- Include: usage guide
+- Include: API documentation
+- Include: deployment guide
+- Include: troubleshooting
+Inputs: [Project, setup process]
+Output format: Complete README
+Evaluation: README is clear and complete</code></pre>
+<p><strong>API documentation</strong>:</p>
+<pre class="text"><code>Role: Technical writer
+Task: Document all API endpoints
+Constraints:
+- Document: each endpoint
+- Include: request/response examples
+- Include: error responses
+- Include: authentication (if any)
+- Use: OpenAPI/Swagger or markdown
+Inputs: [All API endpoints]
+Output format: API documentation
+Evaluation: All endpoints documented clearly</code></pre>
+<h3 id="step-5-set-up-cicd">Step 5: Set up CI/CD</h3>
+<p><strong>CI pipeline</strong>:</p>
+<pre class="text"><code>Role: DevOps engineer
+Task: Set up CI pipeline
+Constraints:
+- Run: tests on every commit
+- Run: linters
+- Run: type checking
+- Fail: if tests fail
+- Use: GitHub Actions, GitLab CI, or similar
+Inputs: [Project, test setup]
+Output format: CI configuration
+Evaluation: CI runs on commits, catches issues</code></pre>
+<h3 id="step-6-deploy-application">Step 6: Deploy application</h3>
+<p><strong>Choose hosting</strong>:</p>
+<ul>
+<li>Backend: Heroku, Railway, Render, AWS, etc.</li>
+<li>Frontend: Vercel, Netlify, GitHub Pages, etc.</li>
+<li>Database: Managed database service</li>
+</ul>
+<p><strong>Backend deployment</strong>:</p>
+<pre class="text"><code>Role: DevOps engineer
+Task: Deploy backend application
+Constraints:
+- Configure: environment variables
+- Set up: database
+- Configure: CORS
+- Set up: logging
+- Document: deployment process
+Inputs: [Backend code, hosting choice]
+Output format: Deployed backend + deployment guide
+Evaluation: Backend is accessible, working correctly</code></pre>
+<p><strong>Frontend deployment</strong>:</p>
+<pre class="text"><code>Role: DevOps engineer
+Task: Deploy frontend application
+Constraints:
+- Configure: API base URL
+- Build: production bundle
+- Set up: environment variables
+- Configure: routing
+- Document: deployment process
+Inputs: [Frontend code, hosting choice]
+Output format: Deployed frontend + deployment guide
+Evaluation: Frontend is accessible, connects to backend</code></pre>
+<h3 id="step-7-create-deployment-guide">Step 7: Create deployment
+guide</h3>
+<p><strong>Document deployment</strong>:</p>
+<pre class="text"><code>Role: Technical writer
+Task: Write deployment guide
+Constraints:
+- Include: prerequisites
+- Include: step-by-step instructions
+- Include: environment variables
+- Include: troubleshooting
+- Include: rollback procedure
+Inputs: [Deployment process]
+Output format: Deployment guide
+Evaluation: Guide is clear and complete</code></pre>
+<h2 id="final-checklist">Final checklist</h2>
+<p>Before considering the project complete:</p>
+<ul class="task-list">
+<li><label><input type="checkbox" />All tests pass (unit, integration,
+E2E)</label></li>
+<li><label><input type="checkbox" />Code coverage is good
+(80%+)</label></li>
+<li><label><input type="checkbox" />Error handling is
+comprehensive</label></li>
+<li><label><input type="checkbox" />UI is polished and
+accessible</label></li>
+<li><label><input type="checkbox" />Documentation is
+complete</label></li>
+<li><label><input type="checkbox" />Application is deployed</label></li>
+<li><label><input type="checkbox" />Deployment guide is
+written</label></li>
+<li><label><input type="checkbox" />CI/CD is set up</label></li>
+<li><label><input type="checkbox" />Code is reviewed</label></li>
+<li><label><input type="checkbox" />Security best practices
+followed</label></li>
+</ul>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="issue-tests-failing-in-ci">Issue: Tests failing in CI</h3>
+<p><strong>Solutions</strong>:</p>
+<ul>
+<li>Run tests locally first</li>
+<li>Check environment differences</li>
+<li>Verify test data setup</li>
+<li>Review CI logs</li>
+</ul>
+<h3 id="issue-deployment-fails">Issue: Deployment fails</h3>
+<p><strong>Solutions</strong>:</p>
+<ul>
+<li>Check environment variables</li>
+<li>Verify database connection</li>
+<li>Review deployment logs</li>
+<li>Test locally first</li>
+</ul>
+<h3 id="issue-application-not-working-after-deployment">Issue:
+Application not working after deployment</h3>
+<p><strong>Solutions</strong>:</p>
+<ul>
+<li>Check API endpoints</li>
+<li>Verify CORS configuration</li>
+<li>Check database connection</li>
+<li>Review error logs</li>
+<li>Test locally vs production differences</li>
+</ul>
+<h2 id="project-completion">Project completion</h2>
+<p>Congratulations! You’ve built a complete full-stack application using
+AI assistance.</p>
+<h3 id="what-youve-accomplished">What you’ve accomplished</h3>
+<ul>
+<li>✅ Built a working application</li>
+<li>✅ Used AI throughout development</li>
+<li>✅ Applied best practices</li>
+<li>✅ Created comprehensive tests</li>
+<li>✅ Deployed to production</li>
+</ul>
+<h3 id="next-steps">Next steps</h3>
+<ul>
+<li>Add real Confluence provider integrations</li>
+<li>Implement authentication</li>
+<li>Add analytics</li>
+<li>Scale the application</li>
+<li>Continue learning and improving</li>
+</ul>
+<h2 id="deliverables">Deliverables</h2>
+<ul>
+<li>Complete test suite</li>
+<li>Polished application</li>
+<li>Comprehensive documentation</li>
+<li>Deployed application</li>
+<li>Deployment guide</li>
+<li>CI/CD pipeline</li>
+</ul>
+<h2 id="reflection">Reflection</h2>
+<p>Take time to reflect:</p>
+<ul>
+<li>What worked well with AI assistance?</li>
+<li>What was challenging?</li>
+<li>How did prompts improve over time?</li>
+<li>What would you do differently?</li>
+<li>How can you apply these skills to future projects?</li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li>Your technology stack deployment guides</li>
+<li>Testing best practices</li>
+<li>Security best practices</li>
+<li>Your organization’s deployment standards</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>starter-prompt-template</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="starter-prompt-for-rule-generation">Starter Prompt for Rule
+Generation</h1>
+<p>Use this prompt to automatically generate Cursor rules for libraries
+and frameworks in your project.</p>
+<h2 id="technology-agnostic-prompt-template">Technology-Agnostic Prompt
+Template</h2>
+<pre class="text"><code>Generate Cursor rules for significant libraries in @package.json (or @requirements.txt, @pom.xml, @Gemfile, or equivalent dependency file)
+
+Create a file for each library covered focusing on:
+
+1. Library Selection Criteria:
+   - DO NOT generate rules for libraries not in dependency file
+   - DO NOT generate rules that already exist
+   - DO NOT include initialization/configuration code
+
+2. Rule Content Requirements:
+   - DO NOT include library initialization/setup code
+   - DO NOT include configuration examples
+   - FOCUS on usage patterns and best practices
+   - INCLUDE common pitfalls
+   - INCLUDE performance considerations
+
+3. For Each Library Rule:
+   - Integration patterns
+   - Best practices
+   - Common issues
+   - Performance optimization
+   - Security considerations
+   - Testing strategies
+
+4. Rule Format:
+   - Clear metadata
+   - Glob patterns (if Auto-Apply)
+   - Descriptive sections
+   - Practical examples of USAGE only
+   - Error prevention guidelines
+
+5. Specific Exclusions:
+   - Configuration code
+   - Setup instructions
+   - Initialization patterns
+   - Module imports
+   - Provider configurations
+   - Framework bootstrap code
+
+## Library Categories and Rules
+
+### State Management
+- Redux, Zustand, MobX, Jotai, Pinia, Vuex, NgRx, NGXS, etc.
+- Store architecture, action patterns, selector patterns, async operations
+
+### UI Component Libraries
+- Material-UI, Ant Design, Chakra UI, Mantine, PrimeNG, Angular Material, etc.
+- Component usage, theming, accessibility, proper component patterns
+
+### Testing Libraries
+- Jest, Vitest, Mocha, Jasmine, Testing Library, Playwright, Cypress, etc.
+- Testing patterns, mocking strategies, coverage, E2E patterns
+
+### Forms Libraries
+- React Hook Form, Formik, Final Form, Angular Forms, Vue Formulate, etc.
+- Form patterns, validation, field configuration, form generation
+
+### Data Fetching
+- React Query, SWR, Apollo Client, RTK Query, Axios patterns, Fetch patterns, etc.
+- Query patterns, caching strategies, invalidation, error handling
+
+### Routing
+- React Router, Next.js Router, Vue Router, Angular Router, etc.
+- Route patterns, navigation, guards, route configuration
+
+### Internationalization
+- i18next, react-intl, vue-i18n, ngx-translate, etc.
+- Translation patterns, locale management, lazy loading
+
+### Build &amp; Architecture (DO NOT ADD)
+- Webpack, Vite, Nx, Angular CLI, Create React App
+- These are build tools, not usage patterns
+
+### Data Visualization
+- D3, Chart.js, Recharts, Victory, NGX-Charts, etc.
+- Chart patterns, data binding, responsive charts, animations
+
+### Authentication
+- Auth0, Firebase Auth, JWT patterns, OAuth patterns, etc.
+- Authentication flows, token management, security patterns
+
+### Validation
+- Zod, Yup, Joi, class-validator, etc.
+- Validation patterns, schema definitions, error handling
+
+### Styling
+- Tailwind CSS, Styled Components, Emotion, CSS Modules, SCSS patterns, etc.
+- Styling patterns, theming, responsive design
+
+After generating each rule, specify which metadata should be used:
+
+- File name: `{library-name}-{type}.mdc`
+- description: (The description for Agent Select rules, keep under 200 chars)
+- alwaysApply: (true for Always rules, false for others)
+- globs: (The glob pattern for Auto-Apply rules, blank for others)
+
+## Example of what NOT to include (initialization/configuration code):
+
+```typescript
+// ❌ DON&#39;T include setup code like this:
+export const store = configureStore({
+  reducer: {
+    counter: counterReducer,
+  },
+});
+
+// ✅ DO include usage patterns like this:
+// Use selectors to access state
+const count = useSelector((state) =&gt; state.counter.value);
+
+// Dispatch actions with proper typing
+dispatch(increment());</code></pre>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ❌ DON&#39;T include initialization code like this:</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flask <span class="im">import</span> Flask</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>app <span class="op">=</span> Flask(<span class="va">__name__</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># ✅ DO include usage patterns like this:</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Use route decorators with proper error handling</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">&#39;/api/users&#39;</span>, methods<span class="op">=</span>[<span class="st">&#39;GET&#39;</span>])</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_users():</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        users <span class="op">=</span> db.get_all_users()</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> jsonify(users), <span class="dv">200</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> jsonify({<span class="st">&#39;error&#39;</span>: <span class="bu">str</span>(e)}), <span class="dv">500</span></span></code></pre></div>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Focus on HOW to use the library, not HOW to set it up</li>
+<li>Include real-world patterns and anti-patterns</li>
+<li>Provide examples that show correct usage</li>
+<li>Consider performance implications</li>
+<li>Address security concerns where relevant</li>
+<li>Include testing strategies for the library</li>
+</ul>
+<h2 id="customization-tips">Customization Tips</h2>
+<h3 id="for-frontend-projects">For Frontend Projects</h3>
+<p>Add these categories:</p>
+<ul>
+<li>Component libraries specific to your framework</li>
+<li>Styling solutions you use</li>
+<li>Form libraries</li>
+<li>State management</li>
+</ul>
+<h3 id="for-backend-projects">For Backend Projects</h3>
+<p>Add these categories:</p>
+<ul>
+<li>ORM patterns (SQLAlchemy, TypeORM, Prisma, etc.)</li>
+<li>API frameworks (Express, FastAPI, Spring, etc.)</li>
+<li>Database patterns</li>
+<li>Authentication/Authorization libraries</li>
+</ul>
+<h3 id="for-full-stack-projects">For Full-Stack Projects</h3>
+<p>Include both frontend and backend categories, organized by area:</p>
+<ul>
+<li><code>.cursor/rules/frontend/</code> for frontend libraries</li>
+<li><code>.cursor/rules/backend/</code> for backend libraries</li>
+<li><code>.cursor/rules/shared/</code> for shared utilities</li>
+</ul>
+<h2 id="usage-instructions">Usage Instructions</h2>
+<ol type="1">
+<li><strong>Identify your dependency file</strong>: Find your
+<code>package.json</code>, <code>requirements.txt</code>,
+<code>pom.xml</code>, or equivalent</li>
+<li><strong>Copy the prompt</strong>: Use the template above</li>
+<li><strong>Customize categories</strong>: Add or remove library
+categories based on your stack</li>
+<li><strong>Run the prompt</strong>: Paste it into Cursor chat</li>
+<li><strong>Review generated rules</strong>: Check each rule for
+accuracy</li>
+<li><strong>Refine as needed</strong>: Adjust rules based on your
+specific needs</li>
+<li><strong>Organize</strong>: Ensure rules are in correct folders with
+proper naming</li>
+</ol>
+<h2 id="expected-output">Expected Output</h2>
+<p>After running the prompt, you should get:</p>
+<ul>
+<li>Multiple rule files (one per significant library)</li>
+<li>Proper metadata for each rule</li>
+<li>Organized in appropriate folders</li>
+<li>Focused on usage patterns, not setup</li>
+</ul>
+<h2 id="next-steps">Next Steps</h2>
+<p>After generating rules:</p>
+<ol type="1">
+<li>Review each rule for accuracy</li>
+<li>Test rules by asking AI to use the libraries</li>
+<li>Refine rules based on your team’s preferences</li>
+<li>Add project-specific patterns</li>
+<li>Document any custom conventions</li>
+</ol>
+</body>
+</html>

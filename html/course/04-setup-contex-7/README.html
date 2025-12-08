@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<h1 id="optional-enhanced-context-with-contex-7">04. Optional: Enhanced
+Context with contex 7</h1>
+<blockquote>
+<p><strong>This chapter is optional</strong>. Cursor’s built-in context
+is sufficient for most use cases. Only proceed if you need enhanced
+context management for large codebases or specific workflows.</p>
+</blockquote>
+<p>This chapter covers setting up contex 7, an optional tool that can
+enhance context management in Cursor. If you’re just starting, you can
+skip this chapter and return to it later if needed.</p>
+<h2 id="learning-objectives">Learning objectives</h2>
+<ul>
+<li>Understand when contex 7 might be useful</li>
+<li>Install and configure contex 7 (if needed)</li>
+<li>Integrate with Cursor workflows</li>
+<li>Apply safe configuration practices</li>
+</ul>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Chapter 03 completed (Cursor setup)</li>
+<li>Understanding of your project structure</li>
+<li>Optional: Large codebase where enhanced context helps</li>
+</ul>
+<h2 id="when-to-use-contex-7">When to use contex 7</h2>
+<h3 id="consider-contex-7-if">✅ Consider contex 7 if:</h3>
+<ul>
+<li><strong>Large codebase</strong>: Project with thousands of files
+where Cursor’s context window is limiting</li>
+<li><strong>Complex architecture</strong>: Multiple services,
+microservices, or distributed systems</li>
+<li><strong>Cross-repository work</strong>: Need context across multiple
+repositories</li>
+<li><strong>Specific workflows</strong>: Your team has established
+contex 7 workflows</li>
+</ul>
+<h3 id="skip-contex-7-if">❌ Skip contex 7 if:</h3>
+<ul>
+<li><strong>Small to medium projects</strong>: Cursor’s built-in context
+is sufficient</li>
+<li><strong>Just starting</strong>: Focus on mastering Cursor basics
+first</li>
+<li><strong>Simple architecture</strong>: Single repository,
+straightforward structure</li>
+<li><strong>Learning phase</strong>: Don’t add complexity until you need
+it</li>
+</ul>
+<p><strong>Recommendation</strong>: Complete Chapters 00-03 and 05
+first. Return to this chapter only if you find Cursor’s context
+limiting.</p>
+<h2 id="quick-setup-if-needed">Quick setup (if needed)</h2>
+<h3 id="step-1-installation">Step 1: Installation</h3>
+<ol type="1">
+<li>Visit contex 7 documentation for your platform</li>
+<li>Follow official installation instructions</li>
+<li>Verify installation works</li>
+</ol>
+<p><strong>Note</strong>: Installation steps vary by platform. Refer to
+official documentation.</p>
+<h3 id="step-2-basic-configuration">Step 2: Basic configuration</h3>
+<ol type="1">
+<li>Open your project in Cursor</li>
+<li>Create configuration file (if needed)</li>
+<li>Set include/exclude patterns for your codebase</li>
+<li>Configure redaction for secrets (if applicable)</li>
+</ol>
+<h3 id="step-3-integration-with-cursor">Step 3: Integration with
+Cursor</h3>
+<ol type="1">
+<li>Enable contex 7 extension in Cursor (if available)</li>
+<li>Or use CLI/API integration</li>
+<li>Test that it works with your workflow</li>
+</ol>
+<h2 id="configuration-best-practices">Configuration best practices</h2>
+<h3 id="security">Security</h3>
+<ul>
+<li><strong>Never include secrets</strong>: Configure
+redaction/masking</li>
+<li><strong>Exclude sensitive files</strong>: Add to exclude
+patterns</li>
+<li><strong>Review logs</strong>: Ensure no PII or secrets in logs</li>
+</ul>
+<h3 id="performance">Performance</h3>
+<ul>
+<li><strong>Limit scope</strong>: Only include necessary
+files/folders</li>
+<li><strong>Use exclude patterns</strong>: Ignore build artifacts,
+node_modules, etc.</li>
+<li><strong>Optimize indexing</strong>: Don’t index unnecessary
+files</li>
+</ul>
+<h3 id="organization">Organization</h3>
+<ul>
+<li><strong>Document configuration</strong>: Keep config in version
+control (without secrets)</li>
+<li><strong>Team alignment</strong>: Share configuration with team</li>
+<li><strong>Version control</strong>: Track config changes</li>
+</ul>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="issue-contex-7-not-working">Issue: contex 7 not working</h3>
+<p><strong>Solutions</strong>:</p>
+<ul>
+<li>Check installation</li>
+<li>Verify configuration</li>
+<li>Review logs</li>
+<li>Consult official documentation</li>
+</ul>
+<h3 id="issue-too-much-context">Issue: Too much context</h3>
+<p><strong>Solutions</strong>:</p>
+<ul>
+<li>Tighten include/exclude patterns</li>
+<li>Reduce scope</li>
+<li>Focus on specific areas</li>
+</ul>
+<h3 id="issue-integration-issues">Issue: Integration issues</h3>
+<p><strong>Solutions</strong>:</p>
+<ul>
+<li>Check Cursor extension (if using)</li>
+<li>Verify API/CLI access</li>
+<li>Review integration documentation</li>
+</ul>
+<h2 id="when-to-skip-this-chapter">When to skip this chapter</h2>
+<p>If you answer “no” to all of these, you can skip this chapter:</p>
+<ul class="task-list">
+<li><label><input type="checkbox" />Is your codebase very large (10,000+
+files)?</label></li>
+<li><label><input type="checkbox" />Do you work across multiple
+repositories?</label></li>
+<li><label><input type="checkbox" />Is Cursor’s context window
+insufficient for your needs?</label></li>
+<li><label><input type="checkbox" />Does your team already use contex
+7?</label></li>
+</ul>
+<p><strong>If all “no”</strong>: Skip to Chapter 05. You can return here
+later if needed.</p>
+<h2 id="alternative-using-cursors-built-in-context">Alternative: Using
+Cursor’s built-in context</h2>
+<p>For most projects, Cursor’s built-in context is sufficient:</p>
+<ol type="1">
+<li><strong>Project indexing</strong>: Cursor automatically indexes your
+project</li>
+<li><strong>File selection</strong>: Select relevant files before
+prompting</li>
+<li><strong>Project rules</strong>: Use rules (Chapter 00) to provide
+context</li>
+<li><strong>Composer</strong>: Use Composer for multi-file edits</li>
+</ol>
+<p><strong>These features cover 90% of use cases</strong> without
+additional tools.</p>
+<h2 id="exercises-optional">Exercises (optional)</h2>
+<p>Only complete these if you’re using contex 7:</p>
+<h3 id="exercise-1-basic-setup">Exercise 1: Basic setup</h3>
+<ol type="1">
+<li>Install contex 7</li>
+<li>Configure for your project</li>
+<li>Test basic functionality</li>
+</ol>
+<h3 id="exercise-2-integration-test">Exercise 2: Integration test</h3>
+<ol type="1">
+<li>Integrate with Cursor</li>
+<li>Test enhanced context</li>
+<li>Verify it improves your workflow</li>
+</ol>
+<h2 id="knowledge-check-self-assessment">Knowledge check
+(self-assessment)</h2>
+<p>If using contex 7, verify:</p>
+<ul class="task-list">
+<li><label><input type="checkbox" />Installation complete</label></li>
+<li><label><input type="checkbox" />Configuration set up</label></li>
+<li><label><input type="checkbox" />Security practices applied (no
+secrets)</label></li>
+<li><label><input type="checkbox" />Integration with Cursor
+works</label></li>
+<li><label><input type="checkbox" />Performance is
+acceptable</label></li>
+</ul>
+<h2 id="checkpoint-should-you-continue">Checkpoint: Should you
+continue?</h2>
+<p><strong>You can skip this chapter if</strong>:</p>
+<ul>
+<li>✅ Cursor’s built-in context works for you</li>
+<li>✅ Your project is small to medium size</li>
+<li>✅ You’re still learning the basics</li>
+</ul>
+<p><strong>Continue with this chapter if</strong>:</p>
+<ul>
+<li>✅ You have a very large codebase</li>
+<li>✅ You need cross-repository context</li>
+<li>✅ Your team requires contex 7</li>
+</ul>
+<p><strong>If unsure</strong>: Skip to Chapter 05. You can always return
+here later.</p>
+<h2 id="references">References</h2>
+<ul>
+<li>contex 7 official documentation</li>
+<li>Cursor documentation on context management</li>
+<li>Your organization’s context management policies</li>
+</ul>
+<hr />
+<p><strong>Next</strong>: If you skipped this chapter, proceed to <a
+href="./05-ai-driven-software-development/README.md">Chapter 05:
+AI-Driven Software Development</a></p>
+</body>
+</html>

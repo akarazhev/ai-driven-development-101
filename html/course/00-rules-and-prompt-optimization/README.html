@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<h1 id="rules-and-prompt-optimization">00. Rules and Prompt
+Optimization</h1>
+<p>Learn how to create and manage Cursor rules to simplify your prompts
+and maintain consistency across projects. This chapter teaches you to
+build a rule-based system that makes AI assistance more effective and
+reduces repetitive prompting.</p>
+<h2 id="learning-objectives">Learning objectives</h2>
+<ul>
+<li>Understand what Cursor rules are and why they matter</li>
+<li>Learn the four types of rules: Always, Auto-Apply, Agent Select, and
+Manual</li>
+<li>Create your first rule using the standard template</li>
+<li>Generate rules for libraries and frameworks automatically</li>
+<li>Organize rules effectively in your project structure</li>
+<li>Apply rules to reduce prompt complexity and improve consistency</li>
+</ul>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Cursor editor installed and configured (see Chapter 03)</li>
+<li>Basic understanding of project structure</li>
+<li>Familiarity with your technology stack</li>
+</ul>
+<h2 id="outline">Outline</h2>
+<ul>
+<li>What are Cursor rules and why use them</li>
+<li>Rule types and when to use each</li>
+<li>Rule structure and metadata</li>
+<li>Creating your first rule</li>
+<li>Generating rules for libraries and frameworks</li>
+<li>Organizing rules in your project</li>
+<li>Best practices and common patterns</li>
+</ul>
+<h2 id="what-are-cursor-rules">What are Cursor rules?</h2>
+<p>Cursor rules are configuration files that define how AI should behave
+in your project. They act as persistent context that:</p>
+<ul>
+<li><strong>Reduce prompt complexity</strong>: Instead of repeating
+instructions in every prompt, define them once in a rule</li>
+<li><strong>Maintain consistency</strong>: Ensure AI follows your
+project’s patterns and conventions</li>
+<li><strong>Improve accuracy</strong>: Provide context about your stack,
+architecture, and preferences</li>
+<li><strong>Save tokens</strong>: Rules are included automatically,
+reducing the need for long prompts</li>
+</ul>
+<p>Think of rules as “project memory” for AI - they remember your
+preferences and patterns across all conversations.</p>
+<h2 id="rule-types">Rule types</h2>
+<p>Cursor supports four types of rules, each with different application
+patterns:</p>
+<h3 id="always-rules--always.mdc">Always Rules
+(<code>-always.mdc</code>)</h3>
+<ul>
+<li><strong>When to use</strong>: Rules that should apply to EVERY chat
+and command</li>
+<li><strong>Example</strong>: Code style preferences, emoji usage,
+general project conventions</li>
+<li><strong>Location</strong>: Must be in
+<code>.cursor/rules/global/</code></li>
+<li><strong>Metadata</strong>: <code>alwaysApply: true</code>, empty
+<code>description</code> and <code>globs</code></li>
+</ul>
+<h3 id="auto-apply-rules--auto.mdc">Auto-Apply Rules
+(<code>-auto.mdc</code>)</h3>
+<ul>
+<li><strong>When to use</strong>: Rules that apply automatically to
+files matching a glob pattern</li>
+<li><strong>Example</strong>: TypeScript conventions for
+<code>*.ts</code> files, component patterns for
+<code>*.component.ts</code></li>
+<li><strong>Metadata</strong>: <code>alwaysApply: false</code>, requires
+<code>globs</code> pattern, empty <code>description</code></li>
+</ul>
+<h3 id="agent-select-rules--agent.mdc">Agent Select Rules
+(<code>-agent.mdc</code>)</h3>
+<ul>
+<li><strong>When to use</strong>: Rules that should be applied
+occasionally based on context</li>
+<li><strong>Example</strong>: Testing patterns, state management,
+specific library usage</li>
+<li><strong>Metadata</strong>: <code>alwaysApply: false</code>, requires
+descriptive <code>description</code>, empty <code>globs</code></li>
+</ul>
+<h3 id="manual-rules--manual.mdc">Manual Rules
+(<code>-manual.mdc</code>)</h3>
+<ul>
+<li><strong>When to use</strong>: Rules that should be manually
+requested by the user</li>
+<li><strong>Example</strong>: Advanced patterns, optional optimizations,
+specialized workflows</li>
+<li><strong>Metadata</strong>: <code>alwaysApply: false</code>, empty
+<code>description</code> and <code>globs</code></li>
+</ul>
+<h2 id="rule-structure">Rule structure</h2>
+<p>All rules must follow this standard structure:</p>
+<pre class="mdc"><code>---
+description: `Comprehensive description that provides full context and clearly indicates when this rule should be applied. Include key scenarios, impacted areas, and why following this rule is important. While being thorough, remain focused and relevant. The description should be detailed enough that the agent can confidently determine whether to apply the rule in any given situation.`
+
+globs: *.ts OR blank
+
+alwaysApply: true or false
+
+---
+
+# Rule Title
+
+## Critical Rules
+
+- Concise, bulleted list of actionable rules the agent MUST follow
+- Rule with Example
+
+&lt;example&gt;
+{valid rule application}
+&lt;/example&gt;
+
+&lt;example type=&quot;invalid&quot;&gt;
+{invalid rule application}
+&lt;/example&gt;</code></pre>
+<h3 id="metadata-fields">Metadata fields</h3>
+<ul>
+<li><strong>description</strong>: Keep under 200 characters. For Agent
+Select rules, this determines when the rule is applied</li>
+<li><strong>globs</strong>: File pattern (e.g., <code>*.ts</code>,
+<code>**/*.component.ts</code>). Required for Auto-Apply rules</li>
+<li><strong>alwaysApply</strong>: <code>true</code> for Always rules,
+<code>false</code> for others</li>
+</ul>
+<h2 id="organizing-rules">Organizing rules</h2>
+<p>Rules should be organized by area of focus, not by library:</p>
+<pre><code>.cursor/rules/
+  global/              # Always rules, rule generation rules
+  frontend/            # Frontend framework rules
+  backend/             # Backend framework rules
+  state/               # State management rules
+  testing/             # Testing rules
+  typescript/          # TypeScript rules
+  styles/              # CSS/SCSS rules</code></pre>
+<p><strong>File naming</strong>:
+<code>{area-of-focus}-{type}.mdc</code></p>
+<p>Examples:</p>
+<ul>
+<li><code>.cursor/rules/global/rule-generation-always.mdc</code></li>
+<li><code>.cursor/rules/frontend/component-patterns-auto.mdc</code></li>
+<li><code>.cursor/rules/state/redux-patterns-agent.mdc</code></li>
+<li><code>.cursor/rules/testing/unit-testing-manual.mdc</code></li>
+</ul>
+<h2 id="creating-your-first-rule">Creating your first rule</h2>
+<h3 id="step-1-choose-the-rule-type">Step 1: Choose the rule type</h3>
+<p>Ask yourself:</p>
+<ul>
+<li>Should this apply to everything? → Always</li>
+<li>Should this apply to specific file types? → Auto-Apply</li>
+<li>Should this apply based on context? → Agent Select</li>
+<li>Should this be on-demand? → Manual</li>
+</ul>
+<h3 id="step-2-write-the-rule-content">Step 2: Write the rule
+content</h3>
+<ol type="1">
+<li>Start with a clear title</li>
+<li>List critical rules as bullet points</li>
+<li>Add examples for clarity</li>
+<li>Keep it focused and actionable</li>
+</ol>
+<h3 id="step-3-set-metadata">Step 3: Set metadata</h3>
+<ul>
+<li>Fill in <code>description</code> (if Agent Select)</li>
+<li>Set <code>globs</code> (if Auto-Apply)</li>
+<li>Set <code>alwaysApply</code> correctly</li>
+</ul>
+<h3 id="step-4-place-in-correct-folder">Step 4: Place in correct
+folder</h3>
+<ul>
+<li>Always rules → <code>.cursor/rules/global/</code></li>
+<li>Others → appropriate area folder</li>
+</ul>
+<h2 id="generating-rules-for-libraries">Generating rules for
+libraries</h2>
+<p>Instead of manually creating rules for each library, use AI to
+generate them automatically.</p>
+<h3 id="when-to-generate-rules">When to generate rules</h3>
+<ul>
+<li>Starting a new project with multiple libraries</li>
+<li>Adding a significant new library to existing project</li>
+<li>Refactoring and need to establish patterns</li>
+<li>Onboarding new team members</li>
+</ul>
+<h3 id="starter-prompt-for-rule-generation">Starter prompt for rule
+generation</h3>
+<p>Use this prompt template to generate rules for your project’s
+libraries:</p>
+<pre class="text"><code>Generate Cursor rules for significant libraries in @package.json (or equivalent dependency file)
+
+Create a file for each library covered focusing on:
+
+1. Library Selection Criteria:
+   - DO NOT generate rules for libraries not in dependency file
+   - DO NOT generate rules that already exist
+   - DO NOT include initialization/configuration code
+
+2. Rule Content Requirements:
+   - DO NOT include library initialization/setup code
+   - DO NOT include configuration examples
+   - FOCUS on usage patterns and best practices
+   - INCLUDE common pitfalls
+   - INCLUDE performance considerations
+
+3. For Each Library Rule:
+   - Integration patterns
+   - Best practices
+   - Common issues
+   - Performance optimization
+   - Security considerations
+   - Testing strategies
+
+4. Rule Format:
+   - Clear metadata
+   - Glob patterns (if Auto-Apply)
+   - Descriptive sections
+   - Practical examples of USAGE only
+   - Error prevention guidelines
+
+5. Specific Exclusions:
+   - Configuration code
+   - Setup instructions
+   - Initialization patterns
+   - Module imports
+   - Provider configurations
+
+## Library Categories and Rules
+
+### State Management
+- Redux, Zustand, MobX, Jotai, etc.
+- Store architecture, action patterns, selector patterns
+
+### UI Component Libraries
+- Material-UI, Ant Design, Chakra UI, etc.
+- Component usage, theming, accessibility
+
+### Testing Libraries
+- Jest, Vitest, Testing Library, Playwright, Cypress
+- Testing patterns, mocking, coverage strategies
+
+### Forms Libraries
+- React Hook Form, Formik, Final Form
+- Form patterns, validation, field configuration
+
+### Data Fetching
+- React Query, SWR, Apollo Client, RTK Query
+- Query patterns, caching, invalidation
+
+### Routing
+- React Router, Next.js Router, Vue Router
+- Route patterns, navigation, guards
+
+### Internationalization
+- i18next, react-intl, vue-i18n
+- Translation patterns, locale management
+
+After generating each rule, specify which metadata should be used:
+- File name: `{library-name}-{type}.mdc`
+- description: (if Agent Select)
+- alwaysApply: (true/false)
+- globs: (if Auto-Apply, the glob pattern)</code></pre>
+<h2 id="best-practices">Best practices</h2>
+<h3 id="dos">Do’s</h3>
+<p>✅ <strong>Check existing rules first</strong>: Always check
+<code>.cursor/rules/</code> before creating new ones<br />
+✅ <strong>Update instead of duplicate</strong>: Modify existing rules
+when possible<br />
+✅ <strong>Keep descriptions clear</strong>: For Agent Select rules, be
+specific about when to apply<br />
+✅ <strong>Use examples</strong>: Include valid and invalid examples for
+clarity<br />
+✅ <strong>Organize by area</strong>: Group related rules, not by
+library<br />
+✅ <strong>Keep rules focused</strong>: One rule per concern, not
+everything in one file</p>
+<h3 id="donts">Don’ts</h3>
+<p>❌ <strong>Don’t include setup code</strong>: Rules should focus on
+usage, not initialization<br />
+❌ <strong>Don’t create duplicates</strong>: Check existing rules
+first<br />
+❌ <strong>Don’t mix concerns</strong>: Keep rules focused on one
+area<br />
+❌ <strong>Don’t use vague descriptions</strong>: Agent Select rules
+need clear criteria<br />
+❌ <strong>Don’t forget metadata</strong>: Always set correct
+<code>alwaysApply</code>, <code>globs</code>,
+<code>description</code></p>
+<h2 id="common-patterns">Common patterns</h2>
+<h3 id="pattern-1-framework-conventions">Pattern 1: Framework
+conventions</h3>
+<p><strong>Type</strong>: Auto-Apply<br />
+<strong>Glob</strong>: <code>*.component.tsx</code> (or
+equivalent)<br />
+<strong>Content</strong>: Component structure, naming, props
+patterns</p>
+<h3 id="pattern-2-testing-standards">Pattern 2: Testing standards</h3>
+<p><strong>Type</strong>: Agent Select<br />
+<strong>Description</strong>: “When writing or modifying tests”<br />
+<strong>Content</strong>: Testing patterns, mocking strategies,
+assertions</p>
+<h3 id="pattern-3-code-style">Pattern 3: Code style</h3>
+<p><strong>Type</strong>: Always<br />
+<strong>Location</strong>: <code>.cursor/rules/global/</code><br />
+<strong>Content</strong>: General style preferences, formatting,
+naming</p>
+<h3 id="pattern-4-library-specific-patterns">Pattern 4: Library-specific
+patterns</h3>
+<p><strong>Type</strong>: Agent Select<br />
+<strong>Description</strong>: “When using [Library Name] for [specific
+purpose]”<br />
+<strong>Content</strong>: Usage patterns, best practices, common
+pitfalls</p>
+<h2 id="exercises">Exercises</h2>
+<h3 id="exercise-1-create-your-first-rule">Exercise 1: Create your first
+rule</h3>
+<p>Create an Always rule for code style preferences:</p>
+<ol type="1">
+<li>Choose 3-5 style preferences (e.g., “Use const for immutable
+values”, “Prefer arrow functions”)</li>
+<li>Write the rule following the template</li>
+<li>Place it in
+<code>.cursor/rules/global/code-style-always.mdc</code></li>
+<li>Test it by asking AI to write code and verify it follows your
+rules</li>
+</ol>
+<h3 id="exercise-2-auto-apply-rule-for-components">Exercise 2:
+Auto-Apply rule for components</h3>
+<p>Create an Auto-Apply rule for component files:</p>
+<ol type="1">
+<li>Identify your component file pattern (e.g.,
+<code>*.component.tsx</code>, <code>*.vue</code>)</li>
+<li>Define 3-5 component conventions</li>
+<li>Create the rule with appropriate glob pattern</li>
+<li>Test by creating a new component</li>
+</ol>
+<h3 id="exercise-3-generate-rules-for-your-stack">Exercise 3: Generate
+rules for your stack</h3>
+<p>Use the starter prompt to generate rules for your project:</p>
+<ol type="1">
+<li>Identify 3-5 key libraries in your project</li>
+<li>Use the generation prompt</li>
+<li>Review generated rules</li>
+<li>Refine and organize them</li>
+</ol>
+<h3 id="exercise-4-agent-select-rule">Exercise 4: Agent Select rule</h3>
+<p>Create an Agent Select rule for a specific use case:</p>
+<ol type="1">
+<li>Choose a context (e.g., “When writing API endpoints”, “When creating
+forms”)</li>
+<li>Write a clear description</li>
+<li>Define the rules and examples</li>
+<li>Test by asking AI to work in that context</li>
+</ol>
+<h2 id="knowledge-check-self-assessment">Knowledge check
+(self-assessment)</h2>
+<ul>
+<li>What are the four types of rules and when should you use each?</li>
+<li>How do you organize rules in your project structure?</li>
+<li>What metadata is required for each rule type?</li>
+<li>How can rules reduce prompt complexity?</li>
+<li>When should you generate rules automatically vs. create them
+manually?</li>
+</ul>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="rule-not-applying">Rule not applying</h3>
+<ul>
+<li><strong>Check metadata</strong>: Verify <code>alwaysApply</code>,
+<code>globs</code>, and <code>description</code> are correct</li>
+<li><strong>Check location</strong>: Always rules must be in
+<code>global/</code> folder</li>
+<li><strong>Check glob pattern</strong>: Test your glob pattern matches
+intended files</li>
+<li><strong>Check description</strong>: Agent Select rules need clear,
+specific descriptions</li>
+</ul>
+<h3 id="too-many-rules-applying">Too many rules applying</h3>
+<ul>
+<li><strong>Review Always rules</strong>: Only use Always for truly
+universal rules</li>
+<li><strong>Refine globs</strong>: Make Auto-Apply patterns more
+specific</li>
+<li><strong>Improve descriptions</strong>: Make Agent Select
+descriptions more specific</li>
+</ul>
+<h3 id="rules-conflicting">Rules conflicting</h3>
+<ul>
+<li><strong>Consolidate</strong>: Merge overlapping rules</li>
+<li><strong>Prioritize</strong>: Use more specific rules to override
+general ones</li>
+<li><strong>Organize</strong>: Better folder structure can prevent
+conflicts</li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li>Cursor documentation on rules</li>
+<li>Your project’s existing rules in <code>.cursor/rules/</code></li>
+<li>Rule generation prompt template (included in this chapter)</li>
+<li><a href="https://cursor.directory/rules">Cursor Directory:
+Rules</a></li>
+</ul>
+</body>
+</html>

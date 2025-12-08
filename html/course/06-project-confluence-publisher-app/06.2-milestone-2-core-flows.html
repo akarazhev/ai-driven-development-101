@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>06.2-milestone-2-core-flows</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<h1 id="m2-core-pageing-flows">M2: Core Pageing Flows</h1>
+<p>Implement the core functionality: creating pages, uploading
+attachment, scheduling, and publishing. This milestone builds the
+essential features of your application.</p>
+<h2 id="learning-objectives">Learning objectives</h2>
+<ul>
+<li>Implement attachment upload functionality</li>
+<li>Create page management endpoints</li>
+<li>Build scheduling system</li>
+<li>Implement publish flow</li>
+<li>Create basic UI for core features</li>
+</ul>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>M1 completed (project scaffold working)</li>
+<li>Database schema in place</li>
+<li>Stub provider implemented</li>
+</ul>
+<h2 id="acceptance-criteria">Acceptance criteria</h2>
+<ul class="task-list">
+<li><label><input type="checkbox" />Can upload attachment
+files</label></li>
+<li><label><input type="checkbox" />Can create pages with text and
+attachment</label></li>
+<li><label><input type="checkbox" />Can schedule pages for
+future</label></li>
+<li><label><input type="checkbox" />Can publish pages
+imattachmenttely</label></li>
+<li><label><input type="checkbox" />Can view page status</label></li>
+<li><label><input type="checkbox" />Basic UI for compose and
+schedules</label></li>
+<li><label><input type="checkbox" />Scheduler processes queued
+pages</label></li>
+</ul>
+<h2 id="step-by-step-guide">Step-by-step guide</h2>
+<h3 id="step-1-implement-attachment-upload">Step 1: Implement attachment
+upload</h3>
+<p><strong>Backend endpoint</strong>:</p>
+<pre class="text"><code>Role: Backend developer
+Task: Implement attachment upload endpoint
+Constraints:
+- Endpoint: POST /api/attachment
+- Accept: multipart/form-data with file and optional alt_text
+- Validate: file type, size limits
+- Store: file to storage, metadata to database
+- Return: AttachmentAsset object with id
+- Include error handling
+Inputs: [Storage setup, database models]
+Output format: Attachment upload endpoint + tests
+Evaluation: Can upload files, metadata saved, validation works</code></pre>
+<p><strong>Frontend component</strong>:</p>
+<pre class="text"><code>Role: Frontend developer
+Task: Create attachment upload component
+Constraints:
+- Allow file selection
+- Show upload progress
+- Display uploaded files
+- Allow description input
+- Handle errors gracefully
+- Use [your framework] patterns
+Inputs: [API client, UI design]
+Output format: Upload component
+Evaluation: Can upload files, see progress, handle errors</code></pre>
+<h3 id="step-2-implement-page-creation">Step 2: Implement page
+creation</h3>
+<p><strong>Backend endpoint</strong>:</p>
+<pre class="text"><code>Role: Backend developer
+Task: Implement page creation endpoint
+Constraints:
+- Endpoint: POST /api/pages
+- Accept: { text: string, attachment_ids: number[] }
+- Validate: text not empty, attachment_ids exist
+- Create: Page and PageAttachment records
+- Return: Page object with attachment
+- Include error handling
+Inputs: [Database models, validation patterns]
+Output format: Page creation endpoint + tests
+Evaluation: Can create pages, link attachment, validation works</code></pre>
+<p><strong>Get page endpoint</strong>:</p>
+<pre class="text"><code>Role: Backend developer
+Task: Implement get page endpoint
+Constraints:
+- Endpoint: GET /api/pages/{id}
+- Return: Page with associated attachment
+- Handle: 404 if not found
+- Include error handling
+Inputs: [Page model, relationships]
+Output format: Get page endpoint + tests
+Evaluation: Returns page with attachment, handles 404</code></pre>
+<h3 id="step-3-implement-scheduling">Step 3: Implement scheduling</h3>
+<p><strong>Schedule endpoint</strong>:</p>
+<pre class="text"><code>Role: Backend developer
+Task: Implement schedule endpoint
+Constraints:
+- Endpoint: POST /api/schedules
+- Accept: { page_id: number, scheduled_at?: datetime }
+- Default: scheduled_at = now (imattachmentte)
+- Create: Schedule record with status &quot;queued&quot;
+- Validate: page exists, scheduled_at in future (if provided)
+- Return: Schedule object
+Inputs: [Schedule model, Page model]
+Output format: Schedule endpoint + tests
+Evaluation: Can schedule pages, validation works</code></pre>
+<p><strong>List schedules endpoint</strong>:</p>
+<pre class="text"><code>Role: Backend developer
+Task: Implement list schedules endpoint
+Constraints:
+- Endpoint: GET /api/schedules
+- Return: List of schedules with page info
+- Filter: optional status filter
+- Sort: by scheduled_at
+- Include error handling
+Inputs: [Schedule model, relationships]
+Output format: List schedules endpoint + tests
+Evaluation: Returns schedules, filtering works</code></pre>
+<h3 id="step-4-implement-schedulerworker">Step 4: Implement
+scheduler/worker</h3>
+<p><strong>Background scheduler</strong>:</p>
+<pre class="text"><code>Role: Backend developer
+Task: Implement background scheduler for queued pages
+Constraints:
+- Check for queued schedules every [interval] seconds
+- Process schedules where scheduled_at &lt;= now
+- Call publish service
+- Update schedule status (queued → pageed/failed)
+- Handle errors and retries
+- Limit concurrent processing
+Inputs: [Schedule model, publish service]
+Output format: Scheduler implementation
+Evaluation: Processes queued pages, updates status, handles errors</code></pre>
+<p><strong>Publish service</strong>:</p>
+<pre class="text"><code>Role: Backend developer
+Task: Implement publish service
+Constraints:
+- Take: page_id
+- Get: page with attachment
+- Call: provider.publish()
+- Log: PublishLog entry
+- Update: schedule status
+- Handle: errors and retries
+Inputs: [Page model, provider interface]
+Output format: Publish service + tests
+Evaluation: Publishes pages, logs results, handles errors</code></pre>
+<h3 id="step-5-implement-publish-endpoint">Step 5: Implement publish
+endpoint</h3>
+<p><strong>Publish now endpoint</strong>:</p>
+<pre class="text"><code>Role: Backend developer
+Task: Implement publish now endpoint
+Constraints:
+- Endpoint: POST /api/confluence/publish
+- Accept: { pageId: number }
+- Call: publish service
+- Return: PublishLog with status
+- Include error handling
+Inputs: [Publish service, Confluence provider]
+Output format: Publish endpoint + tests
+Evaluation: Can publish immediately, returns status</code></pre>
+<h3 id="step-6-build-compose-ui">Step 6: Build compose UI</h3>
+<p><strong>Compose page</strong>:</p>
+<pre class="text"><code>Role: Frontend developer
+Task: Create compose page for creating pages
+Constraints:
+- Text input for page content
+- Attachment upload section
+- Preview of page
+- Create page button
+- Show success/error messages
+- Use [your framework] patterns
+Inputs: [API client, UI components]
+Output format: Compose page component
+Evaluation: Can create pages, upload attachment, see preview</code></pre>
+<h3 id="step-7-build-schedules-ui">Step 7: Build schedules UI</h3>
+<p><strong>Schedules page</strong>:</p>
+<pre class="text"><code>Role: Frontend developer
+Task: Create schedules page
+Constraints:
+- List all schedules
+- Show: page text, scheduled time, status
+- Filter by status
+- Refresh button
+- Use [your framework] patterns
+Inputs: [API client, UI components]
+Output format: Schedules page component
+Evaluation: Can view schedules, filter, refresh</code></pre>
+<h2 id="testing">Testing</h2>
+<h3 id="test-attachment-upload">Test attachment upload</h3>
+<pre class="text"><code>Role: Test engineer
+Task: Write tests for attachment upload
+Constraints:
+- Test: successful upload
+- Test: file validation (type, size)
+- Test: description handling
+- Test: error cases
+- Use [your testing framework]
+Inputs: [Attachment upload endpoint]
+Output format: Test file
+Evaluation: All tests pass</code></pre>
+<h3 id="test-page-creation">Test page creation</h3>
+<pre class="text"><code>Role: Test engineer
+Task: Write tests for page creation
+Constraints:
+- Test: create page with text
+- Test: create page with attachment
+- Test: validation (empty text, invalid attachment_ids)
+- Test: get page endpoint
+- Use [your testing framework]
+Inputs: [Page endpoints]
+Output format: Test file
+Evaluation: All tests pass</code></pre>
+<h3 id="test-scheduling">Test scheduling</h3>
+<pre class="text"><code>Role: Test engineer
+Task: Write tests for scheduling
+Constraints:
+- Test: schedule page
+- Test: imattachmentte schedule (no scheduled_at)
+- Test: future schedule
+- Test: validation
+- Test: scheduler processes queued pages
+- Use [your testing framework]
+Inputs: [Schedule endpoints, scheduler]
+Output format: Test file
+Evaluation: All tests pass</code></pre>
+<h3 id="test-publishing">Test publishing</h3>
+<pre class="text"><code>Role: Test engineer
+Task: Write tests for publishing
+Constraints:
+- Test: publish now endpoint
+- Test: publish service with stub provider
+- Test: error handling
+- Test: publish log creation
+- Use [your testing framework]
+Inputs: [Publish endpoint, service]
+Output format: Test file
+Evaluation: All tests pass</code></pre>
+<h2 id="integration-testing">Integration testing</h2>
+<p><strong>E2E flow test</strong>:</p>
+<pre class="text"><code>Role: Test engineer
+Task: Write E2E test for complete flow
+Constraints:
+- Test: upload attachment → create page → schedule → publish
+- Use stub provider
+- Verify: all steps work together
+- Use [your E2E testing framework]
+Inputs: [All endpoints, scheduler]
+Output format: E2E test
+Evaluation: Complete flow works end-to-end</code></pre>
+<h2 id="verification-checklist">Verification checklist</h2>
+<p>Before moving to M3, verify:</p>
+<ul class="task-list">
+<li><label><input type="checkbox" />Can upload attachment
+files</label></li>
+<li><label><input type="checkbox" />Can create pages with text and
+attachment</label></li>
+<li><label><input type="checkbox" />Can schedule pages (imattachmentte
+and future)</label></li>
+<li><label><input type="checkbox" />Scheduler processes queued
+pages</label></li>
+<li><label><input type="checkbox" />Can publish pages
+imattachmenttely</label></li>
+<li><label><input type="checkbox" />Can view schedules and
+status</label></li>
+<li><label><input type="checkbox" />UI works for compose and
+schedules</label></li>
+<li><label><input type="checkbox" />All tests pass</label></li>
+<li><label><input type="checkbox" />Error handling works</label></li>
+</ul>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="issue-attachment-upload-fails">Issue: Attachment upload
+fails</h3>
+<p><strong>Solutions</strong>:</p>
+<ul>
+<li>Check file size limits</li>
+<li>Verify storage path exists</li>
+<li>Check file permissions</li>
+<li>Review error logs</li>
+</ul>
+<h3 id="issue-scheduler-not-running">Issue: Scheduler not running</h3>
+<p><strong>Solutions</strong>:</p>
+<ul>
+<li>Verify scheduler is started</li>
+<li>Check interval configuration</li>
+<li>Review scheduler logs</li>
+<li>Test manually</li>
+</ul>
+<h3 id="issue-pages-not-publishing">Issue: Pages not publishing</h3>
+<p><strong>Solutions</strong>:</p>
+<ul>
+<li>Check stub provider is working</li>
+<li>Verify publish service is called</li>
+<li>Review error logs</li>
+<li>Test provider directly</li>
+</ul>
+<h2 id="next-steps">Next steps</h2>
+<p>Once M2 is complete, proceed to <strong><a
+href="./06.3-milestone-3-ai-features.md">M3: AI-Assisted Content
+Generation</a></strong></p>
+<h2 id="deliverables">Deliverables</h2>
+<ul>
+<li>Attachment upload working</li>
+<li>Page creation working</li>
+<li>Scheduling system working</li>
+<li>Publishing flow working</li>
+<li>Basic UI for compose and schedules</li>
+<li>Scheduler processing queued pages</li>
+<li>Tests passing</li>
+</ul>
+</body>
+</html>

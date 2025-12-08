@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="setup-cursor-ai">03. Setup Cursor AI</h1>
+<p>Step-by-step guide to setting up Cursor for effective AI pair
+programming. Learn how to install, configure, and use Cursor to maximize
+your productivity with AI assistance.</p>
+<h2 id="learning-objectives">Learning objectives</h2>
+<ul>
+<li>Install Cursor and verify AI features work</li>
+<li>Configure workspace and project settings</li>
+<li>Set up your development environment</li>
+<li>Understand Cursor’s key features and shortcuts</li>
+<li>Apply best practices for AI-assisted coding</li>
+<li>Troubleshoot common issues</li>
+</ul>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Basic familiarity with code editors</li>
+<li>A project to work on (any technology stack)</li>
+<li>Git installed (for version control)</li>
+</ul>
+<h2 id="outline">Outline</h2>
+<ul>
+<li>Installation and first launch</li>
+<li>Workspace configuration</li>
+<li>Environment setup</li>
+<li>Key features and shortcuts</li>
+<li>Best practices</li>
+<li>Troubleshooting guide</li>
+<li>Ready-to-use configurations</li>
+</ul>
+<h2 id="installation-and-first-launch">Installation and first
+launch</h2>
+<h3 id="step-1-download-cursor">Step 1: Download Cursor</h3>
+<ol type="1">
+<li>Visit <a href="https://cursor.sh">cursor.sh</a></li>
+<li>Click “Download” for your operating system</li>
+<li>Run the installer</li>
+<li>Follow installation prompts</li>
+</ol>
+<p><strong>Note</strong>: Cursor is available for macOS, Windows, and
+Linux.</p>
+<h3 id="step-2-first-launch-and-sign-in">Step 2: First launch and
+sign-in</h3>
+<ol type="1">
+<li>Launch Cursor</li>
+<li>Sign in with your account (create one if needed)</li>
+<li>Verify AI features are enabled:
+<ul>
+<li>Look for AI chat icon in sidebar</li>
+<li>Check that “Composer” feature is available</li>
+<li>Confirm you can access AI suggestions</li>
+</ul></li>
+</ol>
+<p><strong>Screenshot placeholder</strong>: [Add screenshot of Cursor
+welcome screen with AI features visible]</p>
+<h3 id="step-3-verify-installation">Step 3: Verify installation</h3>
+<p>Test that AI features work:</p>
+<ol type="1">
+<li>Open any code file</li>
+<li>Select some code</li>
+<li>Press <code>Cmd+K</code> (Mac) or <code>Ctrl+K</code>
+(Windows/Linux)</li>
+<li>You should see AI suggestions appear</li>
+</ol>
+<p>If this works, installation is successful!</p>
+<h2 id="workspace-configuration">Workspace configuration</h2>
+<h3 id="step-1-open-your-project">Step 1: Open your project</h3>
+<ol type="1">
+<li>File → Open Folder (or <code>Cmd+O</code> /
+<code>Ctrl+O</code>)</li>
+<li>Navigate to your project directory</li>
+<li>Click “Open”</li>
+</ol>
+<h3 id="step-2-trust-the-workspace">Step 2: Trust the workspace</h3>
+<p>When opening a project, Cursor may ask:</p>
+<ul>
+<li>“Do you trust the authors of the files in this folder?”</li>
+<li>Click “Yes, I trust the authors”</li>
+</ul>
+<p><strong>Why this matters</strong>: Cursor needs to index your
+codebase to provide context-aware suggestions.</p>
+<h3 id="step-3-enable-indexing">Step 3: Enable indexing</h3>
+<ol type="1">
+<li>Cursor will start indexing your project automatically</li>
+<li>Check status in bottom-right corner</li>
+<li>Wait for indexing to complete (may take a few minutes for large
+projects)</li>
+</ol>
+<p><strong>Screenshot placeholder</strong>: [Add screenshot showing
+indexing status]</p>
+<h3 id="step-4-verify-project-structure">Step 4: Verify project
+structure</h3>
+<ol type="1">
+<li>Check that file tree appears in sidebar</li>
+<li>Try searching for files (<code>Cmd+P</code> /
+<code>Ctrl+P</code>)</li>
+<li>Verify code navigation works</li>
+</ol>
+<h2 id="environment-setup">Environment setup</h2>
+<h3 id="setting-up-your-development-environment">Setting up your
+development environment</h3>
+<p>Cursor works with any technology stack. Here’s how to configure
+it:</p>
+<h3 id="for-any-project">For any project:</h3>
+<ol type="1">
+<li><strong>Select interpreter/runtime</strong> (if applicable):
+<ul>
+<li>For Python: Select Python interpreter</li>
+<li>For Node.js: Ensure Node is in PATH</li>
+<li>For Java: Configure JDK</li>
+<li>For other languages: Configure as needed</li>
+</ul></li>
+<li><strong>Install dependencies</strong>:
+<ul>
+<li>Use your project’s package manager</li>
+<li>Ensure dependencies are installed</li>
+<li>Cursor will use these for context</li>
+</ul></li>
+<li><strong>Configure build tools</strong> (if needed):
+<ul>
+<li>Set up your build system</li>
+<li>Configure test runners</li>
+<li>Cursor can help with these tasks</li>
+</ul></li>
+</ol>
+<h3 id="example-python-project">Example: Python project</h3>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In your project directory</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> venv .venv</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> .venv/bin/activate  <span class="co"># On Windows: .venv\Scripts\activate</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-r</span> requirements.txt</span></code></pre></div>
+<p>Then in Cursor:</p>
+<ol type="1">
+<li><code>Cmd+Shift+P</code> → “Python: Select Interpreter”</li>
+<li>Choose <code>.venv/bin/python</code></li>
+</ol>
+<h3 id="example-node.js-project">Example: Node.js project</h3>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In your project directory</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install</span></code></pre></div>
+<p>Cursor will automatically detect Node.js if it’s in your PATH.</p>
+<h3 id="example-java-project">Example: Java project</h3>
+<ol type="1">
+<li>Ensure JDK is installed and in PATH</li>
+<li>Cursor will detect Java projects automatically</li>
+<li>Configure build tool (Maven/Gradle) as needed</li>
+</ol>
+<h2 id="key-features-and-shortcuts">Key features and shortcuts</h2>
+<h3 id="chat-with-ai">Chat with AI</h3>
+<p><strong>Shortcut</strong>: <code>Cmd+L</code> (Mac) or
+<code>Ctrl+L</code> (Windows/Linux)</p>
+<ul>
+<li>Ask questions about your code</li>
+<li>Get explanations</li>
+<li>Request code changes</li>
+<li>Debug issues</li>
+</ul>
+<p><strong>Screenshot placeholder</strong>: [Add screenshot of AI chat
+interface]</p>
+<h3 id="composer-multi-file-editing">Composer (Multi-file editing)</h3>
+<p><strong>Shortcut</strong>: <code>Cmd+I</code> (Mac) or
+<code>Ctrl+I</code> (Windows/Linux)</p>
+<ul>
+<li>Edit multiple files at once</li>
+<li>Make coordinated changes across codebase</li>
+<li>Great for refactoring and feature implementation</li>
+</ul>
+<p><strong>Screenshot placeholder</strong>: [Add screenshot of Composer
+interface]</p>
+<h3 id="inline-suggestions">Inline suggestions</h3>
+<p><strong>Shortcut</strong>: <code>Tab</code> to accept,
+<code>Esc</code> to dismiss</p>
+<ul>
+<li>AI suggests code as you type</li>
+<li>Context-aware completions</li>
+<li>Press <code>Tab</code> to accept, <code>Esc</code> to dismiss</li>
+</ul>
+<h3 id="code-selection-and-ai">Code selection and AI</h3>
+<p><strong>Shortcut</strong>: Select code → <code>Cmd+K</code> (Mac) or
+<code>Ctrl+K</code> (Windows/Linux)</p>
+<ul>
+<li>Select specific code</li>
+<li>Press <code>Cmd+K</code> / <code>Ctrl+K</code></li>
+<li>Ask AI to modify just that selection</li>
+<li>Keeps changes focused and minimal</li>
+</ul>
+<p><strong>Screenshot placeholder</strong>: [Add screenshot showing code
+selection with AI prompt]</p>
+<h3 id="command-palette">Command palette</h3>
+<p><strong>Shortcut</strong>: <code>Cmd+Shift+P</code> (Mac) or
+<code>Ctrl+Shift+P</code> (Windows/Linux)</p>
+<ul>
+<li>Access all Cursor commands</li>
+<li>Search for features</li>
+<li>Configure settings</li>
+</ul>
+<h2 id="best-practices">Best practices</h2>
+<h3 id="work-in-small-batches">1. Work in small batches</h3>
+<p>✅ <strong>Do</strong>: Make focused, small changes<br />
+❌ <strong>Don’t</strong>: Ask AI to rewrite entire files at once</p>
+<p><strong>Example</strong>:</p>
+<ul>
+<li>✅ “Add error handling to this function”</li>
+<li>❌ “Refactor this entire module”</li>
+</ul>
+<h3 id="select-code-before-prompting">2. Select code before
+prompting</h3>
+<p>✅ <strong>Do</strong>: Select the specific code you want to
+change<br />
+❌ <strong>Don’t</strong>: Ask AI to find and modify code without
+context</p>
+<p><strong>How</strong>:</p>
+<ol type="1">
+<li>Select the code block</li>
+<li>Press <code>Cmd+K</code> / <code>Ctrl+K</code></li>
+<li>Type your request</li>
+<li>AI will only modify selected code</li>
+</ol>
+<h3 id="review-diffs-carefully">3. Review diffs carefully</h3>
+<p>✅ <strong>Do</strong>: Review all changes before accepting<br />
+❌ <strong>Don’t</strong>: Accept changes blindly</p>
+<p><strong>Check</strong>:</p>
+<ul>
+<li>Are changes what you asked for?</li>
+<li>Did AI modify unrelated code?</li>
+<li>Are there any obvious bugs?</li>
+</ul>
+<h3 id="use-clear-specific-prompts">4. Use clear, specific prompts</h3>
+<p>✅ <strong>Do</strong>: “Add input validation to this function”<br />
+❌ <strong>Don’t</strong>: “Fix this”</p>
+<p><strong>Better prompts include</strong>:</p>
+<ul>
+<li>What to do (specific task)</li>
+<li>Where to do it (file/function)</li>
+<li>How to do it (constraints, patterns)</li>
+</ul>
+<h3 id="commit-frequently">5. Commit frequently</h3>
+<p>✅ <strong>Do</strong>: Commit after each successful change<br />
+❌ <strong>Don’t</strong>: Make many changes before committing</p>
+<p><strong>Why</strong>: Easier to revert if something goes wrong</p>
+<h3 id="never-paste-secrets">6. Never paste secrets</h3>
+<p>✅ <strong>Do</strong>: Use environment variables, placeholders<br />
+❌ <strong>Don’t</strong>: Paste API keys, passwords, tokens</p>
+<p><strong>Example</strong>:</p>
+<ul>
+<li>✅ “Use API_KEY from environment variables”</li>
+<li>❌ “API key is abc123xyz”</li>
+</ul>
+<h2 id="model-and-parameter-settings">Model and parameter settings</h2>
+<h3 id="choosing-a-model">Choosing a model</h3>
+<p>Cursor offers different AI models. Choose based on your needs:</p>
+<ul>
+<li><strong>Claude/GPT-4</strong>: Best for complex reasoning, large
+refactors</li>
+<li><strong>Claude Sonnet</strong>: Good balance of speed and
+quality</li>
+<li><strong>GPT-3.5</strong>: Faster, good for simple tasks</li>
+</ul>
+<p><strong>How to change</strong>:</p>
+<ol type="1">
+<li>Open settings (<code>Cmd+,</code> / <code>Ctrl+,</code>)</li>
+<li>Search for “Model”</li>
+<li>Select your preferred model</li>
+</ol>
+<h3 id="temperature-settings">Temperature settings</h3>
+<ul>
+<li><strong>Low (0.0-0.3)</strong>: More deterministic, consistent
+code</li>
+<li><strong>Medium (0.4-0.7)</strong>: Balanced creativity and
+consistency</li>
+<li><strong>High (0.8-1.0)</strong>: More creative, less
+predictable</li>
+</ul>
+<p><strong>Recommendation</strong>: Use low temperature (0.0-0.3) for
+code, higher for brainstorming</p>
+<h3 id="context-window">Context window</h3>
+<ul>
+<li>Larger context = more codebase understanding</li>
+<li>But also = slower responses and higher costs</li>
+<li>Default settings usually work well</li>
+</ul>
+<h2 id="ready-to-use-prompt-templates">Ready-to-use prompt
+templates</h2>
+<h3 id="template-modify-selected-code">Template: Modify selected
+code</h3>
+<pre class="text"><code>Role: [Your role - e.g., Senior Developer]
+Task: [Specific change]
+Constraints:
+- Only modify the selected code
+- Follow existing patterns in [reference file]
+- Include [specific requirements]
+Inputs: [Selected code is the input]
+Output format: Modified code only
+Evaluation: [How to verify]</code></pre>
+<h3 id="template-explain-code">Template: Explain code</h3>
+<pre class="text"><code>Explain this code:
+- What does it do?
+- How does it work?
+- Are there any potential issues?
+- How could it be improved?</code></pre>
+<h3 id="template-add-feature">Template: Add feature</h3>
+<pre class="text"><code>Role: Full-stack developer
+Task: Add [feature name]
+Constraints:
+- Follow patterns in [reference files]
+- Include error handling
+- Add tests
+- Update documentation
+Inputs: [Relevant files]
+Output format: Complete implementation
+Evaluation: [Acceptance criteria]</code></pre>
+<h3 id="template-fix-bug">Template: Fix bug</h3>
+<pre class="text"><code>Role: Debugging specialist
+Task: Fix [bug description]
+Constraints:
+- Minimal change
+- Preserve existing behavior
+- Add regression test
+Inputs: [Error message, stack trace, code]
+Output format: Fix + test + explanation
+Evaluation: Bug fixed, test passes</code></pre>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="issue-ai-features-not-working">Issue: AI features not
+working</h3>
+<p><strong>Symptoms</strong>: No AI suggestions, chat doesn’t
+respond</p>
+<p><strong>Solutions</strong>:</p>
+<ol type="1">
+<li>Check internet connection</li>
+<li>Verify you’re signed in</li>
+<li>Restart Cursor</li>
+<li>Check Cursor status page for outages</li>
+<li>Update Cursor to latest version</li>
+</ol>
+<h3 id="issue-slow-or-no-responses">Issue: Slow or no responses</h3>
+<p><strong>Symptoms</strong>: AI takes very long to respond or times
+out</p>
+<p><strong>Solutions</strong>:</p>
+<ol type="1">
+<li>Reduce context window size</li>
+<li>Select smaller code blocks</li>
+<li>Simplify your prompt</li>
+<li>Check your internet connection</li>
+<li>Try a different model (some are faster)</li>
+</ol>
+<h3 id="issue-ai-changes-too-much-code">Issue: AI changes too much
+code</h3>
+<p><strong>Symptoms</strong>: AI modifies files you didn’t ask it to
+change</p>
+<p><strong>Solutions</strong>:</p>
+<ol type="1">
+<li>Select specific code before prompting</li>
+<li>Add constraint: “Only modify [specific files]”</li>
+<li>Be more explicit about scope</li>
+<li>Review diffs before accepting</li>
+<li>Use project rules (see Chapter 00) to set boundaries</li>
+</ol>
+<h3 id="issue-ai-doesnt-understand-context">Issue: AI doesn’t understand
+context</h3>
+<p><strong>Symptoms</strong>: Suggestions don’t match your project
+patterns</p>
+<p><strong>Solutions</strong>:</p>
+<ol type="1">
+<li>Provide more context in prompt</li>
+<li>Reference existing code patterns</li>
+<li>Use project rules (see Chapter 00)</li>
+<li>Select relevant code before prompting</li>
+<li>Be explicit about your stack and patterns</li>
+</ol>
+<h3 id="issue-indexing-not-working">Issue: Indexing not working</h3>
+<p><strong>Symptoms</strong>: Cursor doesn’t seem to understand your
+codebase</p>
+<p><strong>Solutions</strong>:</p>
+<ol type="1">
+<li>Wait for indexing to complete (check status)</li>
+<li>Re-index: <code>Cmd+Shift+P</code> → “Index Workspace”</li>
+<li>Check <code>.cursorignore</code> file (may be excluding files)</li>
+<li>Ensure workspace is trusted</li>
+<li>Restart Cursor</li>
+</ol>
+<h3 id="issue-authentication-errors">Issue: Authentication errors</h3>
+<p><strong>Symptoms</strong>: “Authentication failed” or “Please sign
+in”</p>
+<p><strong>Solutions</strong>:</p>
+<ol type="1">
+<li>Sign out and sign back in</li>
+<li>Check your account status</li>
+<li>Verify subscription/plan (if applicable)</li>
+<li>Clear Cursor cache and restart</li>
+<li>Contact Cursor support if persistent</li>
+</ol>
+<h3 id="issue-code-suggestions-are-wrong">Issue: Code suggestions are
+wrong</h3>
+<p><strong>Symptoms</strong>: AI suggests code that doesn’t work or is
+incorrect</p>
+<p><strong>Solutions</strong>:</p>
+<ol type="1">
+<li>Always test AI-generated code</li>
+<li>Provide more specific constraints</li>
+<li>Reference working examples from your codebase</li>
+<li>Break complex requests into smaller steps</li>
+<li>Use evaluation criteria in prompts</li>
+</ol>
+<h3 id="issue-cant-find-files">Issue: Can’t find files</h3>
+<p><strong>Symptoms</strong>: File search or navigation doesn’t work</p>
+<p><strong>Solutions</strong>:</p>
+<ol type="1">
+<li>Wait for indexing to complete</li>
+<li>Check if files are in <code>.gitignore</code> or
+<code>.cursorignore</code></li>
+<li>Re-index workspace</li>
+<li>Verify workspace is opened correctly</li>
+<li>Try using <code>Cmd+P</code> / <code>Ctrl+P</code> for file
+search</li>
+</ol>
+<h2 id="exercises">Exercises</h2>
+<h3 id="exercise-1-complete-setup">Exercise 1: Complete setup</h3>
+<p><strong>Goal</strong>: Get Cursor fully configured</p>
+<p><strong>Steps</strong>:</p>
+<ol type="1">
+<li>Install Cursor</li>
+<li>Sign in</li>
+<li>Open your project</li>
+<li>Trust workspace</li>
+<li>Wait for indexing</li>
+<li>Test AI chat (<code>Cmd+L</code> / <code>Ctrl+L</code>)</li>
+<li>Test code selection (<code>Cmd+K</code> / <code>Ctrl+K</code>)</li>
+</ol>
+<p><strong>Deliverable</strong>: Working Cursor setup with AI features
+enabled</p>
+<h3 id="exercise-2-first-ai-interaction">Exercise 2: First AI
+interaction</h3>
+<p><strong>Goal</strong>: Use AI to modify code</p>
+<p><strong>Steps</strong>:</p>
+<ol type="1">
+<li>Open a file in your project</li>
+<li>Select a function</li>
+<li>Press <code>Cmd+K</code> / <code>Ctrl+K</code></li>
+<li>Ask: “Add error handling to this function”</li>
+<li>Review the changes</li>
+<li>Accept or refine</li>
+</ol>
+<p><strong>Deliverable</strong>: Successfully modified code using AI</p>
+<h3 id="exercise-3-explore-features">Exercise 3: Explore features</h3>
+<p><strong>Goal</strong>: Learn Cursor’s key features</p>
+<p><strong>Steps</strong>:</p>
+<ol type="1">
+<li>Try AI chat (<code>Cmd+L</code> / <code>Ctrl+L</code>)</li>
+<li>Try Composer (<code>Cmd+I</code> / <code>Ctrl+I</code>)</li>
+<li>Try inline suggestions (just type and wait)</li>
+<li>Try command palette (<code>Cmd+Shift+P</code> /
+<code>Ctrl+Shift+P</code>)</li>
+<li>Explore settings</li>
+</ol>
+<p><strong>Deliverable</strong>: Familiarity with Cursor’s main
+features</p>
+<h3 id="exercise-4-configure-for-your-stack">Exercise 4: Configure for
+your stack</h3>
+<p><strong>Goal</strong>: Set up Cursor for your technology</p>
+<p><strong>Steps</strong>:</p>
+<ol type="1">
+<li>Identify your tech stack</li>
+<li>Configure interpreter/runtime if needed</li>
+<li>Install project dependencies</li>
+<li>Test that Cursor understands your code</li>
+<li>Create a simple rule (see Chapter 00) for your stack</li>
+</ol>
+<p><strong>Deliverable</strong>: Cursor configured and working with your
+stack</p>
+<h2 id="knowledge-check-self-assessment">Knowledge check
+(self-assessment)</h2>
+<p>Before moving forward, verify you can:</p>
+<ul class="task-list">
+<li><label><input type="checkbox" />Install and launch
+Cursor</label></li>
+<li><label><input type="checkbox" />Open and trust a
+workspace</label></li>
+<li><label><input type="checkbox" />Use AI chat (<code>Cmd+L</code> /
+<code>Ctrl+L</code>)</label></li>
+<li><label><input type="checkbox" />Use code selection with AI
+(<code>Cmd+K</code> / <code>Ctrl+K</code>)</label></li>
+<li><label><input type="checkbox" />Access Composer (<code>Cmd+I</code>
+/ <code>Ctrl+I</code>)</label></li>
+<li><label><input type="checkbox" />Troubleshoot common
+issues</label></li>
+<li><label><input type="checkbox" />Configure Cursor for your tech
+stack</label></li>
+</ul>
+<h2 id="checkpoint-what-should-work">Checkpoint: What should work</h2>
+<p>After completing this chapter, you should be able to:</p>
+<p>✅ Cursor is installed and running<br />
+✅ You can open your project in Cursor<br />
+✅ AI chat responds to questions<br />
+✅ Code selection with AI works<br />
+✅ You can modify code using AI<br />
+✅ Cursor understands your codebase (indexing complete)<br />
+✅ You know how to troubleshoot common issues</p>
+<p><strong>If all of these work</strong>, you’re ready for Chapter
+04!</p>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://cursor.sh">Cursor official website</a></li>
+<li><a href="https://docs.cursor.sh">Cursor documentation</a></li>
+<li><a href="https://docs.cursor.sh/shortcuts">Cursor keyboard
+shortcuts</a></li>
+<li>Your project’s technology documentation</li>
+<li><a href="https://cursor.com/learn">Cursor Learn — Official
+Course</a></li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<h1 id="project-confluence-publisher-app">06. Project: Confluence
+Publisher App</h1>
+<p>Build a full-stack web application to compose, schedule, and publish
+documentation pages to Confluence. This project demonstrates how to use
+AI assistance throughout the entire development lifecycle, from planning
+to deployment.</p>
+<p><strong>This project is technology-agnostic</strong> - you can use
+any backend (Python, Node.js, Java, Go, etc.) and any frontend ( React,
+Vue, Angular, etc.) that you’re comfortable with.</p>
+<h2 id="learning-objectives">Learning objectives</h2>
+<ul>
+<li>Apply all skills from previous chapters to build a complete
+application</li>
+<li>Use AI for planning, design, implementation, testing, and
+deployment</li>
+<li>Follow best practices and design patterns</li>
+<li>Build a production-ready application with AI assistance</li>
+</ul>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Chapters 00-05 completed (or 00-03, 05 if you skipped 04)</li>
+<li>Cursor set up and working</li>
+<li>Familiarity with your chosen technology stack</li>
+<li>Basic understanding of web development</li>
+</ul>
+<h2 id="project-overview">Project overview</h2>
+<p>You’ll build a Confluence publisher app that allows users to:</p>
+<ul>
+<li>Compose documentation pages with title, content, and
+attachments</li>
+<li>Schedule pages for future publication to Confluence spaces</li>
+<li>Publish pages immediately to Confluence</li>
+<li>View page status and retry failed publications</li>
+<li>Use AI to improve content, generate summaries, and suggest
+titles</li>
+</ul>
+<h2 id="project-structure">Project structure</h2>
+<p>The project is divided into 4 milestones, each building on the
+previous one:</p>
+<ol type="1">
+<li><strong><a href="./06.1-milestone-1-scaffold.md">M1: Project
+Scaffold</a></strong> - Set up project structure and basic
+infrastructure</li>
+<li><strong><a href="./06.2-milestone-2-core-flows.md">M2: Core Posting
+Flows</a></strong> - Implement core functionality</li>
+<li><strong><a href="./06.3-milestone-3-ai-features.md">M3: AI-Assisted
+Content Generation</a></strong> - Add AI features</li>
+<li><strong><a href="./06.4-milestone-4-polishing.md">M4: Polishing and
+Deployment</a></strong> - Testing, documentation, and deployment</li>
+</ol>
+<h2 id="architecture-overview">Architecture overview</h2>
+<h3 id="components">Components</h3>
+<ul>
+<li><strong>Backend API</strong>: RESTful API for pages, attachments,
+schedules, and Confluence operations</li>
+<li><strong>Frontend UI</strong>: Web interface for composing,
+scheduling, and viewing pages</li>
+<li><strong>Provider Adapters</strong>: Interface to integrate with
+Confluence API (stub provider for development)</li>
+<li><strong>Scheduler</strong>: Background worker for scheduled
+publishing and retries</li>
+<li><strong>Storage</strong>: Database for pages/attachments/schedules;
+file storage for attachments</li>
+<li><strong>AI Module</strong>: Content improvement and generation
+helpers</li>
+</ul>
+<h3 id="technology-choices">Technology choices</h3>
+<p><strong>You choose</strong>:</p>
+<ul>
+<li>Backend framework (FastAPI, Express, Spring Boot, etc.)</li>
+<li>Frontend framework (React, Vue, Angular, etc.)</li>
+<li>Database (PostgreSQL, MySQL, SQLite for dev, etc.)</li>
+<li>Language (Python, JavaScript/TypeScript, Java, Go, etc.)</li>
+</ul>
+<p><strong>Recommendation</strong>: Use what you know best. The patterns
+and prompts work with any stack.</p>
+<h2 id="requirements-and-user-stories">Requirements and user
+stories</h2>
+<h3 id="core-user-stories">Core user stories</h3>
+<ul>
+<li>As a content manager, I can compose a Confluence page (title +
+content + attachments) and preview it</li>
+<li>As a content manager, I can schedule a page for future publication
+or publish immediately</li>
+<li>As a content manager, I can view publication status (queued,
+published, failed) and retry failures safely</li>
+<li>As a content manager, I can request AI to improve content, generate
+summaries, or suggest titles</li>
+<li>As a content manager, I can specify target Confluence space and
+parent page for organization</li>
+</ul>
+<h3 id="non-goals-initial-scope">Non-goals (initial scope)</h3>
+<ul>
+<li>Multi-tenant authentication (single user/team for now)</li>
+<li>Advanced Confluence features (macros, templates)</li>
+<li>Page versioning and diff tracking</li>
+<li>Real Confluence API integration (use stub provider for
+development)</li>
+</ul>
+<h2 id="data-model">Data model</h2>
+<h3 id="core-entities">Core entities</h3>
+<ul>
+<li><strong>Attachment</strong>: id, filename, content_type, size,
+storage_path, description</li>
+<li><strong>Page</strong>: id, title, content, space_key,
+parent_page_id, created_at, updated_at</li>
+<li><strong>PageAttachment</strong>: page_id, attachment_id, position
+(junction table)</li>
+<li><strong>Schedule</strong>: id, page_id, scheduled_at, status,
+attempt_count, last_error</li>
+<li><strong>PublishLog</strong>: id, page_id, provider, page_id
+(Confluence), status, message, created_at</li>
+</ul>
+<h3 id="relationships">Relationships</h3>
+<ul>
+<li>Page → PageAttachment → Attachment (one-to-many)</li>
+<li>Page → Schedule (one-to-many)</li>
+<li>Page → PublishLog (one-to-many)</li>
+</ul>
+<h2 id="api-endpoints">API endpoints</h2>
+<h3 id="attachments">Attachments</h3>
+<ul>
+<li><code>POST /api/attachments</code> - Upload attachment file</li>
+<li><code>GET /api/attachments/{id}</code> - Get attachment
+metadata</li>
+</ul>
+<h3 id="pages">Pages</h3>
+<ul>
+<li><code>POST /api/pages</code> - Create page</li>
+<li><code>GET /api/pages/{id}</code> - Get page with attachments</li>
+<li><code>GET /api/pages</code> - List pages</li>
+</ul>
+<h3 id="schedules">Schedules</h3>
+<ul>
+<li><code>POST /api/schedules</code> - Schedule a page for
+publication</li>
+<li><code>GET /api/schedules</code> - List schedules</li>
+<li><code>GET /api/schedules/{id}</code> - Get schedule status</li>
+</ul>
+<h3 id="publishing">Publishing</h3>
+<ul>
+<li><code>POST /api/confluence/publish</code> - Publish page immediately
+to Confluence</li>
+<li><code>GET /api/confluence/status/{pageId}</code> - Get publication
+status</li>
+</ul>
+<h3 id="ai">AI</h3>
+<ul>
+<li><code>POST /api/ai/improve-content</code> - Improve page
+content</li>
+<li><code>POST /api/ai/generate-summary</code> - Generate page
+summary</li>
+<li><code>POST /api/ai/suggest-title</code> - Suggest page title</li>
+</ul>
+<h2 id="design-patterns">Design patterns</h2>
+<h3 id="provider-adapter-pattern">Provider Adapter Pattern</h3>
+<p>Use an adapter pattern to abstract Confluence API:</p>
+<pre class="text"><code>BaseProvider interface:
+- publishPage(spaceKey, title, content, parentPageId, attachmentPaths) -&gt; (pageId, message)
+- getStatus(pageId) -&gt; status
+
+ConfluenceStubProvider (for development):
+- Simulates Confluence API responses
+- Returns mock Confluence page IDs
+- Can simulate failures for testing</code></pre>
+<p>This allows you to:</p>
+<ul>
+<li>Test without real Confluence API calls</li>
+<li>Switch to real Confluence integration easily</li>
+<li>Develop without Confluence credentials</li>
+</ul>
+<h2 id="security-and-compliance">Security and compliance</h2>
+<h3 id="best-practices">Best practices</h3>
+<ul>
+<li><strong>Never store secrets in code</strong>: Use environment
+variables</li>
+<li><strong>Validate all inputs</strong>: Sanitize user input</li>
+<li><strong>Enforce file size/type limits</strong>: Prevent abuse</li>
+<li><strong>Redact secrets from logs</strong>: Don’t log sensitive
+data</li>
+<li><strong>Respect rate limits</strong>: Implement backoff
+strategies</li>
+</ul>
+<h3 id="privacy">Privacy</h3>
+<ul>
+<li>Don’t store PII unnecessarily</li>
+<li>Use secure storage for credentials</li>
+<li>Implement proper access controls</li>
+<li>Follow data protection regulations</li>
+</ul>
+<h2 id="testing-strategy">Testing strategy</h2>
+<h3 id="test-types">Test types</h3>
+<ol type="1">
+<li><strong>Unit tests</strong>: Individual functions/components</li>
+<li><strong>Integration tests</strong>: API endpoints with test
+database</li>
+<li><strong>E2E tests</strong>: Complete user flows</li>
+<li><strong>AI evaluation</strong>: Test AI output quality</li>
+</ol>
+<h3 id="testing-with-stub-provider">Testing with stub provider</h3>
+<p>Use stub provider for:</p>
+<ul>
+<li>Development (no API keys needed)</li>
+<li>Testing (predictable behavior)</li>
+<li>CI/CD (no external dependencies)</li>
+</ul>
+<h2 id="getting-started">Getting started</h2>
+<p>Before you start development:</p>
+<ul>
+<li>Clone this course Git repository locally to access the project
+description and reference materials.</li>
+<li>Create your own separate Git repository for the Confluence Publisher
+App implementation and do all application development there (do not
+commit your app code into this course repo).</li>
+</ul>
+<ol type="1">
+<li><strong>Choose your stack</strong>: Pick backend and frontend
+technologies</li>
+<li><strong>Start with M1</strong>: Follow <a
+href="./06.1-milestone-1-scaffold.md">Milestone 1 guide</a></li>
+<li><strong>Work incrementally</strong>: Complete each milestone before
+moving on</li>
+<li><strong>Use AI throughout</strong>: Apply patterns from previous
+chapters</li>
+</ol>
+<h2 id="milestones-overview">Milestones overview</h2>
+<h3 id="m1-project-scaffold-week-1">M1: Project Scaffold (Week 1)</h3>
+<ul>
+<li>Set up project structure</li>
+<li>Configure development environment</li>
+<li>Create database schema (pages, attachments, schedules)</li>
+<li>Implement health endpoint</li>
+<li>Create Confluence stub provider</li>
+</ul>
+<p><strong>Deliverable</strong>: Working project scaffold with health
+check</p>
+<h3 id="m2-core-publishing-flows-week-2">M2: Core Publishing Flows (Week
+2)</h3>
+<ul>
+<li>Implement attachment upload</li>
+<li>Create page endpoints</li>
+<li>Build scheduling system</li>
+<li>Create basic UI</li>
+<li>Implement Confluence publish flow</li>
+</ul>
+<p><strong>Deliverable</strong>: Can create, schedule, and publish pages
+to Confluence</p>
+<h3 id="m3-ai-features-week-3">M3: AI Features (Week 3)</h3>
+<ul>
+<li>Add AI content improvement</li>
+<li>Implement summary generation</li>
+<li>Add title suggestions</li>
+<li>Add AI prompts to UI</li>
+<li>Test AI output quality</li>
+</ul>
+<p><strong>Deliverable</strong>: AI-assisted content enhancement
+working</p>
+<h3 id="m4-polishing-week-4">M4: Polishing (Week 4)</h3>
+<ul>
+<li>Write comprehensive tests</li>
+<li>Add error handling</li>
+<li>Improve UI/UX</li>
+<li>Document everything</li>
+<li>Deploy application</li>
+</ul>
+<p><strong>Deliverable</strong>: Production-ready application</p>
+<h2 id="tips-for-success">Tips for success</h2>
+<h3 id="use-ai-effectively">Use AI effectively</h3>
+<ul>
+<li><strong>Plan first</strong>: Use AI to break down each
+milestone</li>
+<li><strong>Small steps</strong>: Implement one feature at a time</li>
+<li><strong>Test constantly</strong>: Verify each change works</li>
+<li><strong>Refine prompts</strong>: Improve prompts based on
+results</li>
+<li><strong>Review everything</strong>: Don’t accept AI output
+blindly</li>
+</ul>
+<h3 id="stay-organized">Stay organized</h3>
+<ul>
+<li><strong>Commit frequently</strong>: Small, focused commits</li>
+<li><strong>Document decisions</strong>: Why you made certain
+choices</li>
+<li><strong>Track progress</strong>: Check off milestones as you
+complete them</li>
+<li><strong>Ask for help</strong>: Use AI when stuck</li>
+</ul>
+<h3 id="quality-matters">Quality matters</h3>
+<ul>
+<li><strong>Write tests</strong>: Test as you build</li>
+<li><strong>Handle errors</strong>: Don’t ignore error cases</li>
+<li><strong>Follow patterns</strong>: Use consistent code style</li>
+<li><strong>Review code</strong>: Check AI output before committing</li>
+</ul>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="common-issues">Common issues</h3>
+<p><strong>Problem</strong>: AI suggests wrong technology patterns</p>
+<ul>
+<li><strong>Solution</strong>: Provide more context about your stack,
+use project rules</li>
+</ul>
+<p><strong>Problem</strong>: Tests fail after AI changes</p>
+<ul>
+<li><strong>Solution</strong>: Always run tests, refine prompts to
+include test requirements</li>
+</ul>
+<p><strong>Problem</strong>: AI changes too much code</p>
+<ul>
+<li><strong>Solution</strong>: Select specific code, be explicit about
+scope</li>
+</ul>
+<p><strong>Problem</strong>: Deployment issues</p>
+<ul>
+<li><strong>Solution</strong>: Test locally first, use staging
+environment</li>
+</ul>
+<h2 id="knowledge-check">Knowledge check</h2>
+<p>Before starting, ensure you can:</p>
+<ul class="task-list">
+<li><label><input type="checkbox" />Write effective prompts (Chapter
+01)</label></li>
+<li><label><input type="checkbox" />Break down complex tasks (Chapter
+02)</label></li>
+<li><label><input type="checkbox" />Use Cursor effectively (Chapter
+03)</label></li>
+<li><label><input type="checkbox" />Apply development workflows (Chapter
+05)</label></li>
+<li><label><input type="checkbox" />Create project rules (Chapter
+00)</label></li>
+</ul>
+<h2 id="next-steps">Next steps</h2>
+<p>Ready to start? Begin with <strong><a
+href="./06.1-milestone-1-scaffold.md">Milestone 1: Project
+Scaffold</a></strong></p>
+<h2 id="references">References</h2>
+<ul>
+<li>Your chosen technology stack documentation</li>
+<li>REST API design best practices</li>
+<li>Database design patterns</li>
+<li>Security best practices (OWASP)</li>
+<li>Accessibility guidelines (WCAG)</li>
+</ul>
+<h2 id="resources">Resources</h2>
+<ul>
+<li><a href="https://cursor.com/learn">Cursor Learn — Official
+Course</a></li>
+<li><a href="https://cursor.directory/rules">Cursor Directory:
+Rules</a></li>
+</ul>
+</body>
+</html>

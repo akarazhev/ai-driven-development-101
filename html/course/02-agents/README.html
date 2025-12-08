@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<h1 id="when-to-use-ai-for-complex-tasks">02. When to Use AI for Complex
+Tasks</h1>
+<p>Learn when AI assistance is most valuable and how to break down
+complex tasks into manageable prompts. This chapter focuses on practical
+decision-making: when to use AI, when to code manually, and how to
+structure complex requests.</p>
+<h2 id="learning-objectives">Learning objectives</h2>
+<ul>
+<li>Decide when AI helps vs when it might hinder</li>
+<li>Break complex tasks into smaller, manageable prompts</li>
+<li>Structure multi-step requests effectively</li>
+<li>Recognize when to iterate vs when to start over</li>
+<li>Apply AI to real-world development scenarios</li>
+</ul>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Chapter 01 completed (understanding basic prompting)</li>
+<li>Familiarity with your project structure</li>
+</ul>
+<h2 id="outline">Outline</h2>
+<ul>
+<li>When AI helps and when it doesn’t</li>
+<li>Breaking down complex tasks</li>
+<li>Multi-step workflows with AI</li>
+<li>Real-world scenarios</li>
+<li>Common pitfalls and how to avoid them</li>
+</ul>
+<h2 id="when-ai-helps-and-when-it-doesnt">When AI helps and when it
+doesn’t</h2>
+<h3 id="ai-is-great-for">✅ AI is great for:</h3>
+<p><strong>Repetitive tasks</strong></p>
+<ul>
+<li>Writing boilerplate code</li>
+<li>Creating similar components/functions</li>
+<li>Generating tests</li>
+<li>Refactoring similar patterns</li>
+</ul>
+<p><strong>Learning and exploration</strong></p>
+<ul>
+<li>Understanding unfamiliar code</li>
+<li>Learning new libraries/frameworks</li>
+<li>Getting examples of patterns</li>
+<li>Exploring different approaches</li>
+</ul>
+<p><strong>Debugging assistance</strong></p>
+<ul>
+<li>Analyzing error messages</li>
+<li>Finding potential issues</li>
+<li>Suggesting fixes</li>
+<li>Explaining complex code</li>
+</ul>
+<p><strong>Code generation</strong></p>
+<ul>
+<li>Creating utilities from specifications</li>
+<li>Implementing standard patterns</li>
+<li>Writing documentation</li>
+<li>Generating configuration files</li>
+</ul>
+<h3 id="ai-struggles-with">❌ AI struggles with:</h3>
+<p><strong>Highly specific business logic</strong></p>
+<ul>
+<li>Domain-specific rules</li>
+<li>Complex state machines</li>
+<li>Custom algorithms</li>
+<li>Project-specific patterns not in codebase</li>
+</ul>
+<p><strong>Real-time debugging</strong></p>
+<ul>
+<li>Runtime issues that need live inspection</li>
+<li>Performance problems requiring profiling</li>
+<li>Race conditions and timing issues</li>
+</ul>
+<p><strong>Architectural decisions</strong></p>
+<ul>
+<li>System design choices</li>
+<li>Technology selection</li>
+<li>Scalability decisions</li>
+<li>Team preferences</li>
+</ul>
+<p><strong>When you don’t understand the problem</strong></p>
+<ul>
+<li>If you can’t explain it clearly, AI can’t help</li>
+<li>Vague requirements lead to wrong solutions</li>
+<li>Need domain knowledge first</li>
+</ul>
+<h2 id="breaking-down-complex-tasks">Breaking down complex tasks</h2>
+<p>Complex tasks often fail with AI because they’re too large. The
+solution: <strong>break them into smaller pieces</strong>.</p>
+<h3 id="the-breakdown-strategy">The breakdown strategy</h3>
+<ol type="1">
+<li><strong>Identify the goal</strong>: What are you trying to
+achieve?</li>
+<li><strong>List dependencies</strong>: What needs to happen first?</li>
+<li><strong>Create steps</strong>: Each step should be a single, clear
+task</li>
+<li><strong>Order logically</strong>: Do prerequisites first</li>
+<li><strong>Test incrementally</strong>: Verify each step before moving
+on</li>
+</ol>
+<h3 id="example-building-a-feature">Example: Building a feature</h3>
+<p><strong>❌ Too complex</strong>:</p>
+<pre class="text"><code>Build a user authentication system with login, registration, password reset, 
+email verification, OAuth integration, and session management.</code></pre>
+<p><strong>✅ Broken down</strong>:</p>
+<p><strong>Step 1</strong>: Create user model/schema</p>
+<pre class="text"><code>Role: Backend developer
+Task: Create user data model
+Constraints:
+- Include: email, password hash, verification status
+- Follow existing database patterns
+- Add appropriate indexes
+Inputs: [existing model examples]
+Output format: Model definition</code></pre>
+<p><strong>Step 2</strong>: Implement registration endpoint</p>
+<pre class="text"><code>Role: Backend developer  
+Task: Create user registration endpoint
+Constraints:
+- Validate email format
+- Hash password before storing
+- Return appropriate status codes
+- Follow existing API patterns
+Inputs: [user model from step 1, existing API examples]
+Output format: Endpoint code with validation</code></pre>
+<p><strong>Step 3</strong>: Implement login endpoint</p>
+<pre class="text"><code>Role: Backend developer
+Task: Create login endpoint
+Constraints:
+- Verify password hash
+- Generate session token
+- Handle invalid credentials
+- Follow existing auth patterns
+Inputs: [user model, existing auth examples]
+Output format: Login endpoint code</code></pre>
+<p>Continue breaking down until each step is manageable.</p>
+<h2 id="multi-step-workflows">Multi-step workflows</h2>
+<p>For tasks that require multiple related changes, structure your
+prompt to handle the workflow:</p>
+<h3 id="template-multi-step-feature">Template: Multi-step feature</h3>
+<pre class="text"><code>Role: Full-stack developer
+Task: Implement [feature name] with these steps:
+1. [First step - e.g., Create data model]
+2. [Second step - e.g., Create API endpoint]
+3. [Third step - e.g., Create UI component]
+4. [Fourth step - e.g., Add tests]
+
+Constraints:
+- Complete all steps in order
+- Each step should build on previous ones
+- Follow existing project patterns
+- Include error handling at each step
+
+Inputs:
+- Step 1: [context needed]
+- Step 2: [context from step 1 + additional]
+- Step 3: [context from steps 1-2 + additional]
+- Step 4: [all previous context]
+
+Output format: 
+- Complete implementation for all steps
+- Brief explanation of how steps connect
+
+Evaluation:
+- Each step works independently
+- Steps integrate correctly
+- Follows project conventions</code></pre>
+<h3 id="when-to-do-steps-separately">When to do steps separately</h3>
+<p>Sometimes it’s better to do steps one at a time:</p>
+<ul>
+<li><strong>Complex logic</strong>: Each step needs careful review</li>
+<li><strong>Uncertain requirements</strong>: Test each step before
+proceeding</li>
+<li><strong>Large changes</strong>: Easier to review smaller diffs</li>
+<li><strong>Learning</strong>: Understand each step before moving
+on</li>
+</ul>
+<h3 id="when-to-combine-steps">When to combine steps</h3>
+<p>You can combine steps when:</p>
+<ul>
+<li><strong>Simple and related</strong>: Steps are straightforward and
+connected</li>
+<li><strong>Well-defined</strong>: You’re confident about
+requirements</li>
+<li><strong>Standard pattern</strong>: Following a common pattern you
+know works</li>
+</ul>
+<h2 id="real-world-scenarios">Real-world scenarios</h2>
+<h3 id="scenario-1-adding-a-new-api-endpoint">Scenario 1: Adding a new
+API endpoint</h3>
+<p><strong>Breakdown</strong>:</p>
+<ol type="1">
+<li>Define data model (if needed)</li>
+<li>Create route/controller</li>
+<li>Add validation</li>
+<li>Implement business logic</li>
+<li>Add error handling</li>
+<li>Write tests</li>
+<li>Update documentation</li>
+</ol>
+<p><strong>Prompt structure</strong>:</p>
+<pre class="text"><code>Role: Backend developer
+Task: Add [endpoint name] API endpoint
+Constraints:
+- Follow existing API patterns in [reference files]
+- Include input validation
+- Add error handling
+- Write unit tests
+- Update API docs
+
+Steps:
+1. Review existing endpoint patterns
+2. Create route/controller structure
+3. Add validation logic
+4. Implement core functionality
+5. Add error handling
+6. Write tests
+7. Update documentation
+
+Inputs: [existing API examples, data model if needed]
+Output format: Complete implementation with tests
+Evaluation: Endpoint works, tests pass, follows patterns</code></pre>
+<h3 id="scenario-2-refactoring-a-large-component">Scenario 2:
+Refactoring a large component</h3>
+<p><strong>Breakdown</strong>:</p>
+<ol type="1">
+<li>Understand current structure</li>
+<li>Identify refactoring goals</li>
+<li>Extract smaller pieces</li>
+<li>Refactor incrementally</li>
+<li>Update tests</li>
+<li>Verify behavior unchanged</li>
+</ol>
+<p><strong>Prompt structure</strong>:</p>
+<pre class="text"><code>Role: Code refactoring specialist
+Task: Refactor [component name] for [goal: readability/maintainability/performance]
+
+Current state: [describe or reference file]
+Desired state: [describe improvements]
+
+Constraints:
+- Preserve exact behavior
+- Improve [specific aspect]
+- Keep same public API
+- Maintain test coverage
+
+Steps:
+1. Analyze current structure
+2. Identify extraction opportunities
+3. Extract [specific pieces]
+4. Refactor [specific parts]
+5. Update tests if needed
+6. Verify no behavior changes
+
+Inputs: [component code, test file]
+Output format: Refactored code + test updates + explanation
+Evaluation: All tests pass, code improved, behavior identical</code></pre>
+<h3 id="scenario-3-debugging-a-complex-issue">Scenario 3: Debugging a
+complex issue</h3>
+<p><strong>Breakdown</strong>:</p>
+<ol type="1">
+<li>Reproduce the issue</li>
+<li>Identify affected code</li>
+<li>Analyze root cause</li>
+<li>Propose fix</li>
+<li>Test the fix</li>
+<li>Verify no regressions</li>
+</ol>
+<p><strong>Prompt structure</strong>:</p>
+<pre class="text"><code>Role: Debugging specialist
+Task: Fix [issue description]
+
+Symptoms:
+- [What happens]
+- [When it happens]
+- [Error messages if any]
+
+Steps to reproduce:
+1. [Step 1]
+2. [Step 2]
+3. [Step 3]
+
+Affected code: [file paths]
+Related code: [file paths]
+
+Constraints:
+- Minimal fix (don&#39;t refactor unrelated code)
+- Preserve existing behavior for other cases
+- Add regression test
+
+Steps:
+1. Analyze error/behavior
+2. Identify root cause
+3. Propose minimal fix
+4. Add test to prevent regression
+5. Verify fix works
+
+Inputs: [error logs, stack traces, relevant code]
+Output format: 
+- Root cause explanation
+- Minimal fix
+- Regression test
+- Verification steps
+
+Evaluation: Issue fixed, test passes, no regressions</code></pre>
+<h2 id="common-pitfalls-and-how-to-avoid-them">Common pitfalls and how
+to avoid them</h2>
+<h3 id="pitfall-1-asking-for-too-much-at-once">Pitfall 1: Asking for too
+much at once</h3>
+<p><strong>Problem</strong>: “Build a complete authentication
+system”</p>
+<p><strong>Solution</strong>: Break into steps (model → registration →
+login → etc.)</p>
+<h3 id="pitfall-2-not-providing-enough-context">Pitfall 2: Not providing
+enough context</h3>
+<p><strong>Problem</strong>: “Add validation to the form”</p>
+<p><strong>Solution</strong>: Include form code, validation patterns,
+error handling examples</p>
+<h3 id="pitfall-3-vague-requirements">Pitfall 3: Vague requirements</h3>
+<p><strong>Problem</strong>: “Make it better”</p>
+<p><strong>Solution</strong>: Specify what “better” means (faster, more
+readable, fewer bugs)</p>
+<h3 id="pitfall-4-ignoring-project-patterns">Pitfall 4: Ignoring project
+patterns</h3>
+<p><strong>Problem</strong>: AI suggests patterns that don’t match your
+project</p>
+<p><strong>Solution</strong>: Always reference existing code patterns in
+your prompts</p>
+<h3 id="pitfall-5-not-testing-incrementally">Pitfall 5: Not testing
+incrementally</h3>
+<p><strong>Problem</strong>: Building everything then discovering it
+doesn’t work</p>
+<p><strong>Solution</strong>: Test each step before moving to the
+next</p>
+<h2 id="ready-to-use-prompt-templates">Ready-to-use prompt
+templates</h2>
+<h3 id="template-feature-implementation">Template: Feature
+implementation</h3>
+<pre class="text"><code>Role: [Your role]
+Task: Implement [feature name]
+
+Breakdown:
+1. [Step 1 description]
+2. [Step 2 description]
+3. [Step 3 description]
+
+Constraints:
+- Follow patterns in [reference files]
+- Include [specific requirements]
+- Handle [edge cases]
+
+Inputs: [context for each step]
+Output format: [what you need]
+Evaluation: [how to verify success]</code></pre>
+<h3 id="template-refactoring">Template: Refactoring</h3>
+<pre class="text"><code>Role: Refactoring specialist
+Task: Refactor [code] for [goal]
+
+Current issues: [what&#39;s wrong]
+Desired improvements: [what should be better]
+
+Constraints:
+- Preserve behavior
+- Improve [specific aspects]
+- Follow [project standards]
+
+Steps:
+1. Analyze current code
+2. Identify improvements
+3. Apply refactoring
+4. Verify no changes
+
+Inputs: [code to refactor]
+Output format: Refactored code + explanation
+Evaluation: Tests pass, code improved</code></pre>
+<h3 id="template-debugging">Template: Debugging</h3>
+<pre class="text"><code>Role: Debugging assistant
+Task: Fix [issue]
+
+Problem: [description]
+Steps to reproduce: [list]
+Error: [if applicable]
+
+Affected code: [files]
+Constraints:
+- Minimal fix
+- Add regression test
+- Explain root cause
+
+Inputs: [error info, code]
+Output format: Fix + test + explanation
+Evaluation: Issue resolved, test added</code></pre>
+<h2 id="exercises">Exercises</h2>
+<h3 id="exercise-1-break-down-a-complex-task">Exercise 1: Break down a
+complex task</h3>
+<p><strong>Goal</strong>: Practice breaking down a large task</p>
+<p><strong>Task</strong>: “Build a blog system with posts, comments,
+user management, and search”</p>
+<p><strong>Your assignment</strong>:</p>
+<ol type="1">
+<li>Break this into 5-7 smaller steps</li>
+<li>Write a prompt for the first step</li>
+<li>Identify what context each step needs</li>
+<li>Define how to verify each step</li>
+</ol>
+<h3 id="exercise-2-multi-step-implementation">Exercise 2: Multi-step
+implementation</h3>
+<p><strong>Goal</strong>: Implement a feature using step-by-step
+approach</p>
+<p><strong>Choose a small feature</strong> (e.g., “add pagination to
+list view”)</p>
+<p><strong>Steps</strong>:</p>
+<ol type="1">
+<li>Break it into 2-3 steps</li>
+<li>Implement step 1 with AI</li>
+<li>Test step 1</li>
+<li>Implement step 2 with AI</li>
+<li>Test integration</li>
+<li>Document what worked</li>
+</ol>
+<h3 id="exercise-3-refactoring-workflow">Exercise 3: Refactoring
+workflow</h3>
+<p><strong>Goal</strong>: Refactor code using structured approach</p>
+<p><strong>Steps</strong>:</p>
+<ol type="1">
+<li>Find a function/component that needs refactoring</li>
+<li>Write a refactoring prompt with clear steps</li>
+<li>Execute with AI</li>
+<li>Review and test</li>
+<li>Document improvements</li>
+</ol>
+<h3 id="exercise-4-debugging-workflow">Exercise 4: Debugging
+workflow</h3>
+<p><strong>Goal</strong>: Use AI to debug a real issue</p>
+<p><strong>Steps</strong>:</p>
+<ol type="1">
+<li>Find or create a bug in your code</li>
+<li>Write a debugging prompt</li>
+<li>Let AI identify and fix</li>
+<li>Verify the fix</li>
+<li>Add regression test</li>
+</ol>
+<h2 id="knowledge-check-self-assessment">Knowledge check
+(self-assessment)</h2>
+<p>Before moving forward, verify you can:</p>
+<ul class="task-list">
+<li><label><input type="checkbox" />Identify when AI helps vs when it
+doesn’t</label></li>
+<li><label><input type="checkbox" />Break complex tasks into smaller
+steps</label></li>
+<li><label><input type="checkbox" />Structure multi-step prompts
+effectively</label></li>
+<li><label><input type="checkbox" />Recognize common
+pitfalls</label></li>
+<li><label><input type="checkbox" />Apply templates to real
+scenarios</label></li>
+</ul>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="ai-gives-incomplete-solutions">AI gives incomplete
+solutions</h3>
+<p><strong>Problem</strong>: AI implements part of a feature but misses
+important parts</p>
+<p><strong>Solution</strong>:</p>
+<ul>
+<li>Break task into smaller, more specific steps</li>
+<li>Add explicit checklist in constraints</li>
+<li>Review output and ask for missing pieces separately</li>
+</ul>
+<h3 id="ai-changes-too-much-unrelated-code">AI changes too much
+unrelated code</h3>
+<p><strong>Problem</strong>: When asking for one thing, AI modifies many
+files</p>
+<p><strong>Solution</strong>:</p>
+<ul>
+<li>Be explicit: “Only modify [specific files]”</li>
+<li>Add constraint: “Don’t change [unrelated areas]”</li>
+<li>Select specific code before prompting</li>
+</ul>
+<h3 id="ai-doesnt-follow-project-patterns">AI doesn’t follow project
+patterns</h3>
+<p><strong>Problem</strong>: Generated code doesn’t match your
+architecture</p>
+<p><strong>Solution</strong>:</p>
+<ul>
+<li>Provide more examples of existing patterns</li>
+<li>Reference specific files in inputs</li>
+<li>Add constraint: “Follow exact pattern from [file]”</li>
+<li>Use project rules (see Chapter 00)</li>
+</ul>
+<h3 id="multi-step-task-gets-confusing">Multi-step task gets
+confusing</h3>
+<p><strong>Problem</strong>: AI loses track of steps or combines them
+incorrectly</p>
+<p><strong>Solution</strong>:</p>
+<ul>
+<li>Do steps one at a time instead of all at once</li>
+<li>Provide clear step numbers and dependencies</li>
+<li>Test each step before moving on</li>
+<li>Reference previous step outputs explicitly</li>
+</ul>
+<h2 id="checkpoint-what-should-work">Checkpoint: What should work</h2>
+<p>After completing this chapter, you should be able to:</p>
+<p>✅ Recognize when AI is helpful vs when to code manually<br />
+✅ Break complex tasks into manageable steps<br />
+✅ Structure multi-step prompts effectively<br />
+✅ Avoid common pitfalls<br />
+✅ Apply templates to real development scenarios</p>
+<p><strong>If you can do all of these</strong>, you’re ready for Chapter
+03!</p>
+<h2 id="references">References</h2>
+<ul>
+<li>Chapter 01: Basic prompting skills</li>
+<li>Your project’s architecture and patterns</li>
+<li>Cursor documentation on complex workflows</li>
+</ul>
+<h2 id="resources">Resources</h2>
+<ul>
+<li><a href="https://cursor.com/learn">Cursor Learn — Official
+Course</a></li>
+<li><a href="https://cursor.directory/rules">Cursor Directory:
+Rules</a></li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>06.1-milestone-1-scaffold</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<h1 id="m1-project-scaffold-and-environment">M1: Project Scaffold and
+Environment</h1>
+<p>Set up the foundation of your Confluence automation app. This
+milestone focuses on project structure, development environment, and
+basic infrastructure.</p>
+<h2 id="learning-objectives">Learning objectives</h2>
+<ul>
+<li>Set up project structure for full-stack application</li>
+<li>Configure development environment</li>
+<li>Create database schema</li>
+<li>Implement health check endpoint</li>
+<li>Create stub provider for development</li>
+</ul>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Chapters 00-05 completed</li>
+<li>Cursor set up and working</li>
+<li>Your chosen technology stack installed</li>
+</ul>
+<h2 id="acceptance-criteria">Acceptance criteria</h2>
+<ul class="task-list">
+<li><label><input type="checkbox" />Project structure created (backend,
+frontend, tests, docs)</label></li>
+<li><label><input type="checkbox" />Development environment
+configured</label></li>
+<li><label><input type="checkbox" />Database schema created</label></li>
+<li><label><input type="checkbox" />Health endpoint working
+(<code>GET /api/health</code>)</label></li>
+<li><label><input type="checkbox" />Stub provider
+implemented</label></li>
+<li><label><input type="checkbox" />Basic models/entities
+defined</label></li>
+</ul>
+<h2 id="step-by-step-guide">Step-by-step guide</h2>
+<h3 id="step-1-plan-project-structure">Step 1: Plan project
+structure</h3>
+<p><strong>Use AI to help plan</strong>:</p>
+<pre class="text"><code>Role: Technical architect
+Task: Design project structure for a full-stack Confluence automation app
+Constraints:
+- Separate backend and frontend
+- Include: models, API routes, services, tests, docs
+- Follow best practices for [your stack]
+- Make it scalable and maintainable
+Inputs: [Your technology choices]
+Output format: Directory structure with explanations
+Evaluation: Structure is clear, organized, and follows conventions</code></pre>
+<p><strong>Typical structure</strong>:</p>
+<pre><code>project/
+  backend/
+    models/          # Data models
+    routes/          # API endpoints
+    services/       # Business logic
+    providers/      # Social attachment adapters
+    config/         # Configuration
+    tests/          # Backend tests
+  frontend/
+    src/
+      components/   # UI components
+      pages/        # Page components
+      services/     # API clients
+      utils/        # Utilities
+    tests/          # Frontend tests
+  docs/             # Documentation
+  README.md</code></pre>
+<h3 id="step-2-set-up-backend">Step 2: Set up backend</h3>
+<p><strong>Choose your stack</strong> and set up:</p>
+<p><strong>For Node.js/Express</strong>:</p>
+<pre class="text"><code>Role: Backend developer
+Task: Set up Express.js backend with TypeScript
+Constraints:
+- Include: Express, TypeScript, testing framework
+- Set up project structure
+- Configure build scripts
+- Add health check endpoint
+Inputs: [Project requirements]
+Output format: Complete backend setup</code></pre>
+<p><strong>For Python/FastAPI</strong>:</p>
+<pre class="text"><code>Role: Backend developer
+Task: Set up FastAPI backend
+Constraints:
+- Include: FastAPI, SQLAlchemy/SQLModel, Pydantic
+- Set up project structure
+- Configure development server
+- Add health check endpoint
+Inputs: [Project requirements]
+Output format: Complete backend setup</code></pre>
+<p><strong>For Java/Spring Boot</strong>:</p>
+<pre class="text"><code>Role: Backend developer
+Task: Set up Spring Boot application
+Constraints:
+- Include: Spring Boot, JPA, REST controllers
+- Set up project structure (Maven/Gradle)
+- Configure application properties
+- Add health check endpoint
+Inputs: [Project requirements]
+Output format: Complete Spring Boot setup</code></pre>
+<h3 id="step-3-set-up-database">Step 3: Set up database</h3>
+<p><strong>Create schema</strong>:</p>
+<pre class="text"><code>Role: Database architect
+Task: Design database schema for Confluence automation app
+Constraints:
+- Tables: AttachmentAsset, Page, PageAttachment, Schedule, PublishLog
+- Include: relationships, indexes, constraints
+- Use [your ORM/framework]
+- Include migration files
+Inputs: [Data model from main README]
+Output format: Schema definition + migration files
+Evaluation: Schema supports all requirements</code></pre>
+<p><strong>Tables to create</strong>:</p>
+<ul>
+<li><code>attachment_assets</code>: id, filename, content_type, size,
+storage_path, alt_text</li>
+<li><code>pages</code>: id, text, created_at, updated_at, author_id</li>
+<li><code>page_attachment</code>: id, page_id, attachment_id,
+position</li>
+<li><code>schedules</code>: id, page_id, scheduled_at, status,
+attempt_count, last_error</li>
+<li><code>publish_logs</code>: id, page_id, provider, external_id,
+status, message, created_at</li>
+</ul>
+<h3 id="step-4-implement-health-endpoint">Step 4: Implement health
+endpoint</h3>
+<p><strong>Create health check</strong>:</p>
+<pre class="text"><code>Role: Backend developer
+Task: Implement health check endpoint
+Constraints:
+- Endpoint: GET /api/health
+- Return: { &quot;status&quot;: &quot;ok&quot; }
+- Test that it works
+- Follow existing API patterns
+Inputs: [Backend setup]
+Output format: Health endpoint + test
+Evaluation: Endpoint returns correct response</code></pre>
+<h3 id="step-5-create-stub-provider">Step 5: Create stub provider</h3>
+<p><strong>Implement provider interface</strong>:</p>
+<pre class="text"><code>Role: Software engineer
+Task: Create provider adapter pattern with stub implementation
+Constraints:
+- Define BaseProvider interface with publish() method
+- Implement StubProvider that simulates publishing
+- Return mock external_id
+- Can simulate success/failure
+- Follow adapter pattern
+Inputs: [Provider requirements]
+Output format: Provider interface + stub implementation
+Evaluation: Stub provider works and can be swapped later</code></pre>
+<p><strong>Interface</strong>:</p>
+<pre class="text"><code>BaseProvider:
+  publish(text: string, attachment_paths: string[]) -&gt; (external_id: string, message: string)
+  get_status(external_id: string) -&gt; status: string</code></pre>
+<h3 id="step-6-set-up-frontend">Step 6: Set up frontend</h3>
+<p><strong>Choose your framework</strong> and set up:</p>
+<p><strong>For React</strong>:</p>
+<pre class="text"><code>Role: Frontend developer
+Task: Set up React application with TypeScript
+Constraints:
+- Include: React, TypeScript, routing, API client
+- Set up project structure
+- Configure build tools
+- Add basic layout
+Inputs: [Frontend requirements]
+Output format: Complete React setup</code></pre>
+<p><strong>For Vue</strong>:</p>
+<pre class="text"><code>Role: Frontend developer
+Task: Set up Vue 3 application with TypeScript
+Constraints:
+- Include: Vue 3, TypeScript, Vue Router, API client
+- Set up project structure
+- Configure build tools
+- Add basic layout
+Inputs: [Frontend requirements]
+Output format: Complete Vue setup</code></pre>
+<p><strong>For Angular</strong>:</p>
+<pre class="text"><code>Role: Frontend developer
+Task: Set up Angular application
+Constraints:
+- Include: Angular, TypeScript, routing, HTTP client
+- Set up project structure
+- Configure build
+- Add basic layout
+Inputs: [Frontend requirements]
+Output format: Complete Angular setup</code></pre>
+<h3 id="step-7-connect-frontend-to-backend">Step 7: Connect frontend to
+backend</h3>
+<p><strong>Set up API client</strong>:</p>
+<pre class="text"><code>Role: Frontend developer
+Task: Create API client to connect frontend to backend
+Constraints:
+- Base URL configurable
+- Methods for: health check, attachment, pages, schedules
+- Error handling
+- TypeScript types
+- Follow existing patterns
+Inputs: [Backend API endpoints]
+Output format: API client with types
+Evaluation: Can call backend endpoints successfully</code></pre>
+<h2 id="testing">Testing</h2>
+<h3 id="test-health-endpoint">Test health endpoint</h3>
+<pre class="text"><code>Role: Test engineer
+Task: Write test for health endpoint
+Constraints:
+- Use [your testing framework]
+- Test: GET /api/health returns 200
+- Test: Response has correct structure
+- Follow existing test patterns
+Inputs: [Health endpoint code]
+Output format: Test file
+Evaluation: Test passes</code></pre>
+<h3 id="test-stub-provider">Test stub provider</h3>
+<pre class="text"><code>Role: Test engineer
+Task: Write tests for stub provider
+Constraints:
+- Test: publish() returns external_id
+- Test: get_status() returns status
+- Test: failure simulation works
+- Use [your testing framework]
+Inputs: [Stub provider code]
+Output format: Test file
+Evaluation: All tests pass</code></pre>
+<h2 id="verification-checklist">Verification checklist</h2>
+<p>Before moving to M2, verify:</p>
+<ul class="task-list">
+<li><label><input type="checkbox" />Backend runs and responds to health
+check</label></li>
+<li><label><input type="checkbox" />Frontend runs and can call
+backend</label></li>
+<li><label><input type="checkbox" />Database schema created and
+migrations work</label></li>
+<li><label><input type="checkbox" />Stub provider implemented and
+tested</label></li>
+<li><label><input type="checkbox" />Project structure is
+organized</label></li>
+<li><label><input type="checkbox" />Development environment
+configured</label></li>
+<li><label><input type="checkbox" />Basic tests pass</label></li>
+</ul>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="issue-backend-wont-start">Issue: Backend won’t start</h3>
+<p><strong>Solutions</strong>:</p>
+<ul>
+<li>Check dependencies are installed</li>
+<li>Verify configuration files</li>
+<li>Check port isn’t in use</li>
+<li>Review error logs</li>
+</ul>
+<h3 id="issue-database-connection-fails">Issue: Database connection
+fails</h3>
+<p><strong>Solutions</strong>:</p>
+<ul>
+<li>Verify database is running</li>
+<li>Check connection string</li>
+<li>Verify credentials</li>
+<li>Check firewall/network</li>
+</ul>
+<h3 id="issue-frontend-cant-reach-backend">Issue: Frontend can’t reach
+backend</h3>
+<p><strong>Solutions</strong>:</p>
+<ul>
+<li>Check CORS configuration</li>
+<li>Verify backend URL</li>
+<li>Check network/firewall</li>
+<li>Review API client setup</li>
+</ul>
+<h2 id="next-steps">Next steps</h2>
+<p>Once M1 is complete, proceed to <strong><a
+href="./06.2-milestone-2-core-flows.md">M2: Core Pageing
+Flows</a></strong></p>
+<h2 id="deliverables">Deliverables</h2>
+<ul>
+<li>Working project scaffold</li>
+<li>Health endpoint responding</li>
+<li>Database schema created</li>
+<li>Stub provider implemented</li>
+<li>Basic frontend-backend connection</li>
+<li>Tests passing</li>
+</ul>
+</body>
+</html>

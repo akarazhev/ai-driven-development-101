@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>06.3-milestone-3-ai-features</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<h1 id="m3-ai-assisted-content-generation">M3: AI-Assisted Content
+Generation</h1>
+<p>Add AI features to help users create better content: generate page
+content improvements and automatic description for images.</p>
+<h2 id="learning-objectives">Learning objectives</h2>
+<ul>
+<li>Integrate AI into your application</li>
+<li>Implement content content improvement generation</li>
+<li>Add automatic description generation</li>
+<li>Create UI for AI features</li>
+<li>Evaluate AI output quality</li>
+</ul>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>M2 completed (core flows working)</li>
+<li>AI API access (OpenAI, Anthropic, etc.) or use Cursor’s AI</li>
+<li>Understanding of AI prompting (from previous chapters)</li>
+</ul>
+<h2 id="acceptance-criteria">Acceptance criteria</h2>
+<ul class="task-list">
+<li><label><input type="checkbox" />Can generate page content
+improvements using AI</label></li>
+<li><label><input type="checkbox" />Can generate description for
+images</label></li>
+<li><label><input type="checkbox" />AI features integrated into
+UI</label></li>
+<li><label><input type="checkbox" />AI output is validated and
+safe</label></li>
+<li><label><input type="checkbox" />Evaluation notes
+documented</label></li>
+</ul>
+<h2 id="step-by-step-guide">Step-by-step guide</h2>
+<h3 id="step-1-set-up-ai-integration">Step 1: Set up AI integration</h3>
+<p><strong>Choose AI provider</strong>:</p>
+<ul>
+<li>OpenAI API</li>
+<li>Anthropic Claude API</li>
+<li>Use Cursor’s AI (for development)</li>
+<li>Other LLM API</li>
+</ul>
+<p><strong>Configure API access</strong>:</p>
+<pre class="text"><code>Role: Backend developer
+Task: Set up AI API integration
+Constraints:
+- Use environment variables for API keys
+- Create AI service/client
+- Handle API errors gracefully
+- Include rate limiting
+- Never log API keys
+Inputs: [AI provider choice]
+Output format: AI service setup
+Evaluation: Can call AI API, errors handled, keys secure</code></pre>
+<h3 id="step-2-implement-content-improvement-generation">Step 2:
+Implement content improvement generation</h3>
+<p><strong>Backend endpoint</strong>:</p>
+<pre class="text"><code>Role: Backend developer
+Task: Implement AI content improvement generation endpoint
+Constraints:
+- Endpoint: POST /api/ai/content improvements
+- Accept: { message: string }
+- Prompt: Generate 3 content improvements (max 200 chars each)
+- Return: { content improvements: string[] }
+- Validate: input length, output format
+- Handle: API errors, rate limits
+Inputs: [AI service, prompt template]
+Output format: Content improvement generation endpoint + tests
+Evaluation: Generates content improvements, handles errors, validates output</code></pre>
+<p><strong>Prompt template</strong>:</p>
+<pre class="text"><code>Role: Social copywriter
+Task: Produce 3 short content improvements (max 200 chars) for the following message
+Constraints:
+- Respect platform tone guidelines
+- Avoid sensitive claims
+- Include 1 relevant hashtag when appropriate
+- Keep each content improvement unique
+Inputs: [original message]
+Output format: JSON array of strings
+Evaluation: Content is clear, non-duplicative, and policy-safe</code></pre>
+<h3 id="step-3-implement-description-generation">Step 3: Implement
+description generation</h3>
+<p><strong>Backend endpoint</strong>:</p>
+<pre class="text"><code>Role: Backend developer
+Task: Implement AI description generation endpoint
+Constraints:
+- Endpoint: POST /api/ai/alt-text
+- Accept: { description: string }
+- Prompt: Generate concise description (8-20 words)
+- Return: { alt_text: string }
+- Validate: output length, quality
+- Handle: API errors
+Inputs: [AI service, prompt template]
+Output format: Description generation endpoint + tests
+Evaluation: Generates description, handles errors, validates output</code></pre>
+<p><strong>Prompt template</strong>:</p>
+<pre class="text"><code>Role: Accessibility assistant
+Task: Write concise, descriptive description for an image
+Constraints:
+- 1 sentence, 8-20 words
+- Avoid speculation
+- Be accurate and helpful
+- No marketing language
+Inputs: [brief image description]
+Output: Plain sentence
+Evaluation: Helpful and accurate without extra language</code></pre>
+<h3 id="step-4-add-ai-features-to-ui">Step 4: Add AI features to UI</h3>
+<p><strong>Content improvement generation in compose</strong>:</p>
+<pre class="text"><code>Role: Frontend developer
+Task: Add content improvement generation to compose page
+Constraints:
+- Button: &quot;Generate content improvements&quot;
+- Show: loading state
+- Display: generated content improvements
+- Allow: selecting content improvement to use
+- Handle: errors gracefully
+- Use [your framework] patterns
+Inputs: [Compose page, API client]
+Output format: Updated compose component
+Evaluation: Can generate content improvements, select one, handle errors</code></pre>
+<p><strong>Description generation</strong>:</p>
+<pre class="text"><code>Role: Frontend developer
+Task: Add description generation to attachment upload
+Constraints:
+- Button: &quot;Generate description&quot; for each image
+- Show: loading state
+- Fill: description field with generated text
+- Allow: editing generated text
+- Handle: errors gracefully
+- Use [your framework] patterns
+Inputs: [Attachment upload component, API client]
+Output format: Updated upload component
+Evaluation: Can generate description, edit it, handle errors</code></pre>
+<h3 id="step-5-add-safety-checks">Step 5: Add safety checks</h3>
+<p><strong>Content validation</strong>:</p>
+<pre class="text"><code>Role: Backend developer
+Task: Add safety checks for AI-generated content
+Constraints:
+- Validate: length limits
+- Check: for inappropriate content (basic)
+- Sanitize: output before returning
+- Log: validation failures
+- Return: safe content only
+Inputs: [AI endpoints]
+Output format: Validation middleware/service
+Evaluation: Filters unsafe content, logs issues</code></pre>
+<h3 id="step-6-evaluate-ai-output">Step 6: Evaluate AI output</h3>
+<p><strong>Create evaluation document</strong>:</p>
+<pre class="text"><code>Role: QA engineer
+Task: Evaluate AI output quality
+Constraints:
+- Test: content improvement generation with sample inputs
+- Test: description generation with sample images
+- Document: what works well, what doesn&#39;t
+- Note: prompt improvements needed
+- Record: example outputs
+Inputs: [AI endpoints, test cases]
+Output format: Evaluation notes document
+Evaluation: Clear assessment of AI quality</code></pre>
+<p><strong>Test cases</strong>:</p>
+<ul>
+<li>Short messages (&lt; 50 chars)</li>
+<li>Long messages (&gt; 200 chars)</li>
+<li>Messages with hashtags</li>
+<li>Messages with mentions</li>
+<li>Various image types</li>
+</ul>
+<h2 id="testing">Testing</h2>
+<h3 id="test-content-improvement-generation">Test content improvement
+generation</h3>
+<pre class="text"><code>Role: Test engineer
+Task: Write tests for content improvement generation
+Constraints:
+- Test: successful generation
+- Test: input validation
+- Test: error handling
+- Test: output format
+- Use [your testing framework]
+Inputs: [Content improvement endpoint]
+Output format: Test file
+Evaluation: All tests pass</code></pre>
+<h3 id="test-description-generation">Test description generation</h3>
+<pre class="text"><code>Role: Test engineer
+Task: Write tests for description generation
+Constraints:
+- Test: successful generation
+- Test: input validation
+- Test: output length
+- Test: error handling
+- Use [your testing framework]
+Inputs: [Description endpoint]
+Output format: Test file
+Evaluation: All tests pass</code></pre>
+<h3 id="test-safety-checks">Test safety checks</h3>
+<pre class="text"><code>Role: Test engineer
+Task: Write tests for safety validation
+Constraints:
+- Test: length validation
+- Test: content filtering
+- Test: sanitization
+- Use [your testing framework]
+Inputs: [Validation service]
+Output format: Test file
+Evaluation: All tests pass</code></pre>
+<h2 id="evaluation-checklist">Evaluation checklist</h2>
+<p>Evaluate AI output quality:</p>
+<ul class="task-list">
+<li><label><input type="checkbox" />Content improvements are unique and
+useful</label></li>
+<li><label><input type="checkbox" />Description is accurate and
+helpful</label></li>
+<li><label><input type="checkbox" />Output follows length
+constraints</label></li>
+<li><label><input type="checkbox" />Safety checks work</label></li>
+<li><label><input type="checkbox" />Error handling is
+robust</label></li>
+<li><label><input type="checkbox" />UI integration works
+smoothly</label></li>
+<li><label><input type="checkbox" />Performance is
+acceptable</label></li>
+</ul>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="issue-ai-api-errors">Issue: AI API errors</h3>
+<p><strong>Solutions</strong>:</p>
+<ul>
+<li>Check API key is valid</li>
+<li>Verify rate limits</li>
+<li>Review API error messages</li>
+<li>Implement retry logic</li>
+<li>Check network connectivity</li>
+</ul>
+<h3 id="issue-poor-ai-output-quality">Issue: Poor AI output quality</h3>
+<p><strong>Solutions</strong>:</p>
+<ul>
+<li>Refine prompt templates</li>
+<li>Add more constraints</li>
+<li>Provide better examples</li>
+<li>Try different models</li>
+<li>Adjust temperature settings</li>
+</ul>
+<h3 id="issue-slow-ai-responses">Issue: Slow AI responses</h3>
+<p><strong>Solutions</strong>:</p>
+<ul>
+<li>Add loading states</li>
+<li>Implement caching</li>
+<li>Use faster models</li>
+<li>Optimize prompts</li>
+<li>Consider async processing</li>
+</ul>
+<h2 id="next-steps">Next steps</h2>
+<p>Once M3 is complete, proceed to <strong><a
+href="./06.4-milestone-4-polishing.md">M4: Polishing and
+Deployment</a></strong></p>
+<h2 id="deliverables">Deliverables</h2>
+<ul>
+<li>AI content improvement generation working</li>
+<li>AI description generation working</li>
+<li>AI features in UI</li>
+<li>Safety checks implemented</li>
+<li>Evaluation notes documented</li>
+<li>Tests passing</li>
+</ul>
+</body>
+</html>
