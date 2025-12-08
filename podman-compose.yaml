@@ -28,7 +28,7 @@ services:
     volumes:
       - data:/data
       - attachments:/storage/attachments
-    # Security: run as non-root user (if supported by base image)
+    # Podman security: run as non-root user
     # user: "1000:1000"  # Uncomment if your image supports it
     restart: unless-stopped
     healthcheck:
