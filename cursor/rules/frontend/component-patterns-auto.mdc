@@ -1,0 +1,110 @@
+# Frontend Rules - Angular 20 + TypeScript + TailwindCSS
+
+## Architecture
+- Use standalone components (no NgModules)
+- Follow component-based architecture
+- Keep components small and focused on single responsibility
+- Use services for shared business logic and API calls
+- Implement proper separation of concerns
+
+## Component Structure
+- Use standalone components with `standalone: true`
+- Import only what's needed in component imports array
+- Use `ChangeDetectionStrategy.OnPush` for better performance
+- Keep templates inline for small components, extract to separate files for larger ones
+- Use signals for reactive state management
+
+## Component File Organization
+```
+component-name/
+  component-name.component.ts
+  component-name.component.html (if template is large)
+  component-name.component.css (if styles are needed)
+  component-name.component.spec.ts
+```
+
+## TypeScript Best Practices
+- Use strict TypeScript configuration
+- Define interfaces/types for all data structures
+- Use type inference where appropriate, explicit types where needed
+- Avoid `any` type - use `unknown` or proper types
+- Use readonly for immutable data
+- Use const assertions for literal types
+- Prefer interfaces over types for object shapes (unless union/intersection needed)
+
+## Signals (Angular Signals API)
+- Use `signal()` for component state
+- Use `computed()` for derived state
+- Use `effect()` sparingly (prefer computed signals)
+- Update signals using `.set()` or `.update()`
+- Prefer signals over RxJS observables for component-local state
+- Use signals with `ChangeDetectionStrategy.OnPush` for optimal performance
+
+## Services
+- Use `@Injectable({ providedIn: 'root' })` for singleton services
+- Use `inject()` function for dependency injection (preferred over constructor injection)
+- Keep services focused on specific domains
+- Return observables from HTTP calls, handle errors appropriately
+- Use RxJS operators (map, catchError, tap) for data transformation
+
+## HTTP Client
+- Use Angular HttpClient for all API calls
+- Centralize API base URL in environment configuration
+- Handle errors with proper error handling
+- Use interceptors for common concerns (auth, logging, error handling)
+- Return typed observables from service methods
+
+## Routing
+- Use Angular Router for navigation
+- Define routes in dedicated route configuration files
+- Use route guards for authentication/authorization
+- Use route resolvers for data pre-loading when needed
+- Use lazy loading for feature modules/routes
+
+## Forms
+- Use reactive forms (`FormBuilder`, `FormGroup`, `FormControl`) for complex forms
+- Use template-driven forms for simple forms
+- Validate forms properly with validators
+- Display validation errors clearly to users
+- Use `FormArray` for dynamic form fields
+
+## Material Design Integration
+- Use Angular Material components for UI elements
+- Follow Material Design guidelines for layout and components
+- Use Material Design color palette and theming
+- Implement proper Material Design patterns (cards, dialogs, snackbars, etc.)
+- Use Material Design icons
+- Ensure accessibility (ARIA labels, keyboard navigation)
+
+## TailwindCSS Usage
+- Use Tailwind utility classes for styling
+- Create custom Tailwind components for reusable patterns
+- Use Tailwind's responsive breakpoints (sm, md, lg, xl, 2xl)
+- Use Tailwind's dark mode when applicable
+- Avoid inline styles, prefer Tailwind classes
+- Use Tailwind's spacing, typography, and color systems
+- Combine Tailwind with Material Design components appropriately
+
+## Performance
+- Use OnPush change detection strategy
+- Implement lazy loading for routes
+- Use trackBy functions in *ngFor loops
+- Avoid unnecessary subscriptions (use async pipe when possible)
+- Unsubscribe from observables to prevent memory leaks
+- Use signals for reactive state to minimize change detection cycles
+
+## Accessibility
+- Use semantic HTML elements
+- Provide ARIA labels where needed
+- Ensure keyboard navigation works
+- Maintain proper focus management
+- Test with screen readers
+- Use proper heading hierarchy
+
+## Error Handling
+- Display user-friendly error messages
+- Log errors appropriately for debugging
+- Handle network errors gracefully
+- Provide loading states for async operations
+- Use try-catch for promise-based operations
+

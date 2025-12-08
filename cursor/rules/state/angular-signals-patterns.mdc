@@ -1,0 +1,99 @@
+# State Management Rules - Angular Signals
+
+## Signal Usage Patterns
+- Use `signal()` for component-local state
+- Use `computed()` for derived state that depends on other signals
+- Use `effect()` only when side effects are necessary (logging, external API calls)
+- Prefer signals over RxJS observables for component state
+- Use signals with `ChangeDetectionStrategy.OnPush` for optimal performance
+
+## Component State
+- Define component state as signals at the top of the component class
+- Use descriptive signal names that indicate their purpose
+- Initialize signals with appropriate default values
+- Use `computed()` signals for values derived from other signals
+
+Example:
+```typescript
+export class MyComponent {
+  title = signal('');
+  count = signal(0);
+  doubled = computed(() => this.count() * 2);
+}
+```
+
+## Service State
+- Use signals in services for shared application state
+- Expose signals as readonly to prevent external mutation
+- Provide methods to update state (encapsulate signal updates)
+
+Example:
+```typescript
+@Injectable({ providedIn: 'root' })
+export class StateService {
+  private _items = signal<Item[]>([]);
+  readonly items = this._items.asReadonly();
+  
+  addItem(item: Item) {
+    this._items.update(items => [...items, item]);
+  }
+}
+```
+
+## Signal Updates
+- Use `.set()` for replacing entire signal value
+- Use `.update()` for modifying based on current value
+- Always create new object/array references when updating to trigger change detection
+
+Good:
+```typescript
+items.update(current => [...current, newItem]);
+```
+
+Bad:
+```typescript
+items().push(newItem); // Won't trigger change detection
+```
+
+## Combining Signals with RxJS
+- Use `toObservable()` to convert signals to observables when needed
+- Use `toSignal()` to convert observables to signals when needed
+- Prefer signals for component state, observables for async streams (HTTP, WebSocket)
+
+## State Organization
+- Keep state as close to where it's used as possible
+- Lift state up only when multiple components need it
+- Use services for shared state across components
+- Avoid global state unless necessary
+
+## Derived State
+- Use `computed()` for values calculated from other signals
+- Computed signals are memoized and only recalculate when dependencies change
+- Keep computed logic pure (no side effects)
+
+Example:
+```typescript
+totalPrice = computed(() => 
+  this.items().reduce((sum, item) => sum + item.price, 0)
+);
+```
+
+## Effects
+- Use `effect()` sparingly - only for side effects
+- Effects run after signal changes
+- Clean up effects if they create subscriptions or timers
+- Avoid effects that update other signals (prefer computed signals)
+
+Example:
+```typescript
+effect(() => {
+  console.log('Count changed:', this.count());
+});
+```
+
+## Best Practices
+- Don't mutate signal values directly - always use `.set()` or `.update()`
+- Use readonly signals when exposing state from services
+- Combine signals with async pipe for observables when needed
+- Test signals by reading their values in tests
+- Use signals for reactive state, observables for async streams

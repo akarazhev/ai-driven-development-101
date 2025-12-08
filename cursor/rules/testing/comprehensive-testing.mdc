@@ -1,0 +1,193 @@
+# Testing Rules
+
+## Backend Testing - JUnit 5
+
+### Unit Tests
+- Write unit tests for all service classes
+- Test business logic thoroughly
+- Use `@MockBean` or Mockito for mocking dependencies
+- Test edge cases and error scenarios
+- Aim for >80% code coverage on business logic
+
+### Test Structure
+```java
+@ExtendWith(MockitoExtension.class)
+class ServiceTest {
+    @Mock
+    private Repository repository;
+    
+    @InjectMocks
+    private Service service;
+    
+    @Test
+    void shouldDoSomething() {
+        // Given
+        // When
+        // Then
+    }
+}
+```
+
+### Integration Tests
+- Use `@SpringBootTest` for integration tests
+- Use `@DataJpaTest` for repository layer tests
+- Use `@WebMvcTest` for controller tests
+- Use Testcontainers for database integration tests when needed
+- Test API endpoints with MockMvc
+
+### Test Naming
+- Use descriptive test method names: `shouldReturnErrorWhenInvalidInput()`
+- Follow Given-When-Then pattern in test structure
+- Group related tests in test classes
+
+### Best Practices
+- Keep tests independent and isolated
+- Use meaningful test data
+- Test both happy path and error scenarios
+- Mock external dependencies
+- Use `@Transactional` for database tests to rollback changes
+- Clean up test data after tests
+
+## API Testing - Postman
+
+### Collection Organization
+- Organize Postman collections by feature/module
+- Use folders to group related requests
+- Name requests descriptively
+- Use environment variables for different environments (dev, staging, prod)
+
+### Request Structure
+- Use consistent naming: `GET /api/pages`
+- Include proper headers (Content-Type, Authorization)
+- Use variables for reusable values
+- Document requests with descriptions
+
+### Test Scripts
+- Write test scripts for each request
+- Validate response status codes
+- Validate response structure and data
+- Use assertions to verify expected behavior
+- Test error scenarios
+
+### Environment Variables
+- Use environment variables for base URLs
+- Store API keys and tokens in environment variables
+- Use different environments for different stages
+- Document required environment variables
+
+### Collection Structure
+```
+Confluence Publisher API/
+  ├── Health/
+  │   └── GET Health Check
+  ├── Pages/
+  │   ├── POST Create Page
+  │   ├── GET List Pages
+  │   └── GET Page by ID
+  ├── Attachments/
+  │   └── POST Upload Attachment
+  └── Schedules/
+      ├── POST Create Schedule
+      └── GET List Schedules
+```
+
+## Frontend Testing - Playwright
+
+### Test Structure
+- Organize tests by feature/page
+- Use Page Object Model (POM) pattern
+- Keep tests independent and isolated
+- Use descriptive test names
+
+### Test Organization
+```
+e2e/
+  ├── pages/
+  │   ├── compose.page.ts
+  │   └── schedules.page.ts
+  ├── tests/
+  │   ├── compose.spec.ts
+  │   └── schedules.spec.ts
+  └── fixtures/
+      └── test-data.ts
+```
+
+### Page Object Model
+- Create page objects for each major page/component
+- Encapsulate page interactions in page objects
+- Use locators for element selection
+- Keep page objects focused and reusable
+
+Example:
+```typescript
+export class ComposePage {
+  constructor(private page: Page) {}
+  
+  async fillTitle(title: string) {
+    await this.page.fill('[data-testid="page-title"]', title);
+  }
+  
+  async clickCreatePage() {
+    await this.page.click('[data-testid="create-page-btn"]');
+  }
+}
+```
+
+### Test Data
+- Use fixtures for test data
+- Create test data factories
+- Clean up test data after tests
+- Use unique identifiers to avoid conflicts
+
+### Best Practices
+- Use data-testid attributes for reliable element selection
+- Wait for elements to be visible/ready before interacting
+- Use assertions to verify expected behavior
+- Test both happy path and error scenarios
+- Take screenshots on failure
+- Use proper wait strategies (waitForSelector, waitForLoadState)
+- Avoid hard-coded waits (sleep/timeout)
+
+### Test Scenarios
+- Test critical user flows end-to-end
+- Test form validation
+- Test error handling and error messages
+- Test navigation and routing
+- Test responsive design on different viewports
+- Test accessibility (keyboard navigation, screen readers)
+
+### Configuration
+- Configure Playwright in `playwright.config.ts`
+- Set up proper base URL
+- Configure test timeouts
+- Set up proper browser contexts
+- Configure screenshot and video recording on failure
+
+### Example Test
+```typescript
+import { test, expect } from '@playwright/test';
+import { ComposePage } from '../pages/compose.page';
+
+test('should create a new page', async ({ page }) => {
+  const composePage = new ComposePage(page);
+  await composePage.goto();
+  await composePage.fillTitle('Test Page');
+  await composePage.fillContent('Test Content');
+  await composePage.clickCreatePage();
+  await expect(page.locator('[data-testid="success-message"]')).toBeVisible();
+});
+```
+
+## Test Data Management
+- Use factories for creating test data
+- Keep test data isolated and independent
+- Clean up test data after tests
+- Use unique identifiers to avoid conflicts
+- Mock external API calls in tests
+
+## Continuous Integration
+- Run all tests in CI/CD pipeline
+- Fail builds on test failures
+- Generate and publish test reports
+- Run tests in parallel when possible
+- Use appropriate test environments

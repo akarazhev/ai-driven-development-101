@@ -218,3 +218,5 @@ frontend/.vite/
 
 # Development
 dev
+/.vscode/
+/.vscode/

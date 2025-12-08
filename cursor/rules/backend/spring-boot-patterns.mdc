@@ -1,0 +1,97 @@
+# Backend Rules - Spring Boot 3.2
+
+## Architecture
+- Follow layered architecture: Controller → Service → Repository
+- Controllers handle HTTP concerns only (request/response mapping, validation)
+- Services contain business logic
+- Repositories handle data access
+- Use DTOs for request/response objects, never expose entities directly
+
+## Package Structure
+```
+com.confluence.publisher/
+  controller/     # REST controllers (@RestController)
+  service/        # Business logic (@Service)
+  repository/     # JPA repositories (extends JpaRepository)
+  entity/         # JPA entities (@Entity)
+  dto/            # Data Transfer Objects
+  config/         # Configuration classes (@Configuration)
+  exception/      # Exception handlers (@ControllerAdvice)
+  provider/       # External service adapters
+  scheduler/      # Background tasks (@Scheduled)
+```
+
+## Controllers
+- Use `@RestController` for REST endpoints
+- Map endpoints to `/api/*` paths
+- Use appropriate HTTP methods (GET, POST, PUT, DELETE, PATCH)
+- Return ResponseEntity for fine-grained control
+- Use `@Valid` for request body validation
+- Document endpoints with clear method names
+- Handle exceptions at controller level or use global exception handler
+
+## Services
+- Mark services with `@Service` annotation
+- Make services transactional with `@Transactional` when needed
+- Keep business logic in services, not in controllers or repositories
+- Use dependency injection via constructor injection (preferred) or `@Autowired`
+- Return DTOs, not entities, from public methods
+
+## Repositories
+- Extend `JpaRepository<Entity, ID>` or `CrudRepository<Entity, ID>`
+- Use Spring Data JPA query methods for simple queries
+- Use `@Query` for complex queries
+- Use `@Modifying` for update/delete queries
+- Return Optional<T> for single results when appropriate
+
+## Entities
+- Use `@Entity` annotation
+- Use `@Id` with `@GeneratedValue` for primary keys
+- Use appropriate JPA annotations (@Column, @ManyToOne, @OneToMany, etc.)
+- Implement equals() and hashCode() properly
+- Use Lombok `@Data` or `@Getter`/`@Setter` to reduce boilerplate
+- Avoid bidirectional relationships when possible
+
+## DTOs
+- Create separate DTOs for requests and responses
+- Use validation annotations (@NotNull, @NotBlank, @Size, @Email, etc.)
+- Keep DTOs in dedicated package
+- Use record classes (Java 14+) for immutable DTOs when appropriate
+
+## Exception Handling
+- Create custom exceptions for business logic errors
+- Use `@ControllerAdvice` for global exception handling
+- Return appropriate HTTP status codes
+- Provide meaningful error messages
+- Log exceptions with proper context
+
+## Configuration
+- Use `application.yml` for configuration
+- Externalize environment-specific properties
+- Use `@ConfigurationProperties` for type-safe configuration
+- Validate configuration on startup
+
+## SQLite Specific
+- Use SQLite JDBC driver: `org.xerial:sqlite-jdbc`
+- Use Hibernate SQLite dialect: `org.hibernate.orm:hibernate-community-dialects`
+- Handle SQLite limitations (no ALTER TABLE DROP COLUMN, limited concurrent writes)
+- Use connection pooling appropriately
+- Consider file-based database location and permissions
+
+## Testing
+- Write unit tests for services using JUnit 5
+- Use `@SpringBootTest` for integration tests
+- Use `@MockBean` for mocking dependencies
+- Test repository layer with `@DataJpaTest`
+- Test controllers with `@WebMvcTest`
+- Use Testcontainers for database integration tests when needed
+- Aim for >80% code coverage on business logic
+
+## Best Practices
+- Use Java 21 features (records, pattern matching, text blocks)
+- Prefer constructor injection over field injection
+- Use `@Transactional(readOnly = true)` for read-only operations
+- Avoid `@Transactional` on controller methods
+- Use `@Async` for long-running operations
+- Implement proper logging with SLF4J/Logback
+- Use `@PreAuthorize` or `@Secured` for method-level security when needed

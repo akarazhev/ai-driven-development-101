@@ -1,6 +1,8 @@
 package com.confluence.publisher.service;
 
 import com.confluence.publisher.entity.Schedule;
+import com.confluence.publisher.exception.ResourceNotFoundException;
+import com.confluence.publisher.exception.ValidationException;
 import com.confluence.publisher.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -19,7 +21,15 @@ public class ScheduleService {
     
     @Transactional
     public Schedule createSchedule(Long pageId, Instant scheduledAt) {
+        if (pageId == null) {
+            throw new ValidationException("Page ID is required");
+        }
+        
         Instant when = scheduledAt != null ? scheduledAt : Instant.now();
+        if (when.isBefore(Instant.now())) {
+            throw new ValidationException("Scheduled time cannot be in the past");
+        }
+        
         Schedule schedule = Schedule.builder()
                 .pageId(pageId)
                 .scheduledAt(when)
@@ -30,8 +40,12 @@ public class ScheduleService {
     
     @Transactional(readOnly = true)
     public Schedule getSchedule(Long scheduleId) {
+        if (scheduleId == null) {
+            throw new ValidationException("Schedule ID is required");
+        }
+        
         return scheduleRepository.findById(scheduleId)
-                .orElseThrow(() -> new RuntimeException("Schedule not found: " + scheduleId));
+                .orElseThrow(() -> new ResourceNotFoundException("Schedule", scheduleId));
     }
     
     @Transactional(readOnly = true)

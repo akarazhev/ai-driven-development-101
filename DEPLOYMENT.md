@@ -10,7 +10,7 @@ This project uses `.env` files for local development and environment variables f
 
 1. **Copy the example file:**
    ```bash
-   cp .env.example .env
+   cp .env .env
    ```
 
 2. **Edit `.env` with your credentials:**

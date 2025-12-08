@@ -1,18 +1,34 @@
 spring:
   application:
     name: confluence-publisher
+  # Optimize startup performance
+  main:
+    lazy-initialization: false  # Set to true for faster startup, but may delay errors
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: false
+    open-in-view: false  # Disable to improve performance and remove warning
     properties:
       hibernate:
         dialect: org.hibernate.community.dialect.SQLiteDialect
         format_sql: true
+        # Optimize Hibernate startup
+        jdbc:
+          batch_size: 20
+        order_inserts: true
+        order_updates: true
   servlet:
     multipart:
       max-file-size: 50MB
       max-request-size: 50MB
+  # Optimize DevTools
+  devtools:
+    restart:
+      enabled: true
+      additional-exclude: static/**,public/**,templates/**
+    livereload:
+      enabled: true
 
 app:
   app-name: confluence-publisher
@@ -26,8 +42,8 @@ app:
     - http://localhost:4200
     - http://localhost:8080
     - http://localhost:5173
-  provider: ${CONFLUENCE_PROVIDER:confluence-stub}
-  scheduler-interval-seconds: ${SCHEDULER_INTERVAL_SECONDS:5}
+  provider: ${APP_PROVIDER:confluence-api}
+  scheduler-interval-seconds: 5
 
 server:
   port: 8080
@@ -46,4 +62,7 @@ logging:
     com.confluence.publisher: INFO
     org.springframework.web: INFO
     org.hibernate: WARN
+    # Reduce logging during startup for faster initialization
+    org.springframework.boot: WARN
+    org.springframework.context: WARN
 

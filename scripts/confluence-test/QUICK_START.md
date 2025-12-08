@@ -50,7 +50,7 @@ If all steps pass successfully, you will see:
 
 1. Copy the example file:
    ```bash
-   cp .env.example .env
+   cp .env .env
    ```
 
 2. Edit `.env` with your credentials:

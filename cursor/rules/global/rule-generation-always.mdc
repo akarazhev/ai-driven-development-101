@@ -1,0 +1,109 @@
+# Global Development Rules
+
+## Project Structure
+- Maintain clear separation between backend and frontend
+- Follow consistent naming conventions across the codebase
+- Use meaningful, descriptive names for files, classes, methods, and variables
+- Keep files focused on a single responsibility
+
+## Code Quality
+- Write self-documenting code with clear intent
+- Prefer composition over inheritance
+- Follow SOLID principles
+- Keep functions and methods small and focused
+- Avoid deep nesting (max 3-4 levels)
+- Use early returns to reduce complexity
+
+## Documentation
+- Document public APIs and complex business logic
+- Keep README files up to date
+- Include inline comments for non-obvious logic
+- Update documentation when making significant changes
+
+## Prompt Tracking - MANDATORY
+**CRITICAL RULE**: You MUST save EVERY user request/chat message to `cursor/promts/` directory immediately after receiving it.
+
+### Required Actions (MUST DO):
+1. **Save immediately**: After receiving each user request, BEFORE responding, create a markdown file in `cursor/promts/` directory
+2. **File naming format**: Use timestamp-based naming with current date/time: `prompt-YYYY-MM-DD-HHMMSS.md`
+   - Example: `prompt-2024-01-15-143022.md` for January 15, 2024 at 14:30:22
+   - Format: `prompt-{YYYY}-{MM}-{DD}-{HHMMSS}.md`
+   - Use 24-hour format (00-23 for hours)
+   - Always include leading zeros (e.g., `09` not `9`, `05` not `5`)
+3. **File content structure** (use this exact template):
+   ```markdown
+   # User Prompt - [Date and Time]
+   
+   **Timestamp**: YYYY-MM-DD HH:MM:SS
+   
+   **User Request**:
+   [Paste the EXACT, COMPLETE user prompt/request text here - copy it verbatim. This means the actual message the user sent in the chat.]
+   
+   **Context**:
+   - Files involved: [list any files mentioned, opened, or modified]
+   - Action taken: [brief description of what you did in response]
+   - Outcome: [result, status, or what was delivered]
+   
+   **Notes**:
+   - [Any additional context, observations, or important details]
+   ```
+
+### Implementation Rules:
+- **When**: IMMEDIATELY after receiving each user message, BEFORE you start processing it.
+- **Where**: `cursor/promts/` directory (exact path - note the spelling "promts" not "prompts").
+- **What**: Save the COMPLETE, EXACT user prompt text - copy it word-for-word. This refers to the specific text the user typed into the chat input.
+- **Why**: Track all development progress, decisions, and maintain complete conversation history.
+
+### Examples:
+**Example 1:**
+- User asks: "Can you check the project and suggest rules?"
+- Action: Create `cursor/promts/prompt-2024-01-15-143022.md` with the exact question text.
+- Content includes: The question, what was checked, what rules were suggested.
+
+**Example 2:**
+- User asks: "there are a lot of problem during running backend"
+- Action: Create `cursor/promts/prompt-2024-01-15-150530.md` with the exact error message text provided by the user.
+- Content includes: The error text, what was diagnosed, what was fixed.
+
+### Critical Requirements:
+- ✅ **MANDATORY**: Save EVERY user request - no exceptions. "Prompt" means the user's chat message.
+- ✅ **IMMEDIATE**: Save before or right after responding - don't forget.
+- ✅ **COMPLETE**: Include the exact, full user prompt text.
+- ✅ **CONSISTENT**: Use the same format for every prompt.
+- ✅ **ACCURATE**: Use correct timestamp format with leading zeros.
+- ❌ **DO NOT**: Skip saving prompts, even for simple requests.
+- ❌ **DO NOT**: Modify or summarize the user's prompt - save it exactly as written.
+
+### Verification:
+After saving, verify:
+- File exists in `cursor/promts/` directory
+- Filename follows the timestamp format
+- File contains the exact user prompt text
+- File includes context about what was done
+
+## Version Control
+- Write clear, descriptive commit messages
+- Keep commits atomic and focused
+- Use meaningful branch names
+- Review code before committing
+
+## Error Handling
+- Handle errors gracefully with appropriate user feedback
+- Log errors with sufficient context for debugging
+- Use appropriate exception types
+- Never expose sensitive information in error messages
+
+## Security
+- Never commit secrets, API keys, or credentials
+- Validate and sanitize all user inputs
+- Use parameterized queries to prevent SQL injection
+- Implement proper authentication and authorization
+- Follow principle of least privilege
+
+## Performance
+- Optimize database queries and avoid N+1 problems
+- Use pagination for large data sets
+- Implement caching where appropriate
+- Minimize bundle sizes and optimize assets
+- Lazy load components and routes when possible
+

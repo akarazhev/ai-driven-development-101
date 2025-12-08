@@ -99,7 +99,7 @@ The script supports multiple ways to provide credentials (in order of priority):
 
 1. Copy the example file:
    ```bash
-   cp .env.example .env
+   cp .env .env
    ```
 
 2. Edit `.env` with your credentials:

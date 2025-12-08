@@ -1,0 +1,99 @@
+# Style Rules - TailwindCSS + Material Design
+
+## TailwindCSS Configuration
+- Configure Tailwind in `tailwind.config.js`
+- Use content paths that include all template files
+- Extend theme for project-specific design tokens
+- Use Tailwind plugins when needed for additional functionality
+
+## Material Design Integration
+- Use Angular Material components as base UI elements
+- Apply TailwindCSS utilities for custom styling and spacing
+- Follow Material Design 3 (Material You) principles
+- Use Material Design color system with Tailwind color palette
+- Implement Material Design typography scale
+
+## Color System
+- Use Material Design color palette
+- Define primary, secondary, accent colors in Tailwind config
+- Use semantic color names (primary, secondary, error, warning, success)
+- Support both light and dark themes
+- Use Tailwind's opacity modifiers for color variations
+
+Example Tailwind config:
+```javascript
+theme: {
+  extend: {
+    colors: {
+      primary: {
+        50: '#e3f2fd',
+        500: '#2196f3',
+        900: '#0d47a1',
+      },
+    },
+  },
+}
+```
+
+## Typography
+- Use Material Design typography scale
+- Configure Tailwind typography plugin if needed
+- Use consistent font sizes and weights
+- Follow Material Design text styles (headline, body, caption, etc.)
+- Use proper line heights and letter spacing
+
+## Spacing and Layout
+- Use Tailwind's spacing scale (4px base unit)
+- Follow Material Design spacing guidelines (8dp grid system)
+- Use consistent padding and margins
+- Use Flexbox and Grid utilities for layouts
+- Implement responsive breakpoints (sm, md, lg, xl, 2xl)
+
+## Components Styling
+- Style Material components with Tailwind utilities
+- Use Tailwind for custom components
+- Maintain Material Design elevation (shadows) using Tailwind shadow utilities
+- Use Tailwind for borders, rounded corners, and spacing
+- Apply Material Design ripple effects through Angular Material
+
+## Responsive Design
+- Use Tailwind responsive prefixes (sm:, md:, lg:, xl:, 2xl:)
+- Follow mobile-first approach
+- Test on multiple screen sizes
+- Use Tailwind's container utility appropriately
+- Implement proper breakpoints for Material Design breakpoints
+
+## Dark Mode
+- Configure Tailwind dark mode if needed
+- Use `dark:` prefix for dark mode styles
+- Follow Material Design dark theme guidelines
+- Ensure sufficient contrast ratios
+
+## Custom Components
+- Create reusable Tailwind component classes for common patterns
+- Use `@apply` directive sparingly (prefer utility classes)
+- Keep component styles composable
+- Document custom component classes
+
+## Best Practices
+- Prefer utility classes over custom CSS
+- Use Tailwind's JIT mode for optimal bundle size
+- Group related utility classes logically
+- Use consistent spacing and sizing
+- Follow Material Design accessibility guidelines
+- Ensure proper contrast ratios for text
+- Use semantic HTML with Tailwind styling
+
+## Material Design Components
+- Use Angular Material components: MatButton, MatCard, MatDialog, MatFormField, etc.
+- Style Material components with Tailwind when customization is needed
+- Follow Material Design component patterns and guidelines
+- Use Material Design icons (MatIcon)
+- Implement proper Material Design animations and transitions
+
+## Accessibility
+- Ensure sufficient color contrast (WCAG AA minimum)
+- Use proper focus states (Tailwind focus utilities)
+- Maintain keyboard navigation
+- Use semantic HTML elements
+- Test with screen readers

@@ -15,24 +15,132 @@ Full-stack Confluence Publisher App implementing the course project (Chapter 06)
 
 ## Setup
 
-1) Start backend
+### Prerequisites Check
 
+**Java:**
+```bash
+java -version  # Should be Java 21 or higher
+```
+
+**Node.js:**
+```bash
+node -v  # Should be Node 18 or higher
+npm -v
+```
+
+**Gradle (optional, gradlew is included):**
+```bash
+gradle -v  # Optional, gradlew wrapper is included
+```
+
+### Backend Setup
+
+1. **Navigate to backend directory:**
 ```bash
 cd backend
+```
+
+2. **Start the backend (Linux/Mac):**
+```bash
 ./gradlew bootRun
 ```
 
-2) Frontend
+3. **Start the backend (Windows):**
+```bash
+.\gradlew.bat bootRun
+```
 
+4. **Verify backend is running:**
+```bash
+curl http://localhost:8080/api/health
+# Should return: {"status":"ok"}
+```
+
+The backend will:
+- Create necessary directories (`data/`, `storage/attachments/`) automatically
+- Initialize SQLite database at `backend/data/app.db`
+- Start on port 8080
+
+**Backend Configuration:**
+- Default port: `8080`
+- Database: SQLite at `backend/data/app.db`
+- Attachments: `backend/storage/attachments/`
+- Configuration: `backend/src/main/resources/application.yml`
+
+### Frontend Setup
+
+1. **Navigate to frontend directory:**
 ```bash
 cd frontend
+```
+
+2. **Install dependencies:**
+```bash
 npm install
+```
+
+3. **Start the development server:**
+```bash
 npm start
 # or
 ng serve
 ```
 
-Open http://localhost:4200 and ensure the backend is running on http://localhost:8080.
+4. **If port 4200 is in use, use a different port:**
+```bash
+ng serve --port 4201
+```
+
+5. **Open in browser:**
+```
+http://localhost:4200
+# or http://localhost:4201 if using alternate port
+```
+
+**Frontend Configuration:**
+- Default port: `4200`
+- API base URL: `http://localhost:8080` (configured in `frontend/src/app/services/api.service.ts`)
+- Angular Material theme: Indigo-Pink
+
+### Verify Setup
+
+1. **Backend health check:**
+```bash
+curl http://localhost:8080/api/health
+```
+
+2. **Frontend should display:**
+   - New Year countdown at the top
+   - Compose page with form fields
+   - Navigation to Schedules page
+
+3. **Test API from frontend:**
+   - Create a page with title, content, and space key
+   - Upload a file attachment
+   - Publish the page
+
+### Troubleshooting
+
+**Backend won't start:**
+- Check Java version: `java -version` (must be 21+)
+- Check if port 8080 is available: `netstat -an | grep 8080` (Linux/Mac) or `netstat -an | findstr 8080` (Windows)
+- Check logs in console for errors
+- Ensure directories `data/` and `storage/attachments/` exist (created automatically)
+
+**Frontend won't start:**
+- Check Node.js version: `node -v` (must be 18+)
+- Delete `node_modules` and `package-lock.json`, then run `npm install` again
+- Check if port 4200 is available, use `--port` flag to use different port
+- Check browser console for errors
+
+**CORS errors:**
+- Ensure backend is running on port 8080
+- Check `CorsConfig.java` allows `http://localhost:4200`
+- For different frontend port, update CORS configuration
+
+**Database errors:**
+- Ensure `backend/data/` directory exists and is writable
+- Delete `backend/data/app.db` to reset database (will lose all data)
 
 ## Project structure
 
@@ -66,12 +174,93 @@ storage/attachments/ # uploaded files (gitignored)
 - Schedule: POST /api/schedules { pageId, scheduledAt? }
 - List schedules: GET /api/schedules
 
-## Tests
+## Testing
 
+### Backend Tests
+
+**Run all tests:**
 ```bash
 cd backend
 ./gradlew test
 ```
+
+**Run tests on Windows:**
+```bash
+cd backend
+.\gradlew.bat test
+```
+
+**Run specific test class:**
+```bash
+./gradlew test --tests "com.confluence.publisher.service.PageServiceTest"
+```
+
+**View test reports:**
+```bash
+# HTML report location
+backend/build/reports/tests/test/index.html
+```
+
+**Test Coverage:**
+- Unit tests for all services (PageService, AttachmentService, ScheduleService, PublishService)
+- Integration tests for all controllers (PageController, AttachmentController, ScheduleController, ConfluenceController, AiController)
+- Provider tests (ConfluenceStubProvider)
+
+### Frontend Tests
+
+**Run Playwright E2E tests:**
+```bash
+cd frontend
+npm run e2e
+```
+
+**Run E2E tests in headed mode:**
+```bash
+cd frontend
+npx playwright test --headed
+```
+
+**Run specific test file:**
+```bash
+npx playwright test e2e/tests/compose.spec.ts
+```
+
+**View test reports:**
+```bash
+npx playwright show-report
+```
+
+**E2E Test Coverage:**
+- Compose page: Form validation, page creation, content improvement, file uploads, publishing, scheduling
+- Schedules page: Table display, refresh, auto-refresh, status colors
+- Navigation: Route navigation, active state highlighting
+- Error handling: Error messages, validation errors, API errors
+
+### API Testing
+
+**Using Postman:**
+1. Import the collection: `postman/ConfluencePublisher.postman_collection.json`
+2. Set the base URL to `http://localhost:8080`
+3. Run the collection or individual requests
+
+**Using cURL:**
+```bash
+# Health check
+curl http://localhost:8080/api/health
+
+# Create a page
+curl -X POST http://localhost:8080/api/pages \
+  -H "Content-Type: application/json" \
+  -d '{"title":"Test Page","content":"Content","spaceKey":"DEV"}'
+
+# Upload attachment
+curl -X POST http://localhost:8080/api/attachments \
+  -F "file=@document.pdf" \
+  -F "description=Test file"
+```
+
+**API Documentation:**
+See [doc/API_DOCUMENTATION.md](doc/API_DOCUMENTATION.md) for complete API reference.
 
 ## Notes
 
