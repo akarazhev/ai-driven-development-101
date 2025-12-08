@@ -15,6 +15,7 @@ public class AppProperties {
     private String databaseUrl = "jdbc:sqlite:./data/app.db";
     private String attachmentDir = "storage/attachments";
     private String confluenceUrl = "https://your-domain.atlassian.net";
+    private String confluenceUsername = "";
     private String confluenceDefaultSpace = "DEV";
     private String confluenceApiToken = "";
     private List<String> corsOrigins = List.of("http://localhost:5173", "http://localhost:4200", "http://localhost:8080");

@@ -203,3 +203,4 @@ After generating rules:
 4. Add project-specific patterns
 5. Document any custom conventions
 
+

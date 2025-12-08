@@ -53,14 +53,18 @@ export class ApiService {
     return this.http.post<ContentImprovementResponse>(this.api('/ai/improve-content'), { content });
   }
 
-  createPage(title: string, content: string, spaceKey: string, attachmentIds: number[], parentPageId?: number) {
-    return this.http.post<PageResponse>(this.api('/pages'), { 
+  createPage(title: string, content: string, spaceKey: string | null, attachmentIds: number[], parentPageId?: number) {
+    const body: any = { 
       title, 
       content, 
-      spaceKey,
       parentPageId,
       attachmentIds 
-    });
+    };
+    // Only include spaceKey if it's provided (backend will use default if not)
+    if (spaceKey) {
+      body.spaceKey = spaceKey;
+    }
+    return this.http.post<PageResponse>(this.api('/pages'), body);
   }
 
   publishNow(pageId: number) {
@@ -73,5 +77,9 @@ export class ApiService {
 
   getSchedules() {
     return this.http.get<Schedule[]>(this.api('/schedules'));
+  }
+
+  getConfig() {
+    return this.http.get<{ defaultSpace: string }>(this.api('/config'));
   }
 }

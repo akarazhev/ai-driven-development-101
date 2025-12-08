@@ -18,13 +18,19 @@ import java.util.List;
 public class PageController {
     
     private final PageService pageService;
+    private final com.confluence.publisher.config.AppProperties appProperties;
     
     @PostMapping
     public ResponseEntity<PageResponse> createPage(@Valid @RequestBody PageCreateRequest request) {
+        // Use default space from configuration if not provided in request
+        String spaceKey = request.getSpaceKey() != null && !request.getSpaceKey().isBlank() 
+            ? request.getSpaceKey() 
+            : appProperties.getConfluenceDefaultSpace();
+        
         Page page = pageService.createPage(
             request.getTitle(), 
             request.getContent(), 
-            request.getSpaceKey(),
+            spaceKey,
             request.getParentPageId(),
             request.getAttachmentIds()
         );

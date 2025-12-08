@@ -368,3 +368,4 @@ Create an Agent Select rule for a specific use case:
 - Your project's existing rules in `.cursor/rules/`
 - Rule generation prompt template (included in this chapter)
 - [Cursor Directory: Rules](https://cursor.directory/rules)
+
