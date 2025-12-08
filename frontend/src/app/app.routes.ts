@@ -10,3 +10,4 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/schedules/schedules.component').then(m => m.SchedulesComponent)
   }
 ];
+

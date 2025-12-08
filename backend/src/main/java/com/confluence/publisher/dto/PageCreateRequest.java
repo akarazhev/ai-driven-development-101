@@ -16,7 +16,7 @@ public class PageCreateRequest {
     @NotBlank(message = "Content is required")
     private String content;
     
-    @NotBlank(message = "Space key is required")
+    // Space key is optional - will use default from configuration if not provided
     private String spaceKey;
     
     private Long parentPageId;

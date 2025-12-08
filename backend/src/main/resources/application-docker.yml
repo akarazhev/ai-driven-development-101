@@ -2,10 +2,10 @@ app:
   database-url: jdbc:sqlite:///data/app.db
   attachment-dir: /storage/attachments
   confluence-url: ${CONFLUENCE_URL:https://your-domain.atlassian.net}
+  confluence-username: ${CONFLUENCE_USERNAME:}
   confluence-default-space: ${CONFLUENCE_DEFAULT_SPACE:DEV}
   confluence-api-token: ${CONFLUENCE_API_TOKEN:}
-  cors-origins:
-    - http://localhost:4200
-    - http://localhost:8080
-    - http://localhost:5173
+  provider: ${CONFLUENCE_PROVIDER:confluence-stub}
+  scheduler-interval-seconds: ${SCHEDULER_INTERVAL_SECONDS:5}
+  cors-origins: ${CORS_ORIGINS:http://localhost:4200,http://localhost:8080,http://localhost:5173}
 

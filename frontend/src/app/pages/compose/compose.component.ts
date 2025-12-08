@@ -42,7 +42,7 @@ import { ApiService, Attachment } from '../../services/api.service';
           </button>
           <button 
             (click)="createPage()" 
-            [disabled]="busy() || !title() || !content() || !spaceKey()" 
+            [disabled]="busy() || !title() || !content()" 
             class="px-3 py-2 bg-green-600 text-white rounded disabled:opacity-50">
             Create page
           </button>
@@ -131,7 +131,7 @@ export class ComposeComponent {
 
   title = signal('');
   content = signal('');
-  spaceKey = signal('DEV');
+  spaceKey = signal('');
   files = signal<File[]>([]);
   descriptions = signal<string[]>([]);
   attachments = signal<Attachment[]>([]);
@@ -141,6 +141,18 @@ export class ComposeComponent {
   scheduleId = signal<number | null>(null);
 
   canUpload = computed(() => this.files().length > 0);
+
+  constructor() {
+    // Load default space from backend configuration
+    firstValueFrom(this.apiService.getConfig()).then(config => {
+      if (config?.defaultSpace) {
+        this.spaceKey.set(config.defaultSpace);
+      }
+    }).catch(err => {
+      console.error('Failed to load config:', err);
+      // Fallback to empty string - backend will use default
+    });
+  }
 
   onFiles(event: Event) {
     const input = event.target as HTMLInputElement;

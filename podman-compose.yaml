@@ -10,21 +10,19 @@ services:
     env_file:
       # Load secrets from .env file (not committed to git)
       - .env
-      # Optional: load additional environment-specific config
-      - .env.local
     environment:
       SPRING_PROFILES_ACTIVE: docker
       APP_DATABASE_URL: jdbc:sqlite:///data/app.db
       APP_ATTACHMENT_DIR: /storage/attachments
       # Confluence configuration - loaded from .env file
-      # Spring Boot will map these to app.* properties automatically
+      # These are mapped to app.* properties in application-docker.yml
       CONFLUENCE_URL: ${CONFLUENCE_URL:-https://your-domain.atlassian.net}
       CONFLUENCE_DEFAULT_SPACE: ${CONFLUENCE_DEFAULT_SPACE:-DEV}
       CONFLUENCE_API_TOKEN: ${CONFLUENCE_API_TOKEN:-}
       CONFLUENCE_USERNAME: ${CONFLUENCE_USERNAME:-}
-      APP_PROVIDER: ${CONFLUENCE_PROVIDER:-confluence-stub}
-      APP_SCHEDULER_INTERVAL_SECONDS: ${SCHEDULER_INTERVAL_SECONDS:-5}
-      APP_CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:4200,http://localhost:8080,http://localhost:5173}
+      CONFLUENCE_PROVIDER: ${CONFLUENCE_PROVIDER:-confluence-stub}
+      SCHEDULER_INTERVAL_SECONDS: ${SCHEDULER_INTERVAL_SECONDS:-5}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:4200,http://localhost:8080,http://localhost:5173}
     volumes:
       - data:/data
       - attachments:/storage/attachments
@@ -56,3 +54,4 @@ volumes:
     driver: local
   attachments:
     driver: local
+

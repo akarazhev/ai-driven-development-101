@@ -146,3 +146,4 @@ Ensure `env_file` is properly configured in `docker-compose.yml`:
 env_file:
   - .env
 ```
+
