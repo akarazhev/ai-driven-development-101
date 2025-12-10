@@ -18,18 +18,40 @@ public class ConfluencePublisherApplication {
     }
 
     private static void loadEnv() {
-        try {
-            // Try loading from project root (parent of backend)
-            loadDotenv("../");
-            // Try loading from current directory
-            loadDotenv("./");
-        } catch (Exception e) {
-            // Ignore if .env cannot be loaded
+        System.out.println("Current Working Directory: " + System.getProperty("user.dir"));
+        
+        // Strategy: Look in common locations
+        // 1. Current directory
+        boolean loaded = loadDotenv("./");
+        
+        // 2. Parent directory (likely project root if running from backend/)
+        if (!loaded) {
+            loaded = loadDotenv("../");
+        }
+        
+        // 3. Specific check for when running inside backend subdir but .env is in root
+        if (!loaded) {
+            try {
+                java.nio.file.Path currentPath = java.nio.file.Paths.get("").toAbsolutePath();
+                if (currentPath.endsWith("backend")) {
+                     loaded = loadDotenv(currentPath.getParent().toString());
+                }
+            } catch (Exception e) {
+                // ignore
+            }
         }
     }
 
-    private static void loadDotenv(String path) {
+    private static boolean loadDotenv(String path) {
         try {
+            java.io.File envFile = new java.io.File(path, ".env");
+            if (!envFile.exists()) {
+                System.out.println("No .env found at: " + envFile.getAbsolutePath());
+                return false;
+            }
+            
+            System.out.println("Found .env at: " + envFile.getAbsolutePath());
+
             Dotenv dotenv = Dotenv.configure()
                     .directory(path)
                     .ignoreIfMissing()
@@ -39,10 +61,18 @@ public class ConfluencePublisherApplication {
                 // Only set if not already present in OS environment (Env vars take precedence over .env)
                 if (System.getenv(entry.getKey()) == null) {
                     System.setProperty(entry.getKey(), entry.getValue());
+                    // Log loaded variables (masking sensitive values)
+                    if (entry.getKey().contains("TOKEN") || entry.getKey().contains("PASSWORD")) {
+                        System.out.println("Loaded " + entry.getKey() + " from .env: ******");
+                    } else {
+                        System.out.println("Loaded " + entry.getKey() + " from .env: " + entry.getValue());
+                    }
                 }
             });
+            return true;
         } catch (Exception e) {
-            // Directory might not exist or other error, safe to ignore
+            System.out.println("Error loading .env from " + path + ": " + e.getMessage());
+            return false;
         }
     }
 }

@@ -34,15 +34,15 @@ app:
   app-name: confluence-publisher
   database-url: jdbc:sqlite:./data/app.db
   attachment-dir: storage/attachments
-  confluence-url: https://your-domain.atlassian.net
-  confluence-username: ${CONFLUENCE_USERNAME:}
-  confluence-default-space: DEV
+  confluence-url: ${CONFLUENCE_URL:https://your-domain.atlassian.net/wiki}
+  confluence-username: ${CONFLUENCE_USERNAME:user@example.com}
+  confluence-default-space: ${CONFLUENCE_DEFAULT_SPACE:DS}
   confluence-api-token: ${CONFLUENCE_API_TOKEN:}
   cors-origins:
     - http://localhost:4200
     - http://localhost:8080
     - http://localhost:5173
-  provider: ${APP_PROVIDER:confluence-api}
+  provider: ${CONFLUENCE_PROVIDER:confluence-stub}
   scheduler-interval-seconds: 5
 
 server:

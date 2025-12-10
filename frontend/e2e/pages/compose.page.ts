@@ -101,12 +101,12 @@ export class ComposePage {
 
   async waitForError(message?: string) {
     if (message) {
-      // The application uses mat-card for errors in a specific container
-      // Using a more specific selector that targets the error message content
-      await this.page.waitForSelector(`.error-message:has-text("${message}")`, { timeout: 10000 });
+      // Use getByText for more robust text matching, ignoring implementation details like classes
+      // exact: false allows for substring match (default)
+      await this.page.getByText(message, { exact: false }).waitFor({ state: 'visible', timeout: 10000 });
     } else {
       // Wait for any error card to appear
-      await this.page.waitForSelector('.error-card', { timeout: 10000 });
+      await this.page.locator('.error-card').first().waitFor({ state: 'visible', timeout: 10000 });
     }
   }
 
