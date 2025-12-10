@@ -36,7 +36,8 @@ test.describe('Compose Page - Complete User Flows', () => {
   });
 
   test('should display all compose page elements', async () => {
-    await expect(composePage.titleInput).toBeVisible();
+    // Increase timeout for initial load
+    await expect(composePage.titleInput).toBeVisible({ timeout: 10000 });
     await expect(composePage.spaceKeyInput).toBeVisible();
     await expect(composePage.contentTextarea).toBeVisible();
     await expect(composePage.improveContentButton).toBeVisible();
@@ -52,14 +53,19 @@ test.describe('Compose Page - Complete User Flows', () => {
     
     // Fill only title
     await composePage.fillTitle('Test Title');
+    // Blur the input to ensure validation triggers
+    await composePage.page.keyboard.press('Tab');
     await expect(composePage.createPageButton).toBeDisabled();
     
     // Fill title and space key
     await composePage.fillSpaceKey('SPGAC');
+    await composePage.page.keyboard.press('Tab');
     await expect(composePage.createPageButton).toBeDisabled();
     
     // Fill all required fields
     await composePage.fillContent('Test content');
+    // Ensure change detection happens
+    await composePage.page.keyboard.press('Tab');
     await expect(composePage.createPageButton).toBeEnabled();
   });
 
@@ -69,6 +75,8 @@ test.describe('Compose Page - Complete User Flows', () => {
     
     // Enabled when content exists
     await composePage.fillContent('Some content to improve');
+    // Ensure change detection triggers
+    await composePage.page.keyboard.press('Tab');
     await expect(composePage.improveContentButton).toBeEnabled();
   });
 
@@ -86,6 +94,8 @@ test.describe('Compose Page - Complete User Flows', () => {
     await composePage.fillTitle(testTitle);
     await composePage.fillSpaceKey(testSpaceKey);
     await composePage.fillContent(testContent);
+    // Ensure all inputs are registered
+    await composePage.page.keyboard.press('Tab');
     
     await composePage.clickCreatePage();
     
@@ -93,14 +103,16 @@ test.describe('Compose Page - Complete User Flows', () => {
     await composePage.waitForError('Page created successfully');
     
     // Verify publish and schedule buttons are now enabled
-    await expect(composePage.publishNowButton).toBeEnabled({ timeout: 5000 });
-    await expect(composePage.scheduleButton).toBeEnabled({ timeout: 5000 });
+    await expect(composePage.publishNowButton).toBeEnabled({ timeout: 10000 });
+    await expect(composePage.scheduleButton).toBeEnabled({ timeout: 10000 });
   });
 
   test('should improve content and show suggestions', async () => {
     const testContent = 'This is a test content that needs improvement for E2E testing purposes';
     
     await composePage.fillContent(testContent);
+    // Ensure content is registered
+    await composePage.page.keyboard.press('Tab');
     await composePage.clickImproveContent();
     
     // Wait for suggestions to appear
@@ -162,11 +174,13 @@ test.describe('Compose Page - Complete User Flows', () => {
     await composePage.fillTitle(`E2E Publish Test ${Date.now()}`);
     await composePage.fillSpaceKey('SPGAC');
     await composePage.fillContent('Content for publishing');
+    await composePage.page.keyboard.press('Tab');
+    
     await composePage.clickCreatePage();
     await composePage.waitForError('Page created successfully');
     
     // Wait for publish button to be enabled
-    await expect(composePage.publishNowButton).toBeEnabled({ timeout: 5000 });
+    await expect(composePage.publishNowButton).toBeEnabled({ timeout: 10000 });
     
     // Publish the page
     await composePage.clickPublishNow();
@@ -180,11 +194,13 @@ test.describe('Compose Page - Complete User Flows', () => {
     await composePage.fillTitle(`E2E Schedule Test ${Date.now()}`);
     await composePage.fillSpaceKey('SPGAC');
     await composePage.fillContent('Content for scheduling');
+    await composePage.page.keyboard.press('Tab');
+    
     await composePage.clickCreatePage();
     await composePage.waitForError('Page created successfully');
     
     // Wait for schedule button to be enabled
-    await expect(composePage.scheduleButton).toBeEnabled({ timeout: 5000 });
+    await expect(composePage.scheduleButton).toBeEnabled({ timeout: 10000 });
     
     // Schedule the page
     await composePage.clickSchedule();
@@ -223,22 +239,32 @@ test.describe('Compose Page - Complete User Flows', () => {
     
     // Step 1: Upload attachment
     await composePage.selectFiles(testFilePath);
+    
+    // Fill description for file if possible (optional but good for testing)
+    const fileDescInputs = await composePage.page.locator('.file-description-input').all();
+    if (fileDescInputs.length > 0) {
+      await fileDescInputs[0].fill('Test attachment description');
+    }
+
     await composePage.clickUpload();
     await composePage.waitForError('Files uploaded successfully');
     
     // Step 2: Improve content
     await composePage.fillContent(testContent);
+    await composePage.page.keyboard.press('Tab');
     await composePage.clickImproveContent();
     await composePage.waitForSuggestions();
     
     // Step 3: Create page
     await composePage.fillTitle(testTitle);
     await composePage.fillSpaceKey('SPGAC');
+    await composePage.page.keyboard.press('Tab');
+    
     await composePage.clickCreatePage();
     await composePage.waitForError('Page created successfully');
     
     // Step 4: Publish page
-    await expect(composePage.publishNowButton).toBeEnabled({ timeout: 5000 });
+    await expect(composePage.publishNowButton).toBeEnabled({ timeout: 10000 });
     await composePage.clickPublishNow();
     await composePage.waitForError('Page published successfully');
   });

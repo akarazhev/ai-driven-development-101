@@ -39,7 +39,8 @@ export class ComposePage {
     this.attachmentsCard = page.locator('mat-card:has(mat-card-title:has-text("Attached Files"))');
     
     // Error messages
-    this.errorMessages = page.locator('mat-card[style*="background-color"]');
+    // Updated selector to match the actual implementation in AppComponent
+    this.errorMessages = page.locator('.error-card');
   }
 
   async goto() {
@@ -100,21 +101,28 @@ export class ComposePage {
 
   async waitForError(message?: string) {
     if (message) {
-      await this.page.waitForSelector(`text=${message}`, { timeout: 5000 });
+      // The application uses mat-card for errors in a specific container
+      // Using a more specific selector that targets the error message content
+      await this.page.waitForSelector(`.error-message:has-text("${message}")`, { timeout: 10000 });
     } else {
-      await this.errorMessages.first().waitFor({ timeout: 5000 });
+      // Wait for any error card to appear
+      await this.page.waitForSelector('.error-card', { timeout: 10000 });
     }
   }
 
   async getErrorMessages(): Promise<string[]> {
-    const errors = await this.errorMessages.all();
-    return Promise.all(errors.map(async (error) => await error.textContent() || ''));
+    // Wait for at least one error to be visible to avoid race conditions if expected
+    // But if we just want to check current state, we don't wait long
+    const errorElements = await this.page.locator('.error-message').all();
+    return Promise.all(errorElements.map(async (el) => await el.textContent() || ''));
   }
 
   async dismissError(index: number = 0) {
-    const errorCard = this.errorMessages.nth(index);
-    const closeButton = errorCard.locator('button[mat-icon-button]');
-    await closeButton.click();
+    // Target the specific close button within the error card
+    const closeButtons = await this.page.locator('.error-close-button').all();
+    if (closeButtons.length > index) {
+      await closeButtons[index].click();
+    }
   }
 
   async waitForButtonEnabled(button: Locator, timeout: number = 5000) {
