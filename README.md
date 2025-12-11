@@ -4,7 +4,7 @@ Full-stack Confluence Publisher App implementing the course project (Chapter 06)
 
 ## Stack
 
-- Backend: Spring Boot 3.2, JPA/Hibernate, SQLite
+- Backend: Spring Boot 3.4, JPA/Hibernate, SQLite
 - Frontend: Angular 20 + TypeScript + TailwindCSS
 
 ## Prerequisites
@@ -90,12 +90,12 @@ The repo includes Dockerfiles for backend and frontend and a docker-compose.yml 
   docker compose up --build
   ```
 - Open
-  - Frontend: http://localhost:8080
-  - Backend: http://localhost:8080/api/health (accessible via host port 8080)
+  - Frontend: http://localhost:4200
+  - Backend: http://localhost:8080/api/health
 - Stop / clean
   ```bash
   docker compose down          # stop containers
-  docker compose down -v       # also remove volumes (DB/media)
+  docker compose down -v       # also remove volumes (DB/attachments)
   ```
 
 ### Quickstart (Podman)
@@ -106,37 +106,33 @@ The repo includes Dockerfiles for backend and frontend and a docker-compose.yml 
   ```
 - Build and run
   ```bash
-  podman compose up --build
-  # or, depending on your installation
-  podman-compose up --build
+  podman-compose -f podman-compose.yaml up --build
   ```
 - Open
-  - Frontend: http://localhost:8080
-  - Backend: http://localhost:8080/api/health (accessible via host port 8080)
+  - Frontend: http://localhost:4200
+  - Backend: http://localhost:8080/api/health
 - Stop / clean
   ```bash
-  podman compose down
-  podman compose down -v
+  podman-compose -f podman-compose.yaml down
+  podman-compose -f podman-compose.yaml down -v
   ```
+
+> **Note**: Both containers run as non-root users for rootless Podman compatibility. Nginx listens on port 8080 (non-privileged) inside the container.
 
 ### Compose services and ports
 
 - backend
-  - Image: built from backend/Dockerfile (Spring Boot)
-  - Port: 8080 (host -> container)
-  - Volumes: named `data` (SQLite at /data/app.db), `media` (/storage/media)
-  - Env (set in compose):
-    - `SPRING_PROFILES_ACTIVE=docker`
-    - `APP_DATABASE_URL=jdbc:sqlite:///data/app.db`
-    - `APP_ATTACHMENT_DIR=/storage/attachments`
-    - `APP_CONFLUENCE_URL=https://your-domain.atlassian.net`
-    - `APP_CONFLUENCE_DEFAULT_SPACE=DEV`
-    - `APP_PROVIDER=confluence-stub`
-    - `APP_SCHEDULER_INTERVAL_SECONDS=5`
-    - `APP_CORS_ORIGINS=http://localhost:4200,http://localhost:8080,http://localhost:5173`
+  - Image: built from backend/Dockerfile (Spring Boot 3.4, JDK 21)
+  - Port: 8080:8080 (host:container)
+  - Runs as non-root user (`appuser`, UID 1000)
+  - Volumes: named `data` (SQLite at /data/app.db), `attachments` (/storage/attachments)
+  - Env (loaded from `.env` file):
+    - `CONFLUENCE_URL`, `CONFLUENCE_USERNAME`, `CONFLUENCE_API_TOKEN`
+    - `CONFLUENCE_DEFAULT_SPACE`, `CONFLUENCE_PROVIDER`
+    - `SCHEDULER_INTERVAL_SECONDS`, `CORS_ORIGINS`
 - frontend
-  - Image: built from frontend/Dockerfile
-  - Port: 8080 (host -> container port 80, nginx)
+  - Image: built from frontend/Dockerfile (Angular 20, nginx)
+  - Port: 4200:8080 (host:container, nginx on non-privileged port)
   - Build arg: `NG_APP_API_BASE=http://localhost:8080` so the browser calls the backend via host port 8080.
 
 ### Customizing configuration
@@ -169,7 +165,7 @@ docker run --rm -p 8080:8080 \
 docker build -t confluence-frontend \
   --build-arg NG_APP_API_BASE=http://localhost:8080 \
   -f frontend/Dockerfile .
-docker run --rm -p 8080:80 confluence-frontend
+docker run --rm -p 4200:8080 confluence-frontend
 ```
 
 ### Data persistence
@@ -180,9 +176,9 @@ docker run --rm -p 8080:80 confluence-frontend
 ### Troubleshooting
 
 - Port already in use
-  - Change host ports in docker-compose.yml (e.g., `8081:8080`, `8082:80`).
+  - Change host ports in docker-compose.yml (e.g., `8081:8080` for backend, `4201:8080` for frontend).
 - CORS blocked
-  - Add your origin to `APP_CORS_ORIGINS` in docker-compose.yml and recreate containers.
+  - Add your origin to `CORS_ORIGINS` in `.env` file and recreate containers.
 - Frontend cannot reach backend
   - Ensure backend is mapped to host port 8080 and frontend is built with `NG_APP_API_BASE` pointing to `http://localhost:8080`.
   - Rebuild the frontend image after changing `NG_APP_API_BASE`.

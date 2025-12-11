@@ -98,14 +98,18 @@ docker compose down -v
 podman machine start
 
 # Build and start services
-podman compose -f podman-compose.yaml up -d --build
+podman-compose -f podman-compose.yaml up -d --build
 
 # View logs
-podman compose -f podman-compose.yaml logs -f
+podman-compose -f podman-compose.yaml logs -f
 
 # Stop services
-podman compose -f podman-compose.yaml down
+podman-compose -f podman-compose.yaml down
 ```
+
+> **Note**: Both containers run as non-root users for rootless Podman compatibility:
+> - Backend runs as `appuser` (UID 1000) on port 8080
+> - Frontend nginx runs on port 8080 (non-privileged), mapped to host port 4200
 
 ## Security Checklist
 
