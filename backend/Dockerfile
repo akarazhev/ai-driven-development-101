@@ -21,11 +21,19 @@ FROM eclipse-temurin:21-jre-alpine
 
 WORKDIR /app
 
-# Create directories for data and attachments
-RUN mkdir -p /data /storage/attachments /app/data
+# Create non-root user for security
+RUN addgroup -g 1000 appgroup && adduser -u 1000 -G appgroup -D appuser
+
+# Install wget for healthcheck and create directories with proper ownership
+RUN apk add --no-cache wget && \
+    mkdir -p /data /storage/attachments /app/data && \
+    chown -R appuser:appgroup /data /storage /app
 
 # Copy built JAR
-COPY --from=build /app/build/libs/confluence-publisher.jar app.jar
+COPY --from=build --chown=appuser:appgroup /app/build/libs/confluence-publisher.jar app.jar
+
+# Switch to non-root user
+USER appuser
 
 # Default environment variables (can be overridden)
 ENV SPRING_PROFILES_ACTIVE=docker \

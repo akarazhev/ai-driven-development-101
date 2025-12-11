@@ -18,4 +18,6 @@ marimo/_lsp/
 site
 storage/media/*
 !storage/media/.gitkeep
+backend/build/
+backend/.gradle/
 data/*.db
