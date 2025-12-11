@@ -1,6 +1,7 @@
 package com.confluence.publisher.config;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
@@ -8,7 +9,8 @@ import java.util.List;
 
 @Configuration
 @ConfigurationProperties(prefix = "app")
-@Data
+@Getter
+@Setter
 public class AppProperties {
     
     private String appName = "confluence-publisher";
@@ -21,12 +23,5 @@ public class AppProperties {
     private List<String> corsOrigins = List.of("http://localhost:5173", "http://localhost:4200", "http://localhost:8080");
     private String provider = "confluence-stub";
     private Integer schedulerIntervalSeconds = 5;
-    
-    // Helper method to parse comma-separated CORS origins from environment
-    public void setCorsOrigins(String corsOriginsString) {
-        if (corsOriginsString != null && !corsOriginsString.isEmpty()) {
-            this.corsOrigins = List.of(corsOriginsString.split(","));
-        }
-    }
 }
 

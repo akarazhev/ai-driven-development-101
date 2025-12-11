@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -32,11 +33,12 @@ public class PageService {
                 .build();
         page = pageRepository.save(page);
         
+        List<Long> safeAttachmentIds = attachmentIds != null ? attachmentIds : Collections.emptyList();
         final Long savedPageId = page.getId();
-        List<PageAttachment> pageAttachmentList = IntStream.range(0, attachmentIds.size())
+        List<PageAttachment> pageAttachmentList = IntStream.range(0, safeAttachmentIds.size())
                 .mapToObj(i -> PageAttachment.builder()
                         .pageId(savedPageId)
-                        .attachmentId(attachmentIds.get(i))
+                        .attachmentId(safeAttachmentIds.get(i))
                         .position(i)
                         .build())
                 .toList();
