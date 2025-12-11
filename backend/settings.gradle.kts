@@ -1,2 +1,2 @@
-rootProject.name = "social-media-automation"
+rootProject.name = "confluence-publisher-app"
 
