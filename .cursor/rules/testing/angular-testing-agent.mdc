@@ -1,0 +1,407 @@
+---
+description: Angular testing patterns using Jasmine and Karma including component testing, service testing, mocking, and test utilities. Apply when writing or modifying Angular unit tests, component tests, or service tests.
+
+globs: *.spec.ts
+
+alwaysApply: false
+
+---
+
+# Angular Testing Best Practices Agent
+
+## Critical Rules
+
+- Use TestBed for component and service testing
+- Use HttpClientTestingModule for HTTP service tests
+- Mock dependencies with jasmine.createSpyObj or TestBed providers
+- Use ComponentFixture for component testing
+- Test component inputs, outputs, and user interactions
+- Use async/await or fakeAsync for asynchronous testing
+- Clean up after tests with TestBed.resetTestingModule
+- Use proper test isolation with beforeEach setup
+
+<example>
+// Good: Component test with proper setup and mocking
+describe('UserListComponent', () => {
+  let component: UserListComponent;
+  let fixture: ComponentFixture<UserListComponent>;
+  let userService: jasmine.SpyObj<UserService>;
+
+  beforeEach(async () => {
+    const userServiceSpy = jasmine.createSpyObj('UserService', ['getUsers', 'deleteUser']);
+
+    await TestBed.configureTestingModule({
+      imports: [UserListComponent, HttpClientTestingModule],
+      providers: [
+        { provide: UserService, useValue: userServiceSpy }
+      ]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(UserListComponent);
+    component = fixture.componentInstance;
+    userService = TestBed.inject(UserService) as jasmine.SpyObj<UserService>;
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should load users on init', () => {
+    const mockUsers = [
+      { id: 1, name: 'John', email: 'john@example.com' },
+      { id: 2, name: 'Jane', email: 'jane@example.com' }
+    ];
+    userService.getUsers.and.returnValue(of(mockUsers));
+
+    component.ngOnInit();
+    fixture.detectChanges();
+
+    expect(userService.getUsers).toHaveBeenCalled();
+    expect(component.users()).toEqual(mockUsers);
+  });
+
+  it('should display users in template', () => {
+    const mockUsers = [{ id: 1, name: 'John', email: 'john@example.com' }];
+    userService.getUsers.and.returnValue(of(mockUsers));
+
+    component.ngOnInit();
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement;
+    expect(compiled.textContent).toContain('John');
+    expect(compiled.textContent).toContain('john@example.com');
+  });
+});
+</example>
+
+<example type="invalid">
+// Bad: No proper setup, no mocking
+describe('BadComponent', () => {
+  it('should work', () => {
+    const component = new UserListComponent(); // Direct instantiation
+    // No fixture, no TestBed, no mocks
+    component.ngOnInit();
+    // Will fail because dependencies are not provided
+  });
+});
+
+// Bad: Not cleaning up, shared state
+describe('Component', () => {
+  let component: Component;
+  
+  beforeEach(() => {
+    // No cleanup, state persists between tests
+  });
+});
+</example>
+
+## Component Testing
+
+### Component Setup
+- Use TestBed.configureTestingModule for component setup
+- Import necessary modules (CommonModule, FormsModule, etc.)
+- Provide mock services
+- Use ComponentFixture for DOM access
+
+### Testing Component Logic
+- Test component initialization
+- Test input/output bindings
+- Test component methods
+- Test signal updates and computed values
+
+<example>
+// Good: Comprehensive component testing
+describe('UserFormComponent', () => {
+  let component: UserFormComponent;
+  let fixture: ComponentFixture<UserFormComponent>;
+  let userService: jasmine.SpyObj<UserService>;
+
+  beforeEach(async () => {
+    const userServiceSpy = jasmine.createSpyObj('UserService', ['createUser']);
+
+    await TestBed.configureTestingModule({
+      imports: [UserFormComponent, ReactiveFormsModule, HttpClientTestingModule],
+      providers: [
+        { provide: UserService, useValue: userServiceSpy }
+      ]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(UserFormComponent);
+    component = fixture.componentInstance;
+    userService = TestBed.inject(UserService) as jasmine.SpyObj<UserService>;
+  });
+
+  it('should create form with required fields', () => {
+    expect(component.userForm).toBeDefined();
+    expect(component.userForm.get('name')).toBeDefined();
+    expect(component.userForm.get('email')).toBeDefined();
+  });
+
+  it('should validate required fields', () => {
+    const nameControl = component.userForm.get('name');
+    const emailControl = component.userForm.get('email');
+
+    expect(nameControl?.valid).toBeFalsy();
+    expect(emailControl?.valid).toBeFalsy();
+
+    nameControl?.setValue('John');
+    emailControl?.setValue('john@example.com');
+
+    expect(nameControl?.valid).toBeTruthy();
+    expect(emailControl?.valid).toBeTruthy();
+  });
+
+  it('should submit form when valid', () => {
+    const mockUser = { id: 1, name: 'John', email: 'john@example.com' };
+    userService.createUser.and.returnValue(of(mockUser));
+
+    component.userForm.patchValue({
+      name: 'John',
+      email: 'john@example.com'
+    });
+
+    component.onSubmit();
+
+    expect(userService.createUser).toHaveBeenCalled();
+  });
+});
+</example>
+
+## Service Testing
+
+### HTTP Service Testing
+- Use HttpClientTestingModule
+- Use HttpTestingController to mock HTTP requests
+- Verify request methods, URLs, and bodies
+- Test error handling scenarios
+
+### Service Logic Testing
+- Test service methods in isolation
+- Mock dependencies properly
+- Test both success and error cases
+- Verify service state changes
+
+<example>
+// Good: HTTP service testing
+describe('UserService', () => {
+  let service: UserService;
+  let httpMock: HttpTestingController;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [UserService]
+    });
+
+    service = TestBed.inject(UserService);
+    httpMock = TestBed.inject(HttpTestingController);
+  });
+
+  afterEach(() => {
+    httpMock.verify();
+  });
+
+  it('should fetch users', () => {
+    const mockUsers = [
+      { id: 1, name: 'John', email: 'john@example.com' }
+    ];
+
+    service.getUsers().subscribe(users => {
+      expect(users).toEqual(mockUsers);
+    });
+
+    const req = httpMock.expectOne('/api/users');
+    expect(req.request.method).toBe('GET');
+    req.flush(mockUsers);
+  });
+
+  it('should handle HTTP errors', () => {
+    service.getUsers().subscribe({
+      next: () => fail('should have failed'),
+      error: (error) => {
+        expect(error.status).toBe(500);
+      }
+    });
+
+    const req = httpMock.expectOne('/api/users');
+    req.flush('Server Error', { status: 500, statusText: 'Internal Server Error' });
+  });
+
+  it('should create user', () => {
+    const newUser = { name: 'John', email: 'john@example.com' };
+    const createdUser = { id: 1, ...newUser };
+
+    service.createUser(newUser).subscribe(user => {
+      expect(user).toEqual(createdUser);
+    });
+
+    const req = httpMock.expectOne('/api/users');
+    expect(req.request.method).toBe('POST');
+    expect(req.request.body).toEqual(newUser);
+    req.flush(createdUser);
+  });
+});
+</example>
+
+## Async Testing
+
+### fakeAsync and tick
+- Use fakeAsync for testing timers and delays
+- Use tick() to advance time
+- Use flush() to flush all pending timers
+- Use async/await for promise-based code
+
+### Observable Testing
+- Use of() for synchronous observables
+- Use async pipe or subscribe in tests
+- Test observable chains properly
+- Handle errors in observable tests
+
+<example>
+// Good: Async testing patterns
+describe('AsyncComponent', () => {
+  it('should handle debounced search', fakeAsync(() => {
+    const component = new SearchComponent();
+    const searchService = jasmine.createSpyObj('SearchService', ['search']);
+    searchService.search.and.returnValue(of([]));
+
+    component.searchControl.setValue('test');
+    tick(300); // Advance debounce time
+
+    expect(searchService.search).toHaveBeenCalledWith('test');
+  }));
+
+  it('should handle async data loading', async () => {
+    const component = new DataComponent();
+    const dataService = jasmine.createSpyObj('DataService', ['loadData']);
+    dataService.loadData.and.returnValue(
+      new Promise(resolve => setTimeout(() => resolve([]), 100))
+    );
+
+    await component.loadData();
+
+    expect(dataService.loadData).toHaveBeenCalled();
+  });
+});
+</example>
+
+## DOM Testing
+
+### Element Querying
+- Use fixture.nativeElement for DOM access
+- Use DebugElement for Angular-specific queries
+- Use By.css, By.directive for element selection
+- Test user interactions (clicks, input, etc.)
+
+### Template Testing
+- Test rendered content
+- Test conditional rendering
+- Test event bindings
+- Test attribute bindings
+
+<example>
+// Good: DOM and interaction testing
+describe('UserListComponent DOM', () => {
+  let component: UserListComponent;
+  let fixture: ComponentFixture<UserListComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [UserListComponent]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(UserListComponent);
+    component = fixture.componentInstance;
+  });
+
+  it('should render user list', () => {
+    component.users.set([
+      { id: 1, name: 'John', email: 'john@example.com' }
+    ]);
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement;
+    expect(compiled.textContent).toContain('John');
+    expect(compiled.textContent).toContain('john@example.com');
+  });
+
+  it('should handle button click', () => {
+    spyOn(component, 'onDelete');
+    component.users.set([{ id: 1, name: 'John', email: 'john@example.com' }]);
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector('button.delete');
+    button.click();
+
+    expect(component.onDelete).toHaveBeenCalledWith(1);
+  });
+
+  it('should show loading state', () => {
+    component.loading.set(true);
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement;
+    expect(compiled.querySelector('.loading')).toBeTruthy();
+  });
+});
+</example>
+
+## Mocking Strategies
+
+### Service Mocking
+- Use jasmine.createSpyObj for service mocks
+- Configure return values with and.returnValue()
+- Verify method calls with toHaveBeenCalled()
+- Use and.callThrough() for partial mocks
+
+### Dependency Injection
+- Provide mocks in TestBed configuration
+- Use useValue for simple mocks
+- Use useFactory for complex mock creation
+- Override providers in specific tests
+
+<example>
+// Good: Advanced mocking patterns
+describe('Component with Dependencies', () => {
+  let component: ComplexComponent;
+  let fixture: ComponentFixture<ComplexComponent>;
+  let authService: jasmine.SpyObj<AuthService>;
+  let router: jasmine.SpyObj<Router>;
+
+  beforeEach(async () => {
+    const authSpy = jasmine.createSpyObj('AuthService', ['isAuthenticated', 'login']);
+    const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
+
+    authSpy.isAuthenticated.and.returnValue(true);
+    routerSpy.navigate.and.returnValue(Promise.resolve(true));
+
+    await TestBed.configureTestingModule({
+      imports: [ComplexComponent],
+      providers: [
+        { provide: AuthService, useValue: authSpy },
+        { provide: Router, useValue: routerSpy }
+      ]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(ComplexComponent);
+    component = fixture.componentInstance;
+    authService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
+    router = TestBed.inject(Router) as jasmine.SpyObj<Router>;
+  });
+
+  it('should navigate when authenticated', () => {
+    component.handleAction();
+    
+    expect(authService.isAuthenticated).toHaveBeenCalled();
+    expect(router.navigate).toHaveBeenCalledWith(['/dashboard']);
+  });
+});
+</example>
+
+## Common Pitfalls
+
+- **No TestBed Setup**: Always use TestBed for component testing
+- **Missing Mocks**: Mock all dependencies properly
+- **No Cleanup**: Clean up after tests to prevent interference
+- **Synchronous Async Code**: Use fakeAsync or async/await for async operations
+- **No Error Testing**: Test both success and error scenarios

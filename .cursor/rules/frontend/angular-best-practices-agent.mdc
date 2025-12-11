@@ -1,0 +1,172 @@
+---
+description: Essential Angular framework best practices covering standalone components, signals, lazy loading, and performance optimizations. Apply when creating or modifying Angular components, services, or modules.
+
+globs: 
+
+alwaysApply: false
+
+---
+
+# Angular Best Practices Agent
+
+## Critical Rules
+
+- Use standalone components for all new components (Angular 20+)
+- Use signals for reactive state management instead of observables where appropriate
+- Implement lazy loading for feature modules and routes
+- Use OnPush change detection strategy for performance optimization
+- Use dependency injection with `inject()` function for modern Angular patterns
+- Prefer functional guards and interceptors over class-based ones
+- Use control flow syntax (@if, @for, @switch) instead of structural directives
+- Implement proper unsubscription patterns with takeUntil or async pipe
+
+<example>
+// Good: Standalone component with signals and OnPush
+@Component({
+  selector: 'app-user-list',
+  standalone: true,
+  imports: [CommonModule, RouterModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    @if (loading()) {
+      <div>Loading...</div>
+    } @else {
+      @for (user of users(); track user.id) {
+        <div>{{ user.name }}</div>
+      }
+    }
+  `
+})
+export class UserListComponent {
+  private userService = inject(UserService);
+  users = signal<User[]>([]);
+  loading = signal(false);
+
+  ngOnInit(): void {
+    this.loadUsers();
+  }
+
+  private loadUsers(): void {
+    this.loading.set(true);
+    this.userService.getUsers().pipe(
+      takeUntilDestroyed()
+    ).subscribe({
+      next: (users) => {
+        this.users.set(users);
+        this.loading.set(false);
+      },
+      error: () => this.loading.set(false)
+    });
+  }
+}
+</example>
+
+<example type="invalid">
+// Bad: NgModule-based component with default change detection
+@Component({
+  selector: 'app-user-list',
+  template: `
+    <div *ngIf="loading">Loading...</div>
+    <div *ngFor="let user of users">
+      {{ user.name }}
+    </div>
+  `
+})
+export class UserListComponent {
+  users: User[] = [];
+  loading = false;
+
+  constructor(private userService: UserService) {}
+
+  ngOnInit(): void {
+    this.userService.getUsers().subscribe(users => {
+      this.users = users; // Memory leak - no unsubscription
+    });
+  }
+}
+</example>
+
+## Component Patterns
+
+### Standalone Components
+- Always use standalone components for new code
+- Import only needed dependencies in component imports array
+- Use `inject()` function instead of constructor injection
+- Avoid NgModules unless absolutely necessary
+
+### Signals Usage
+- Use signals for component state that changes reactively
+- Use computed() for derived state
+- Use effect() sparingly and only for side effects
+- Combine signals with RxJS observables when needed
+
+### Change Detection
+- Always use OnPush change detection for better performance
+- Manually trigger change detection with ChangeDetectorRef when needed
+- Use signals to automatically trigger change detection
+- Avoid default change detection for performance-critical components
+
+## Routing Patterns
+
+### Lazy Loading
+- Use loadComponent for standalone component lazy loading
+- Use loadChildren for feature module lazy loading
+- Implement proper route guards with functional guards
+- Use route data for configuration
+
+<example>
+// Good: Lazy loading with standalone component
+export const routes: Routes = [
+  {
+    path: 'users',
+    loadComponent: () => import('./users/users.component').then(m => m.UsersComponent)
+  },
+  {
+    path: 'dashboard',
+    loadComponent: () => import('./dashboard/dashboard.component').then(m => m.DashboardComponent),
+    canActivate: [authGuard]
+  }
+];
+</example>
+
+## Service Patterns
+
+### Dependency Injection
+- Use `inject()` function for modern DI patterns
+- Provide services at root level with `providedIn: 'root'`
+- Use providedIn: 'root' for singleton services
+- Avoid providedIn: 'any' unless specifically needed
+
+<example>
+// Good: Modern service with inject
+@Injectable({ providedIn: 'root' })
+export class UserService {
+  private http = inject(HttpClient);
+  private router = inject(Router);
+
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>('/api/users');
+  }
+}
+</example>
+
+## Performance Optimization
+
+### Bundle Optimization
+- Use lazy loading for all feature modules
+- Import only needed Angular modules
+- Use tree-shaking friendly imports
+- Avoid importing entire libraries when only specific functions are needed
+
+### Change Detection Optimization
+- Use OnPush change detection
+- Use trackBy functions for *ngFor loops
+- Minimize template expressions
+- Use pure pipes for transformations
+
+## Common Pitfalls
+
+- **Memory Leaks**: Always unsubscribe from observables using takeUntilDestroyed() or async pipe
+- **Change Detection**: Don't forget to manually trigger change detection in OnPush components when needed
+- **Signals vs Observables**: Use signals for component state, observables for async operations
+- **Lazy Loading**: Don't forget to implement lazy loading for better initial load performance

@@ -1,0 +1,410 @@
+---
+description: Angular Forms patterns including reactive forms, template-driven forms, validation, form controls, and form arrays. Apply when creating or modifying forms, form validation, or form handling in Angular.
+
+globs: 
+
+alwaysApply: false
+
+---
+
+# Angular Forms Best Practices Agent
+
+## Critical Rules
+
+- Prefer reactive forms over template-driven forms for complex forms
+- Use FormBuilder for creating form groups
+- Implement proper validation with Validators
+- Use typed forms (FormGroup<T>, FormControl<T>) for type safety
+- Handle form submission with proper error handling
+- Use form arrays for dynamic form fields
+- Display validation errors with user-friendly messages
+- Use async validators for server-side validation
+
+<example>
+// Good: Reactive form with typed controls and validation
+@Component({
+  selector: 'app-user-form',
+  standalone: true,
+  imports: [ReactiveFormsModule, CommonModule],
+  template: `
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="name">Name</label>
+        <input 
+          id="name"
+          type="text" 
+          formControlName="name"
+          [class.error]="userForm.get('name')?.invalid && userForm.get('name')?.touched">
+        @if (userForm.get('name')?.hasError('required') && userForm.get('name')?.touched) {
+          <span class="error-message">Name is required</span>
+        }
+        @if (userForm.get('name')?.hasError('minlength') && userForm.get('name')?.touched) {
+          <span class="error-message">Name must be at least 3 characters</span>
+        }
+      </div>
+
+      <div>
+        <label for="email">Email</label>
+        <input 
+          id="email"
+          type="email" 
+          formControlName="email">
+        @if (userForm.get('email')?.hasError('required') && userForm.get('email')?.touched) {
+          <span class="error-message">Email is required</span>
+        }
+        @if (userForm.get('email')?.hasError('email') && userForm.get('email')?.touched) {
+          <span class="error-message">Please enter a valid email</span>
+        }
+      </div>
+
+      <button 
+        type="submit" 
+        [disabled]="userForm.invalid || userForm.pending">
+        Submit
+      </button>
+    </form>
+  `
+})
+export class UserFormComponent {
+  private fb = inject(FormBuilder);
+  private userService = inject(UserService);
+
+  userForm = this.fb.group({
+    name: ['', [Validators.required, Validators.minLength(3)]],
+    email: ['', [Validators.required, Validators.email]],
+    age: [null as number | null, [Validators.min(18)]]
+  });
+
+  onSubmit(): void {
+    if (this.userForm.valid) {
+      this.userService.createUser(this.userForm.value).subscribe({
+        next: () => console.log('User created'),
+        error: (error) => console.error('Error:', error)
+      });
+    } else {
+      this.userForm.markAllAsTouched();
+    }
+  }
+}
+</example>
+
+<example type="invalid">
+// Bad: Template-driven form without proper validation
+@Component({
+  template: `
+    <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm.value)">
+      <input name="name" ngModel>
+      <input name="email" ngModel>
+      <button type="submit">Submit</button>
+    </form>
+  `
+})
+export class BadFormComponent {
+  onSubmit(data: any) {
+    // No validation, no type safety
+    this.userService.createUser(data);
+  }
+}
+
+// Bad: No error handling or validation feedback
+@Component({
+  template: `
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <input formControlName="email">
+      <button type="submit">Submit</button>
+    </form>
+  `
+})
+export class BadFormComponent {
+  form = new FormGroup({
+    email: new FormControl('')
+  });
+}
+</example>
+
+## Reactive Forms Patterns
+
+### FormBuilder Usage
+- Use FormBuilder for cleaner form creation
+- Use typed forms (FormGroup<T>) for type safety
+- Group related fields logically
+- Use nested form groups for complex forms
+
+### Form Controls
+- Use FormControl for single fields
+- Use FormGroup for form sections
+- Use FormArray for dynamic lists
+- Set initial values and validators properly
+
+<example>
+// Good: Complex form with nested groups and arrays
+export class ComplexFormComponent {
+  private fb = inject(FormBuilder);
+
+  form = this.fb.group({
+    personalInfo: this.fb.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]]
+    }),
+    address: this.fb.group({
+      street: [''],
+      city: ['', Validators.required],
+      zipCode: ['', [Validators.required, Validators.pattern(/^\d{5}$/)]]
+    }),
+    hobbies: this.fb.array([
+      this.fb.control('')
+    ])
+  });
+
+  get hobbies(): FormArray {
+    return this.form.get('hobbies') as FormArray;
+  }
+
+  addHobby(): void {
+    this.hobbies.push(this.fb.control(''));
+  }
+
+  removeHobby(index: number): void {
+    this.hobbies.removeAt(index);
+  }
+}
+</example>
+
+## Validation Patterns
+
+### Built-in Validators
+- Use Validators.required for required fields
+- Use Validators.email for email validation
+- Use Validators.min/max for numeric validation
+- Use Validators.minLength/maxLength for string length
+- Use Validators.pattern for regex validation
+
+### Custom Validators
+- Create reusable custom validators
+- Return ValidationErrors or null
+- Use validators for complex validation logic
+- Combine multiple validators with Validators.compose
+
+<example>
+// Good: Custom validators
+export class CustomValidators {
+  static passwordStrength(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    if (!value) return null;
+
+    const hasUpperCase = /[A-Z]/.test(value);
+    const hasLowerCase = /[a-z]/.test(value);
+    const hasNumeric = /[0-9]/.test(value);
+    const hasSpecialChar = /[!@#$%^&*]/.test(value);
+
+    const valid = hasUpperCase && hasLowerCase && hasNumeric && hasSpecialChar && value.length >= 8;
+
+    return valid ? null : { passwordStrength: true };
+  }
+
+  static matchPassword(controlName: string, matchingControlName: string) {
+    return (formGroup: AbstractControl): ValidationErrors | null => {
+      const control = formGroup.get(controlName);
+      const matchingControl = formGroup.get(matchingControlName);
+
+      if (!control || !matchingControl) return null;
+
+      if (matchingControl.errors && !matchingControl.errors['mustMatch']) {
+        return null;
+      }
+
+      if (control.value !== matchingControl.value) {
+        matchingControl.setErrors({ mustMatch: true });
+        return { mustMatch: true };
+      } else {
+        matchingControl.setErrors(null);
+        return null;
+      }
+    };
+  }
+}
+
+// Usage
+this.form = this.fb.group({
+  password: ['', [Validators.required, CustomValidators.passwordStrength]],
+  confirmPassword: ['', Validators.required]
+}, {
+  validators: CustomValidators.matchPassword('password', 'confirmPassword')
+});
+</example>
+
+## Async Validation
+
+### Async Validators
+- Use async validators for server-side validation
+- Show loading state during validation
+- Handle validation errors appropriately
+- Debounce async validators to reduce API calls
+
+<example>
+// Good: Async validator for email uniqueness
+export class UserValidators {
+  static emailExists(userService: UserService): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      if (!control.value) {
+        return of(null);
+      }
+
+      return userService.checkEmailExists(control.value).pipe(
+        debounceTime(300),
+        map(exists => exists ? { emailExists: true } : null),
+        catchError(() => of(null))
+      );
+    };
+  }
+}
+
+// Usage
+this.form = this.fb.group({
+  email: ['', 
+    [Validators.required, Validators.email],
+    [UserValidators.emailExists(this.userService)]
+  ]
+});
+
+// Template
+@if (userForm.get('email')?.pending) {
+  <span>Checking email...</span>
+}
+@if (userForm.get('email')?.hasError('emailExists')) {
+  <span>This email is already taken</span>
+}
+</example>
+
+## Form Arrays
+
+### Dynamic Form Fields
+- Use FormArray for dynamic lists
+- Add/remove controls dynamically
+- Validate array items properly
+- Handle nested arrays when needed
+
+<example>
+// Good: Form array for dynamic items
+export class DynamicFormComponent {
+  private fb = inject(FormBuilder);
+
+  form = this.fb.group({
+    items: this.fb.array([])
+  });
+
+  get items(): FormArray {
+    return this.form.get('items') as FormArray;
+  }
+
+  addItem(): void {
+    const itemGroup = this.fb.group({
+      name: ['', Validators.required],
+      quantity: [1, [Validators.required, Validators.min(1)]],
+      price: [0, [Validators.required, Validators.min(0)]]
+    });
+    this.items.push(itemGroup);
+  }
+
+  removeItem(index: number): void {
+    this.items.removeAt(index);
+  }
+
+  getTotal(): number {
+    return this.items.controls.reduce((total, control) => {
+      const quantity = control.get('quantity')?.value || 0;
+      const price = control.get('price')?.value || 0;
+      return total + (quantity * price);
+    }, 0);
+  }
+}
+</example>
+
+## Error Handling
+
+### Validation Error Display
+- Show errors only after field is touched or form is submitted
+- Provide clear, user-friendly error messages
+- Use conditional rendering for error messages
+- Group related errors logically
+
+### Form Submission
+- Validate form before submission
+- Mark all fields as touched on invalid submission
+- Handle submission errors gracefully
+- Provide user feedback on success/error
+
+<example>
+// Good: Comprehensive error handling
+@Component({
+  template: `
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div>
+        <input formControlName="email">
+        @if (form.get('email')?.invalid && form.get('email')?.touched) {
+          <div class="errors">
+            @if (form.get('email')?.hasError('required')) {
+              <span>Email is required</span>
+            }
+            @if (form.get('email')?.hasError('email')) {
+              <span>Please enter a valid email</span>
+            }
+            @if (form.get('email')?.hasError('emailExists')) {
+              <span>This email is already registered</span>
+            }
+          </div>
+        }
+      </div>
+
+      <button 
+        type="submit" 
+        [disabled]="form.invalid || form.pending || submitting">
+        @if (submitting) {
+          Submitting...
+        } @else {
+          Submit
+        }
+      </button>
+
+      @if (submitError) {
+        <div class="error">{{ submitError }}</div>
+      }
+    </form>
+  `
+})
+export class FormComponent {
+  form = this.fb.group({...});
+  submitting = false;
+  submitError: string | null = null;
+
+  onSubmit(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    this.submitting = true;
+    this.submitError = null;
+
+    this.userService.createUser(this.form.value).subscribe({
+      next: () => {
+        this.submitting = false;
+        // Handle success
+      },
+      error: (error) => {
+        this.submitting = false;
+        this.submitError = error.message || 'An error occurred';
+      }
+    });
+  }
+}
+</example>
+
+## Common Pitfalls
+
+- **No Validation**: Always validate form inputs
+- **Poor Error Messages**: Provide clear, actionable error messages
+- **Missing Type Safety**: Use typed forms for better type safety
+- **No Loading States**: Show loading state during async operations
+- **Form State**: Don't forget to handle touched/dirty states properly
