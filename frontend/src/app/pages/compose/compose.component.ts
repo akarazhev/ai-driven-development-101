@@ -35,7 +35,7 @@ import { ApiService, Attachment } from '../../services/api.service';
         ></textarea>
         <div class="flex gap-2">
           <button 
-            (click)="improvContent()" 
+            (click)="improveContent()" 
             [disabled]="busy() || !content()" 
             class="px-3 py-2 bg-blue-600 text-white rounded disabled:opacity-50">
             Improve content
@@ -192,7 +192,7 @@ export class ComposeComponent {
     }
   }
 
-  async improvContent() {
+  async improveContent() {
     this.busy.set(true);
     try {
       const result = await firstValueFrom(this.apiService.improveContent(this.content()));
