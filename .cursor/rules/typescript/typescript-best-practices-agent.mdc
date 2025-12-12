@@ -1,0 +1,237 @@
+---
+description: TypeScript best practices including type safety, strict typing, interfaces, generics, and type inference. Apply when writing TypeScript code, defining types, or working with type annotations.
+
+globs: *.ts,*.tsx
+
+alwaysApply: false
+
+---
+
+# TypeScript Best Practices Agent
+
+## Critical Rules
+
+- Always use strict TypeScript configuration
+- Prefer interfaces for object shapes, types for unions/intersections
+- Use explicit return types for public methods
+- Avoid `any` type, use `unknown` when type is truly unknown
+- Use type guards for runtime type checking
+- Use const assertions for literal types
+- Prefer type inference for local variables when types are obvious
+- Use readonly for immutable data structures
+
+<example>
+// Good: Proper typing with interfaces and explicit return types
+interface User {
+  readonly id: string;
+  name: string;
+  email: string;
+  age?: number;
+}
+
+interface UserService {
+  getUser(id: string): Promise<User>;
+  createUser(userData: Omit<User, 'id'>): Promise<User>;
+}
+
+class UserServiceImpl implements UserService {
+  async getUser(id: string): Promise<User> {
+    // Implementation
+    return { id, name: 'John', email: 'john@example.com' };
+  }
+  
+  async createUser(userData: Omit<User, 'id'>): Promise<User> {
+    return { id: crypto.randomUUID(), ...userData };
+  }
+}
+
+// Good: Type guards
+function isUser(obj: unknown): obj is User {
+  return (
+    typeof obj === 'object' &&
+    obj !== null &&
+    'id' in obj &&
+    'name' in obj &&
+    'email' in obj
+  );
+}
+</example>
+
+<example type="invalid">
+// Bad: Using any and missing types
+function getUser(id: any): any {
+  return { id, name: 'John' };
+}
+
+// Bad: No return type, no interface
+function createUser(userData) {
+  return { id: '1', ...userData };
+}
+
+// Bad: Mutable readonly-like structure
+const config = {
+  apiUrl: 'https://api.example.com'
+};
+config.apiUrl = 'changed'; // Should be readonly
+</example>
+
+## Type Definitions
+
+### Interfaces vs Types
+- Use interfaces for object shapes that might be extended
+- Use types for unions, intersections, and computed types
+- Use interfaces for public APIs
+- Use types for complex type operations
+
+### Type Annotations
+- Use explicit types for function parameters
+- Use explicit return types for public functions
+- Infer types for local variables when obvious
+- Use type assertions sparingly and with caution
+
+<example>
+// Good: Interface for extensible shapes
+interface BaseEntity {
+  id: string;
+  createdAt: Date;
+}
+
+interface User extends BaseEntity {
+  name: string;
+  email: string;
+}
+
+// Good: Type for unions and intersections
+type Status = 'pending' | 'approved' | 'rejected';
+type UserWithStatus = User & { status: Status };
+
+// Good: Complex type operations
+type UserKeys = keyof User;
+type PartialUser = Partial<User>;
+type RequiredUser = Required<User>;
+type UserEmail = Pick<User, 'email'>;
+</example>
+
+## Generics
+
+### Generic Functions
+- Use generics for reusable functions
+- Constrain generics with extends keyword
+- Use descriptive generic parameter names
+- Prefer generic constraints over any
+
+### Generic Types
+- Use generics for reusable types
+- Create generic utility types
+- Use default generic parameters when appropriate
+
+<example>
+// Good: Generic function with constraints
+function getById<T extends { id: string }>(items: T[], id: string): T | undefined {
+  return items.find(item => item.id === id);
+}
+
+// Good: Generic type with default
+interface Repository<T = unknown> {
+  findById(id: string): Promise<T | null>;
+  save(entity: T): Promise<T>;
+  delete(id: string): Promise<boolean>;
+}
+
+// Good: Generic utility type
+type ApiResponse<T> = {
+  data: T;
+  status: number;
+  message?: string;
+};
+
+async function fetchUser(id: string): Promise<ApiResponse<User>> {
+  // Implementation
+}
+</example>
+
+## Type Safety
+
+### Avoiding any
+- Never use `any` unless absolutely necessary
+- Use `unknown` for truly unknown types
+- Use type guards to narrow unknown types
+- Use generics for flexible but type-safe code
+
+### Type Guards
+- Create type guard functions for runtime checks
+- Use instanceof for class instances
+- Use typeof for primitive types
+- Use in operator for property checks
+
+<example>
+// Good: Type guards for unknown types
+function processData(data: unknown): void {
+  if (isUser(data)) {
+    console.log(data.name); // TypeScript knows data is User
+  } else if (isString(data)) {
+    console.log(data.toUpperCase()); // TypeScript knows data is string
+  }
+}
+
+function isUser(obj: unknown): obj is User {
+  return (
+    typeof obj === 'object' &&
+    obj !== null &&
+    'id' in obj &&
+    typeof (obj as any).id === 'string' &&
+    'name' in obj &&
+    typeof (obj as any).name === 'string'
+  );
+}
+
+function isString(value: unknown): value is string {
+  return typeof value === 'string';
+}
+</example>
+
+## Utility Types
+
+### Built-in Utility Types
+- Use Partial<T> for optional properties
+- Use Required<T> for required properties
+- Use Pick<T, K> for selecting properties
+- Use Omit<T, K> for excluding properties
+- Use Readonly<T> for immutable types
+
+### Custom Utility Types
+- Create project-specific utility types
+- Use mapped types for transformations
+- Use conditional types for complex logic
+
+<example>
+// Good: Using utility types
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  age?: number;
+}
+
+// Partial for updates
+type UserUpdate = Partial<Pick<User, 'name' | 'email' | 'age'>>;
+
+// Omit for creation
+type UserCreate = Omit<User, 'id'>;
+
+// Readonly for immutable
+type ImmutableUser = Readonly<User>;
+
+// Good: Custom utility type
+type Nullable<T> = T | null;
+type Optional<T> = T | undefined;
+type Maybe<T> = T | null | undefined;
+</example>
+
+## Common Pitfalls
+
+- **any Type**: Never use any, use unknown or proper types
+- **Missing Return Types**: Always specify return types for public functions
+- **Type Assertions**: Avoid as assertions, use type guards instead
+- **Mutable Readonly**: Use readonly modifier, not just const
+- **Over-complex Types**: Keep types simple and readable

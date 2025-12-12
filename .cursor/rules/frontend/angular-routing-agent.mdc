@@ -1,0 +1,206 @@
+---
+description: Angular routing patterns including lazy loading, route guards, route configuration, and navigation. Apply when working with Angular Router, creating routes, or implementing navigation.
+
+globs: 
+
+alwaysApply: false
+
+---
+
+# Angular Routing Best Practices Agent
+
+## Critical Rules
+
+- Use lazy loading for all feature routes with loadComponent or loadChildren
+- Implement functional route guards instead of class-based guards
+- Use route data for configuration instead of hardcoding values
+- Handle route parameters with proper type safety
+- Implement proper error handling for route navigation failures
+- Use RouterLink directive for declarative navigation
+- Prefer loadComponent for standalone components in Angular 20+
+
+<example>
+// Good: Lazy loading with functional guard
+export const routes: Routes = [
+  {
+    path: 'users',
+    loadComponent: () => import('./users/users.component').then(m => m.UsersComponent),
+    canActivate: [() => inject(AuthService).isAuthenticated()],
+    data: { title: 'Users', requiresAuth: true }
+  },
+  {
+    path: 'users/:id',
+    loadComponent: () => import('./user-detail/user-detail.component').then(m => m.UserDetailComponent),
+    resolve: { user: userResolver }
+  }
+];
+
+// Good: Functional guard
+export const authGuard: CanActivateFn = () => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
+  
+  if (authService.isAuthenticated()) {
+    return true;
+  }
+  
+  return router.createUrlTree(['/login']);
+};
+</example>
+
+<example type="invalid">
+// Bad: Eager loading and class-based guard
+export const routes: Routes = [
+  {
+    path: 'users',
+    component: UsersComponent, // Eager loading
+    canActivate: [AuthGuard] // Class-based guard
+  }
+];
+
+// Bad: Class-based guard
+@Injectable()
+export class AuthGuard implements CanActivate {
+  constructor(private authService: AuthService, private router: Router) {}
+  
+  canActivate(): boolean {
+    if (this.authService.isAuthenticated()) {
+      return true;
+    }
+    this.router.navigate(['/login']);
+    return false;
+  }
+}
+</example>
+
+## Route Configuration
+
+### Lazy Loading Patterns
+- Use `loadComponent` for standalone components
+- Use `loadChildren` for feature modules
+- Always use arrow functions for lazy loading
+- Handle loading errors gracefully
+
+### Route Data
+- Use route data for configuration
+- Access route data in components via ActivatedRoute
+- Use route resolvers for data that must be loaded before navigation
+- Type route data properly
+
+<example>
+// Good: Route with data and resolver
+{
+  path: 'product/:id',
+  loadComponent: () => import('./product/product.component').then(m => m.ProductComponent),
+  data: { 
+    title: 'Product Details',
+    requiresAuth: true 
+  },
+  resolve: { 
+    product: productResolver 
+  }
+}
+
+// Good: Accessing route data
+export class ProductComponent {
+  private route = inject(ActivatedRoute);
+  
+  product$ = this.route.data.pipe(
+    map(data => data['product'] as Product)
+  );
+  
+  title = this.route.snapshot.data['title'];
+}
+</example>
+
+## Navigation Patterns
+
+### Declarative Navigation
+- Use RouterLink directive for template navigation
+- Use RouterLinkActive for active route styling
+- Prefer declarative navigation over imperative when possible
+
+### Imperative Navigation
+- Use Router service for programmatic navigation
+- Handle navigation errors properly
+- Use relative navigation when appropriate
+- Preserve query parameters when needed
+
+<example>
+// Good: Navigation with error handling
+export class NavigationService {
+  private router = inject(Router);
+  
+  navigateToUser(userId: string): void {
+    this.router.navigate(['/users', userId]).catch(error => {
+      console.error('Navigation failed:', error);
+      // Handle error appropriately
+    });
+  }
+  
+  navigateWithQueryParams(params: Record<string, string>): void {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: params,
+      queryParamsHandling: 'merge'
+    });
+  }
+}
+</example>
+
+## Route Guards
+
+### Functional Guards
+- Use functional guards (CanActivateFn, CanDeactivateFn) for new code
+- Inject services using inject() function
+- Return boolean, UrlTree, or Observable/Promise of these
+- Handle async operations properly
+
+### Guard Types
+- CanActivate: Control route access
+- CanDeactivate: Control route exit (e.g., unsaved changes)
+- CanLoad: Control lazy module loading
+- Resolve: Pre-fetch route data
+
+<example>
+// Good: CanDeactivate guard for unsaved changes
+export const unsavedChangesGuard: CanDeactivateFn<ComponentWithUnsavedChanges> = (component) => {
+  if (component.hasUnsavedChanges()) {
+    return confirm('You have unsaved changes. Do you want to leave?');
+  }
+  return true;
+};
+</example>
+
+## Route Parameters
+
+### Parameter Access
+- Use ActivatedRoute for parameter access
+- Prefer observables over snapshots for reactive updates
+- Type parameters properly
+- Handle missing parameters gracefully
+
+<example>
+// Good: Type-safe parameter access
+export class UserDetailComponent {
+  private route = inject(ActivatedRoute);
+  
+  userId$ = this.route.paramMap.pipe(
+    map(params => params.get('id')),
+    filter((id): id is string => id !== null),
+    map(id => parseInt(id, 10))
+  );
+  
+  user$ = this.userId$.pipe(
+    switchMap(id => this.userService.getUser(id))
+  );
+}
+</example>
+
+## Common Pitfalls
+
+- **Eager Loading**: Don't import components directly in route configuration
+- **Guard Logic**: Don't put complex business logic in guards
+- **Memory Leaks**: Unsubscribe from route observables properly
+- **Type Safety**: Always type route parameters and data
+- **Error Handling**: Handle navigation failures and missing routes

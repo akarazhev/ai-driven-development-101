@@ -1,0 +1,294 @@
+---
+description: Spring Boot testing patterns including unit tests, integration tests, mocking, and testcontainers. Apply when writing or modifying tests for Spring Boot applications.
+
+globs: *Test.java,*Tests.java
+
+alwaysApply: false
+
+---
+
+# Spring Boot Testing Best Practices Agent
+
+## Critical Rules
+
+- Use @SpringBootTest for integration tests, @WebMvcTest for controller tests
+- Use @MockBean for mocking Spring beans in tests
+- Use @DataJpaTest for repository tests
+- Use Testcontainers for database integration tests
+- Use @Transactional for test data isolation
+- Use AssertJ for fluent assertions
+- Use @TestConfiguration for test-specific beans
+- Clean up test data after each test
+
+<example>
+// Good: Controller test with @WebMvcTest
+@WebMvcTest(UserController.class)
+class UserControllerTest {
+    @Autowired
+    private MockMvc mockMvc;
+    
+    @MockBean
+    private UserService userService;
+    
+    @Test
+    void shouldGetUserById() throws Exception {
+        User user = User.builder()
+            .id(1L)
+            .name("John Doe")
+            .email("john@example.com")
+            .build();
+        
+        when(userService.findById(1L)).thenReturn(Optional.of(user));
+        
+        mockMvc.perform(get("/api/users/1"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.id").value(1))
+            .andExpect(jsonPath("$.name").value("John Doe"));
+    }
+}
+
+// Good: Repository test with @DataJpaTest
+@DataJpaTest
+@Transactional
+class UserRepositoryTest {
+    @Autowired
+    private UserRepository userRepository;
+    
+    @Test
+    void shouldFindByEmail() {
+        User user = User.builder()
+            .name("John")
+            .email("john@example.com")
+            .build();
+        userRepository.save(user);
+        
+        Optional<User> found = userRepository.findByEmail("john@example.com");
+        
+        assertThat(found).isPresent();
+        assertThat(found.get().getEmail()).isEqualTo("john@example.com");
+    }
+}
+</example>
+
+<example type="invalid">
+// Bad: Full context loading for simple unit test
+@SpringBootTest
+class BadUserServiceTest {
+    @Autowired
+    private UserService userService; // Should mock dependencies
+    
+    @Test
+    void testGetUser() {
+        // This loads entire Spring context unnecessarily
+    }
+}
+
+// Bad: No cleanup, tests interfere with each other
+@Test
+void testCreateUser() {
+    User user = userRepository.save(new User());
+    // User remains in database, affects other tests
+}
+</example>
+
+## Test Types
+
+### Unit Tests
+- Test individual components in isolation
+- Mock all dependencies
+- Use plain JUnit without Spring context
+- Fast execution, no external dependencies
+
+### Integration Tests
+- Test component interactions
+- Use @SpringBootTest with limited context
+- Use @MockBean for external services
+- Test real database with @DataJpaTest
+
+### Web Layer Tests
+- Test controllers with @WebMvcTest
+- Use MockMvc for HTTP request simulation
+- Mock service layer
+- Test request/response handling
+
+<example>
+// Good: Unit test without Spring
+class UserServiceUnitTest {
+    private UserRepository userRepository = mock(UserRepository.class);
+    private UserService userService = new UserService(userRepository);
+    
+    @Test
+    void shouldReturnUserWhenExists() {
+        User user = User.builder().id(1L).name("John").build();
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        
+        Optional<User> result = userService.findById(1L);
+        
+        assertThat(result).isPresent();
+        assertThat(result.get().getName()).isEqualTo("John");
+    }
+}
+
+// Good: Integration test with Testcontainers
+@SpringBootTest
+@Testcontainers
+class UserServiceIntegrationTest {
+    @Container
+    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15")
+            .withDatabaseName("testdb")
+            .withUsername("test")
+            .withPassword("test");
+    
+    @Autowired
+    private UserRepository userRepository;
+    
+    @Test
+    @Transactional
+    void shouldSaveAndRetrieveUser() {
+        User user = User.builder()
+            .name("John")
+            .email("john@example.com")
+            .build();
+        
+        User saved = userRepository.save(user);
+        Optional<User> found = userRepository.findById(saved.getId());
+        
+        assertThat(found).isPresent();
+        assertThat(found.get().getName()).isEqualTo("John");
+    }
+}
+</example>
+
+## Mocking Patterns
+
+### @MockBean Usage
+- Use @MockBean for Spring beans in tests
+- Configure mock behavior with when().thenReturn()
+- Verify interactions with verify()
+- Reset mocks between tests if needed
+
+### Mockito Patterns
+- Use mock() for plain mocks
+- Use @Mock for field injection
+- Use @InjectMocks for dependency injection
+- Use ArgumentCaptor for argument verification
+
+<example>
+// Good: Mocking with @MockBean
+@WebMvcTest(UserController.class)
+class UserControllerTest {
+    @MockBean
+    private UserService userService;
+    
+    @MockBean
+    private EmailService emailService;
+    
+    @Test
+    void shouldCreateUserAndSendEmail() {
+        UserCreateDto dto = new UserCreateDto("John", "john@example.com");
+        UserResponseDto response = new UserResponseDto(1L, "John", "john@example.com");
+        
+        when(userService.create(any(UserCreateDto.class))).thenReturn(response);
+        
+        mockMvc.perform(post("/api/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(dto)))
+            .andExpect(status().isCreated())
+            .andExpect(jsonPath("$.id").value(1));
+        
+        verify(emailService).sendWelcomeEmail("john@example.com");
+    }
+}
+</example>
+
+## Assertions
+
+### AssertJ Usage
+- Use AssertJ for fluent assertions
+- Use assertThat() for all assertions
+- Use extracting() for nested property assertions
+- Use satisfies() for complex assertions
+
+### Exception Testing
+- Use assertThrows() for exception testing
+- Verify exception messages and types
+- Test exception handling logic
+
+<example>
+// Good: AssertJ assertions
+@Test
+void shouldHaveCorrectUserProperties() {
+    User user = userService.findById(1L).orElseThrow();
+    
+    assertThat(user)
+        .isNotNull()
+        .extracting(User::getName, User::getEmail)
+        .containsExactly("John Doe", "john@example.com");
+    
+    assertThat(user.getCreatedAt())
+        .isBefore(LocalDateTime.now())
+        .isAfter(LocalDateTime.now().minusDays(1));
+}
+
+// Good: Exception testing
+@Test
+void shouldThrowExceptionWhenUserNotFound() {
+    when(userRepository.findById(999L)).thenReturn(Optional.empty());
+    
+    assertThatThrownBy(() -> userService.findById(999L))
+        .isInstanceOf(EntityNotFoundException.class)
+        .hasMessageContaining("User not found");
+}
+</example>
+
+## Test Data Management
+
+### @Transactional for Isolation
+- Use @Transactional on test methods for automatic rollback
+- Use @DirtiesContext when context needs refresh
+- Use @Sql for test data setup
+- Clean up test data properly
+
+### Test Fixtures
+- Create test data builders
+- Use @BeforeEach for common setup
+- Use @AfterEach for cleanup
+- Reuse test data creation methods
+
+<example>
+// Good: Test data management
+@SpringBootTest
+@Transactional
+class UserServiceTest {
+    @Autowired
+    private UserRepository userRepository;
+    
+    @BeforeEach
+    void setUp() {
+        userRepository.deleteAll();
+    }
+    
+    @Test
+    void shouldCreateUser() {
+        User user = createTestUser("John", "john@example.com");
+        User saved = userRepository.save(user);
+        
+        assertThat(saved.getId()).isNotNull();
+    }
+    
+    private User createTestUser(String name, String email) {
+        return User.builder()
+            .name(name)
+            .email(email)
+            .build();
+    }
+}
+</example>
+
+## Common Pitfalls
+
+- **Full Context Loading**: Don't use @SpringBootTest for simple unit tests
+- **Test Interference**: Always clean up test data or use @Transactional
+- **Over-mocking**: Don't mock everything, test real interactions when appropriate
+- **Slow Tests**: Use @DataJpaTest instead of full @SpringBootTest for repository tests
+- **Missing Assertions**: Always verify test results, don't just call methods

@@ -1,0 +1,222 @@
+---
+description: Tailwind CSS usage patterns including utility classes, responsive design, custom configuration, and component styling. Apply when writing CSS, styling components, or working with Tailwind utility classes.
+
+globs: *.css,*.scss,*.html,*.ts
+
+alwaysApply: false
+
+---
+
+# Tailwind CSS Best Practices Agent
+
+## Critical Rules
+
+- Use utility classes instead of custom CSS when possible
+- Use responsive prefixes (sm:, md:, lg:, xl:) for breakpoints
+- Use @apply directive sparingly, prefer utility classes in templates
+- Organize utility classes logically (layout, spacing, colors, typography)
+- Use Tailwind's color palette and spacing scale consistently
+- Prefer composition over custom CSS
+- Use arbitrary values ([...]) only when necessary
+
+<example>
+// Good: Utility classes in template
+<div class="flex flex-col md:flex-row gap-4 p-6 bg-white rounded-lg shadow-md">
+  <div class="flex-1">
+    <h2 class="text-2xl font-bold text-gray-900 mb-2">Title</h2>
+    <p class="text-gray-600">Description text</p>
+  </div>
+  <button class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+    Action
+  </button>
+</div>
+
+// Good: Custom component with @apply (when needed)
+.card {
+  @apply bg-white rounded-lg shadow-md p-6;
+}
+
+.card-header {
+  @apply border-b border-gray-200 pb-4 mb-4;
+}
+</example>
+
+<example type="invalid">
+// Bad: Custom CSS instead of utilities
+.custom-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+// Bad: Inline styles
+<div style="display: flex; padding: 1rem; background: white;">
+</example>
+
+## Utility Class Patterns
+
+### Layout Utilities
+- Use flex, grid for layout
+- Use container for responsive containers
+- Use space-x, space-y for spacing between children
+- Use gap for grid/flex gaps
+
+### Spacing Utilities
+- Use p-*, m-* for padding and margin
+- Use consistent spacing scale (4, 8, 12, 16, etc.)
+- Use negative margins (e.g., -mx-4) when needed
+- Use auto margins for centering
+
+<example>
+// Good: Layout and spacing patterns
+<div class="container mx-auto px-4">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="p-6 bg-white rounded-lg">
+      <h3 class="mb-4 text-xl font-semibold">Card Title</h3>
+      <p class="text-gray-600">Card content</p>
+    </div>
+  </div>
+</div>
+
+// Good: Flexbox patterns
+<div class="flex items-center justify-between p-4">
+  <div class="flex items-center gap-3">
+    <img src="..." class="w-10 h-10 rounded-full" />
+    <span>Name</span>
+  </div>
+  <button class="px-4 py-2">Action</button>
+</div>
+</example>
+
+## Responsive Design
+
+### Breakpoint Usage
+- Use mobile-first approach
+- Base styles apply to mobile
+- Use sm:, md:, lg:, xl:, 2xl: for larger screens
+- Use responsive utilities consistently
+
+### Responsive Patterns
+- Hide/show elements with responsive utilities
+- Adjust layout direction (flex-col to flex-row)
+- Change grid columns responsively
+- Adjust spacing and typography
+
+<example>
+// Good: Responsive design patterns
+<div class="
+  flex flex-col 
+  md:flex-row 
+  gap-4 
+  p-4 md:p-6 
+  text-sm md:text-base
+">
+  <div class="w-full md:w-1/2">
+    Content
+  </div>
+  <div class="hidden md:block w-1/2">
+    Sidebar (hidden on mobile)
+  </div>
+</div>
+
+// Good: Responsive grid
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+  <!-- Grid items -->
+</div>
+</example>
+
+## Component Styling
+
+### Button Patterns
+- Use consistent button styles
+- Use hover:, focus:, active: states
+- Use disabled: state for disabled buttons
+- Combine with size utilities
+
+### Form Input Patterns
+- Use consistent input styling
+- Use focus: ring utilities
+- Use error states with red colors
+- Use placeholder: styling
+
+<example>
+// Good: Button component patterns
+<button class="
+  px-4 py-2 
+  bg-blue-600 text-white 
+  rounded-md 
+  hover:bg-blue-700 
+  focus:outline-none focus:ring-2 focus:ring-blue-500 
+  disabled:opacity-50 disabled:cursor-not-allowed
+">
+  Submit
+</button>
+
+// Good: Input patterns
+<input class="
+  w-full px-4 py-2 
+  border border-gray-300 rounded-md 
+  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+  placeholder:text-gray-400
+" />
+
+<input class="
+  w-full px-4 py-2 
+  border-2 border-red-300 rounded-md 
+  focus:outline-none focus:ring-2 focus:ring-red-500
+" />
+</example>
+
+## Custom Configuration
+
+### Theme Extension
+- Extend Tailwind theme in tailwind.config.js
+- Add custom colors, fonts, spacing
+- Maintain consistency with design system
+- Use CSS variables for dynamic theming
+
+### Plugin Usage
+- Use Tailwind plugins for complex utilities
+- Create custom utilities when needed
+- Use @layer directive for custom styles
+- Keep custom styles minimal
+
+<example>
+// Good: Tailwind config extension
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          50: '#f0f9ff',
+          500: '#3b82f6',
+          900: '#1e3a8a',
+        }
+      },
+      spacing: {
+        '18': '4.5rem',
+        '88': '22rem',
+      }
+    }
+  }
+}
+
+// Good: Custom utility with @layer
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+</example>
+
+## Common Pitfalls
+
+- **Overusing @apply**: Prefer utility classes in templates
+- **Custom CSS**: Don't write custom CSS when utilities exist
+- **Inconsistent Spacing**: Use Tailwind's spacing scale
+- **Responsive Design**: Don't forget mobile-first approach
+- **Arbitrary Values**: Use sparingly, prefer theme values

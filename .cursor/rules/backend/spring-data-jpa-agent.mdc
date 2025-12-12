@@ -1,0 +1,267 @@
+---
+description: Spring Data JPA patterns including repository methods, query creation, entity relationships, and transaction management. Apply when working with JPA entities, repositories, or database operations.
+
+globs: 
+
+alwaysApply: false
+
+---
+
+# Spring Data JPA Best Practices Agent
+
+## Critical Rules
+
+- Use Spring Data JPA repositories instead of EntityManager directly
+- Follow naming conventions for query methods (findBy, countBy, etc.)
+- Use @Query annotation for complex queries
+- Implement proper entity relationships (OneToMany, ManyToOne, etc.)
+- Use @Transactional for write operations
+- Use @Entity and proper JPA annotations
+- Avoid N+1 query problems with proper fetching strategies
+- Use DTOs for projections when fetching specific fields
+
+<example>
+// Good: Repository with custom query and projection
+@Repository
+public interface PageRepository extends JpaRepository<Page, Long> {
+    List<Page> findByStatus(String status, Pageable pageable);
+    
+    @Query("SELECT p FROM Page p WHERE p.status = :status AND p.createdAt > :date")
+    List<Page> findRecentByStatus(@Param("status") String status, @Param("date") LocalDateTime date);
+    
+    @Query("SELECT new com.confluence.publisher.dto.PageSummaryDto(p.id, p.title, p.status) " +
+           "FROM Page p WHERE p.status = :status")
+    List<PageSummaryDto> findSummariesByStatus(@Param("status") String status);
+    
+    boolean existsByTitle(String title);
+}
+
+// Good: Entity with proper relationships
+@Entity
+@Table(name = "pages")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Page {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    @Column(nullable = false)
+    private String title;
+    
+    @Column(columnDefinition = "TEXT")
+    private String content;
+    
+    private String status;
+    
+    @OneToMany(mappedBy = "page", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<PageAttachment> attachments = new ArrayList<>();
+    
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+    
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
+}
+</example>
+
+<example type="invalid">
+// Bad: Direct EntityManager usage
+@Service
+public class BadPageService {
+    @PersistenceContext
+    private EntityManager em; // Should use repository
+    
+    public Page findById(Long id) {
+        return em.find(Page.class, id);
+    }
+}
+
+// Bad: Eager fetching causing N+1 problem
+@Entity
+public class BadPage {
+    @OneToMany(fetch = FetchType.EAGER) // Should be LAZY
+    private List<Attachment> attachments;
+}
+</example>
+
+## Repository Patterns
+
+### Query Methods
+- Use Spring Data JPA query method naming conventions
+- Methods starting with find, read, get, query, stream return entities
+- Methods starting with count, exists return boolean/long
+- Use Optional for single result queries
+- Use Pageable for pagination
+
+### Custom Queries
+- Use @Query for JPQL queries
+- Use native queries only when necessary
+- Use @Modifying for update/delete queries
+- Use projections (DTOs) for read-only queries
+
+<example>
+// Good: Repository with various query patterns
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+    // Derived query method
+    Optional<User> findByEmail(String email);
+    
+    // Query with pagination
+    Page<User> findByStatus(String status, Pageable pageable);
+    
+    // Custom JPQL query
+    @Query("SELECT u FROM User u WHERE u.status = :status AND u.createdAt BETWEEN :start AND :end")
+    List<User> findActiveUsersInPeriod(
+        @Param("status") String status,
+        @Param("start") LocalDateTime start,
+        @Param("end") LocalDateTime end
+    );
+    
+    // Native query (use sparingly)
+    @Query(value = "SELECT * FROM users WHERE email LIKE %:domain%", nativeQuery = true)
+    List<User> findByEmailDomain(@Param("domain") String domain);
+    
+    // Update query
+    @Modifying
+    @Query("UPDATE User u SET u.status = :status WHERE u.id = :id")
+    void updateStatus(@Param("id") Long id, @Param("status") String status);
+    
+    // Projection query
+    @Query("SELECT new com.example.dto.UserSummaryDto(u.id, u.name, u.email) FROM User u")
+    List<UserSummaryDto> findAllSummaries();
+}
+</example>
+
+## Entity Patterns
+
+### Entity Design
+- Use @Entity and @Table annotations
+- Use @Id with @GeneratedValue for primary keys
+- Use proper column definitions with @Column
+- Use @CreationTimestamp and @UpdateTimestamp for audit fields
+- Implement equals() and hashCode() properly (or use @Data from Lombok)
+
+### Relationships
+- Use LAZY fetching by default
+- Use EAGER fetching only when necessary
+- Use proper cascade types (CascadeType.ALL, PERSIST, etc.)
+- Use mappedBy for bidirectional relationships
+- Avoid circular references in toString()
+
+<example>
+// Good: Proper entity relationships
+@Entity
+public class Page {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    @OneToMany(mappedBy = "page", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<PageAttachment> attachments = new ArrayList<>();
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_id")
+    private User author;
+}
+
+@Entity
+public class PageAttachment {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "page_id")
+    private Page page;
+    
+    private String fileName;
+    private String filePath;
+}
+</example>
+
+## Transaction Management
+
+### @Transactional Usage
+- Use @Transactional on service methods, not repositories
+- Use @Transactional(readOnly = true) for read operations
+- Use @Transactional without readOnly for write operations
+- Handle transaction rollback on exceptions properly
+
+### Transaction Boundaries
+- Keep transactions at service layer
+- Don't use @Transactional on controller methods
+- Use @Transactional(propagation = Propagation.REQUIRES_NEW) when needed
+- Handle transaction timeout for long operations
+
+<example>
+// Good: Proper transaction management
+@Service
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
+public class PageService {
+    private final PageRepository pageRepository;
+    
+    public Optional<Page> findById(Long id) {
+        return pageRepository.findById(id);
+    }
+    
+    @Transactional
+    public Page create(PageCreateDto dto) {
+        Page page = Page.builder()
+            .title(dto.getTitle())
+            .content(dto.getContent())
+            .build();
+        return pageRepository.save(page);
+    }
+    
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void updateInNewTransaction(Page page) {
+        // This runs in a separate transaction
+        pageRepository.save(page);
+    }
+}
+</example>
+
+## Performance Optimization
+
+### N+1 Problem Prevention
+- Use JOIN FETCH in queries to load related entities
+- Use @EntityGraph for fetching strategies
+- Use DTO projections to avoid loading unnecessary data
+- Use batch fetching for collections
+
+### Query Optimization
+- Use pagination for large result sets
+- Use indexes on frequently queried columns
+- Avoid SELECT * queries, use projections
+- Use native queries only when JPQL is insufficient
+
+<example>
+// Good: Preventing N+1 queries
+@Repository
+public interface PageRepository extends JpaRepository<Page, Long> {
+    // Using JOIN FETCH
+    @Query("SELECT p FROM Page p JOIN FETCH p.attachments WHERE p.id = :id")
+    Optional<Page> findByIdWithAttachments(@Param("id") Long id);
+    
+    // Using EntityGraph
+    @EntityGraph(attributePaths = {"attachments", "author"})
+    List<Page> findByStatus(String status);
+    
+    // Using projection to avoid loading full entity
+    @Query("SELECT new com.example.dto.PageListDto(p.id, p.title, p.status) FROM Page p")
+    List<PageListDto> findAllSummaries();
+}
+</example>
+
+## Common Pitfalls
+
+- **N+1 Queries**: Always use JOIN FETCH or EntityGraph for related entities
+- **Eager Fetching**: Avoid EAGER fetch type, use LAZY with explicit fetching
+- **Transaction Boundaries**: Don't forget @Transactional for write operations
+- **Entity Exposure**: Never expose entities directly, use DTOs
+- **Circular References**: Avoid circular toString() or use @JsonIgnore

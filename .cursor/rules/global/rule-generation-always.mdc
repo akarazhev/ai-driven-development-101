@@ -1,0 +1,175 @@
+---
+description: 
+
+globs: 
+
+alwaysApply: true
+
+---
+
+# Rule Generation Guidelines
+
+This document outlines the standard format for creating and organizing all AI-generated rules for this project. Its main goal is to ensure clarity, consistency, and a scalable structure.
+
+- Check for existing rules before creating new ones @.cursor/rules
+
+- Update existing rules when possible instead of creating duplicates
+
+## Organizational Folders
+
+- Do not separate by library (e.g., do not use a `libraries/` folder).
+
+- Rule files must be located and named using the format: `.cursor/rules/{area-folder}/{area-of-focus}-{type}.mdc`. The `{area-of-focus}` describes the specific part of the technology or functionality the rule applies to.
+
+ - `.cursor/rules/global/`: Rules that apply to every chat and command. Also, Cursor behavior and rule generation rules
+
+ - `.cursor/rules/frontend/`: Frontend framework rules. Examples:
+
+   - For rules about components: `.cursor/rules/frontend/component-development-agent.mdc`
+
+   - For rules about hooks: `.cursor/rules/frontend/hooks-patterns-agent.mdc`
+
+   - For broad frontend rules: `.cursor/rules/frontend/global-standards-agent.mdc`
+
+ - `.cursor/rules/backend/`: Backend framework rules. Examples:
+
+   - For rules about API routes: `.cursor/rules/backend/api-routes-agent.mdc`
+
+   - For rules about services: `.cursor/rules/backend/services-patterns-agent.mdc`
+
+ - `.cursor/rules/state/`: State management rules. Examples:
+
+   - For Redux: `.cursor/rules/state/redux-patterns-agent.mdc`
+
+   - For Zustand: `.cursor/rules/state/zustand-patterns-agent.mdc`
+
+   - For Context API: `.cursor/rules/state/context-patterns-agent.mdc`
+
+ - `.cursor/rules/testing/`: Testing rules. Examples: 
+
+   - For Jest: `.cursor/rules/testing/jest-testing-agent.mdc`
+
+   - For Testing Library: `.cursor/rules/testing/testing-library-agent.mdc`
+
+   - For E2E: `.cursor/rules/testing/e2e-testing-agent.mdc`
+
+ - `.cursor/rules/typescript/`: General TypeScript rules. Examples:
+
+   - For error handling: `.cursor/rules/typescript/typescript-error-handling-agent.mdc`
+
+   - For style: `.cursor/rules/typescript/typescript-style-agent.mdc`
+
+ - `.cursor/rules/styles/`: CSS, SCSS, and styling rules. Examples:
+
+   - For CSS conventions: `.cursor/rules/styles/css-conventions-agent.mdc`
+
+   - For responsive design: `.cursor/rules/styles/responsive-design-agent.mdc`
+
+## Metadata 
+
+The frontmatter is mandatory and determines rule application. When creating a rule, first make sure what type is it and base on that setup the metadata:
+
+### Always
+
+ - Applies to all chats/commands. e.g. add emojis after reading a rule
+
+ - Suffix with `-always.mdc`
+
+  - `alwaysApply: true` and empty `description` and `globs`
+
+  - Must be in `.cursor/rules/global/`
+
+### Auto-Apply
+
+ - Use when the rule applies to files matching a glob.
+
+ - Suffix with `-auto.mdc`
+
+ - Requires `globs` pattern `alwaysApply: false` and `description` is empty 
+
+### Agent Select 
+
+- Use when the rules that should be applied occasionally.
+
+- Suffix the file name with `-agent.mdc`
+
+-  Requires descriptive `description`. `alwaysApply: false` and the `globs` is empty
+
+### Manual (`-manual.mdc`): 
+
+  - This is for rules that should be manually requested by the user
+
+  - Suffix with `-manual.mdc`
+
+  - `alwaysApply: false` and `description` and `globs` should be empty
+
+### Glob Pattern Examples
+
+Use these patterns in the `globs` frontmatter field to target specific files:
+
+- All TypeScript: `*.ts`
+- All TypeScript React: `*.tsx`
+- All JavaScript: `*.js`
+- All component files: `*.component.tsx` or `*.component.ts`
+- All test files: `*.test.ts` or `*.spec.ts`
+- All styles: `*.css` or `*.scss`
+- Files in specific directory: `src/components/**/*.tsx`
+- Multiple patterns: `["*.ts", "*.tsx"]`
+
+### Description
+
+- Keep rule descriptions under 200 characters for better readability
+- For Agent Select rules, be specific about when the rule should apply
+- Include key scenarios and impacted areas
+
+## Rule Template Structure
+
+- All rule files must follow this structure
+
+```mdc
+---
+description: `Comprehensive description that provides full context and clearly indicates when this rule should be applied. Include key scenarios, impacted areas, and why following this rule is important. While being thorough, remain focused and relevant. The description should be detailed enough that the agent can confidently determine whether to apply the rule in any given situation.`
+
+globs: *.ts OR blank
+
+alwaysApply: {true or false}
+
+---
+
+# Rule Title
+
+## Critical Rules
+
+- Concise, bulleted list of actionable rules the agent MUST follow
+- Rule with Example
+
+<example>
+{valid rule application}
+</example>
+
+<example type="invalid">
+{invalid rule application}
+</example>
+```
+
+### Examples
+
+- Place examples immediately after their corresponding rules for clear context
+- Omit examples for rules that are clear without them
+- Keep examples brief and focused
+- Include only one example type when the rule is self-explanatory
+
+## Confirmation Response Format
+
+- After creating or updating a rule, send a message with this format:
+
+🧠 Rule Generation Success: [file path] 
+
+Rule Type: [Agent Select | Auto-Apply | Always | Manual]
+
+Rule Description: [Brief description of the rule's purpose]
+
+Rule metadata: 
+- alwaysApply: [true/false]
+- globs: [pattern or blank]
+- description: [description or blank]

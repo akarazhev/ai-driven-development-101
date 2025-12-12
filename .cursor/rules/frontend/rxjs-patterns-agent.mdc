@@ -1,0 +1,226 @@
+---
+description: RxJS patterns for reactive programming including observables, operators, subscription management, and error handling. Apply when working with RxJS observables, HTTP requests, or reactive data flows.
+
+globs: 
+
+alwaysApply: false
+
+---
+
+# RxJS Best Practices Agent
+
+## Critical Rules
+
+- Always unsubscribe from observables to prevent memory leaks
+- Use takeUntilDestroyed() for component subscriptions in Angular 20+
+- Prefer async pipe in templates when possible
+- Use appropriate operators (switchMap for HTTP, mergeMap for concurrent, concatMap for sequential)
+- Handle errors with catchError and provide fallback values
+- Use debounceTime and distinctUntilChanged for user input
+- Use shareReplay for expensive computations that multiple subscribers need
+
+<example>
+// Good: Proper subscription management with takeUntilDestroyed
+@Component({
+  selector: 'app-user-list',
+  standalone: true,
+  template: `
+    @if (users$ | async; as users) {
+      @for (user of users; track user.id) {
+        <div>{{ user.name }}</div>
+      }
+    }
+  `
+})
+export class UserListComponent {
+  private userService = inject(UserService);
+  
+  users$ = this.userService.getUsers().pipe(
+    catchError(error => {
+      console.error('Failed to load users:', error);
+      return of([]);
+    })
+  );
+}
+
+// Good: Using switchMap for HTTP requests
+export class SearchComponent {
+  searchControl = new FormControl('');
+  
+  results$ = this.searchControl.valueChanges.pipe(
+    debounceTime(300),
+    distinctUntilChanged(),
+    filter(query => query && query.length > 2),
+    switchMap(query => this.searchService.search(query)),
+    catchError(() => of([]))
+  );
+}
+</example>
+
+<example type="invalid">
+// Bad: Memory leak - no unsubscription
+export class BadComponent {
+  constructor(private userService: UserService) {}
+  
+  ngOnInit(): void {
+    this.userService.getUsers().subscribe(users => {
+      this.users = users; // Subscription never unsubscribed
+    });
+  }
+}
+
+// Bad: Wrong operator for HTTP requests
+export class BadSearchComponent {
+  results$ = this.searchControl.valueChanges.pipe(
+    mergeMap(query => this.searchService.search(query)) // Should use switchMap
+  );
+}
+</example>
+
+## Subscription Management
+
+### takeUntilDestroyed Pattern
+- Use takeUntilDestroyed() for component subscriptions (Angular 20+)
+- Automatically unsubscribes when component is destroyed
+- Preferred over manual subscription management
+
+### Async Pipe
+- Use async pipe in templates when possible
+- Automatically handles subscription and unsubscription
+- Works well with OnPush change detection
+- Can be used with multiple observables
+
+<example>
+// Good: Multiple async pipes
+@Component({
+  template: `
+    @if (user$ | async; as user) {
+      <div>{{ user.name }}</div>
+    }
+    @if (posts$ | async; as posts) {
+      @for (post of posts; track post.id) {
+        <div>{{ post.title }}</div>
+      }
+    }
+  `
+})
+export class UserProfileComponent {
+  user$ = this.userService.getUser(this.userId);
+  posts$ = this.postService.getUserPosts(this.userId);
+}
+</example>
+
+## Operator Selection
+
+### Transformation Operators
+- **map**: Simple value transformation
+- **switchMap**: HTTP requests, cancellable operations (cancels previous)
+- **mergeMap**: Concurrent operations (runs all)
+- **concatMap**: Sequential operations (waits for previous)
+- **exhaustMap**: Ignore new emissions while processing
+
+### Filtering Operators
+- **filter**: Conditional filtering
+- **take**: Limit emissions
+- **takeUntil**: Unsubscribe trigger
+- **distinctUntilChanged**: Skip duplicate consecutive values
+- **debounceTime**: Delay emissions (for user input)
+- **throttleTime**: Limit emission rate
+
+<example>
+// Good: Operator selection for different scenarios
+export class DataService {
+  // HTTP request - use switchMap (cancels previous)
+  searchUsers(query: string): Observable<User[]> {
+    return this.http.get<User[]>(`/api/users?q=${query}`);
+  }
+  
+  // Concurrent operations - use mergeMap
+  loadMultipleUsers(ids: string[]): Observable<User[]> {
+    return from(ids).pipe(
+      mergeMap(id => this.getUser(id)),
+      toArray()
+    );
+  }
+  
+  // Sequential operations - use concatMap
+  processItemsSequentially(items: Item[]): Observable<Result> {
+    return from(items).pipe(
+      concatMap(item => this.processItem(item))
+    );
+  }
+}
+</example>
+
+## Error Handling
+
+### catchError Pattern
+- Always use catchError for error handling
+- Provide fallback values or rethrow errors
+- Log errors appropriately
+- Consider user-facing error messages
+
+<example>
+// Good: Comprehensive error handling
+export class ApiService {
+  getData(): Observable<Data[]> {
+    return this.http.get<Data[]>('/api/data').pipe(
+      retry(2), // Retry on failure
+      catchError(error => {
+        if (error.status === 404) {
+          return of([]); // Return empty array for 404
+        }
+        this.notificationService.showError('Failed to load data');
+        return throwError(() => error); // Rethrow other errors
+      })
+    );
+  }
+}
+</example>
+
+## Performance Optimization
+
+### shareReplay for Caching
+- Use shareReplay to cache expensive computations
+- Share results between multiple subscribers
+- Specify buffer size appropriately
+- Use refCount for automatic cleanup
+
+### Debouncing and Throttling
+- Use debounceTime for search inputs (300ms typical)
+- Use throttleTime for scroll events (100ms typical)
+- Combine with distinctUntilChanged to avoid duplicate requests
+
+<example>
+// Good: Cached and debounced search
+export class SearchService {
+  private searchCache = new Map<string, Observable<SearchResult[]>>();
+  
+  search(query: string): Observable<SearchResult[]> {
+    if (!this.searchCache.has(query)) {
+      const search$ = this.http.get<SearchResult[]>(`/api/search?q=${query}`).pipe(
+        shareReplay(1),
+        catchError(() => of([]))
+      );
+      this.searchCache.set(query, search$);
+    }
+    return this.searchCache.get(query)!;
+  }
+  
+  // Debounced search input
+  searchInput$ = this.searchControl.valueChanges.pipe(
+    debounceTime(300),
+    distinctUntilChanged(),
+    filter(query => query && query.length > 2),
+    switchMap(query => this.search(query))
+  );
+}
+</example>
+
+## Common Pitfalls
+
+- **Memory Leaks**: Always unsubscribe or use async pipe
+- **Wrong Operator**: Don't use mergeMap for HTTP requests (use switchMap)
+- **Error Swallowing**: Don't forget to handle errors with catchError
+- **Over-subscription**: Avoid subscribing multiple times to the same observable
+- **Missing Retry Logic**: Consider retry for transient failures

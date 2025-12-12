@@ -1,0 +1,271 @@
+---
+description: Spring Boot best practices including REST controllers, service layer patterns, dependency injection, and configuration. Apply when creating or modifying Spring Boot controllers, services, or configuration classes.
+
+globs: 
+
+alwaysApply: false
+
+---
+
+# Spring Boot Best Practices Agent
+
+## Critical Rules
+
+- Use @RestController for REST endpoints, not @Controller
+- Implement proper exception handling with @ControllerAdvice
+- Use @Service for business logic, keep controllers thin
+- Use constructor injection instead of field injection
+- Implement proper HTTP status codes and response types
+- Use DTOs for API requests/responses, not entities directly
+- Validate input with @Valid and Jakarta Validation annotations
+- Use @Transactional for database operations in services
+
+<example>
+// Good: Proper REST controller with DTOs and validation
+@RestController
+@RequestMapping("/api/users")
+@RequiredArgsConstructor
+public class UserController {
+    private final UserService userService;
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponseDto> getUser(@PathVariable Long id) {
+        return userService.findById(id)
+            .map(user -> ResponseEntity.ok(UserResponseDto.from(user)))
+            .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    public ResponseEntity<UserResponseDto> createUser(
+            @Valid @RequestBody UserCreateDto userDto) {
+        UserResponseDto created = userService.create(userDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    }
+}
+
+// Good: Service layer with proper transaction management
+@Service
+@RequiredArgsConstructor
+@Transactional
+public class UserService {
+    private final UserRepository userRepository;
+
+    public Optional<User> findById(Long id) {
+        return userRepository.findById(id);
+    }
+
+    public UserResponseDto create(UserCreateDto dto) {
+        User user = User.builder()
+            .name(dto.getName())
+            .email(dto.getEmail())
+            .build();
+        User saved = userRepository.save(user);
+        return UserResponseDto.from(saved);
+    }
+}
+</example>
+
+<example type="invalid">
+// Bad: Field injection and entity exposure
+@RestController
+public class BadUserController {
+    @Autowired
+    private UserService userService; // Field injection
+
+    @GetMapping("/{id}")
+    public User getUser(@PathVariable Long id) { // Exposing entity
+        return userService.findById(id).orElse(null);
+    }
+}
+
+// Bad: Business logic in controller
+@RestController
+public class BadController {
+    @GetMapping("/users/{id}")
+    public User getUser(@PathVariable Long id) {
+        // Business logic should be in service
+        return userRepository.findById(id)
+            .map(user -> {
+                user.setLastAccessed(LocalDateTime.now());
+                return userRepository.save(user);
+            })
+            .orElse(null);
+    }
+}
+</example>
+
+## Controller Patterns
+
+### REST Controllers
+- Use @RestController instead of @Controller + @ResponseBody
+- Define base path with @RequestMapping at class level
+- Use appropriate HTTP methods (@GetMapping, @PostMapping, etc.)
+- Return ResponseEntity for full control over HTTP response
+- Use proper HTTP status codes (200, 201, 204, 404, etc.)
+
+### Request/Response Handling
+- Use DTOs for all API inputs and outputs
+- Validate request DTOs with @Valid
+- Use @PathVariable for path variables
+- Use @RequestParam for query parameters
+- Use @RequestBody for request bodies
+
+<example>
+// Good: Comprehensive REST controller
+@RestController
+@RequestMapping("/api/pages")
+@RequiredArgsConstructor
+public class PageController {
+    private final PageService pageService;
+
+    @GetMapping
+    public ResponseEntity<List<PageResponseDto>> getAllPages(
+            @RequestParam(required = false) String status,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size) {
+        List<PageResponseDto> pages = pageService.findAll(status, page, size);
+        return ResponseEntity.ok(pages);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PageResponseDto> getPage(@PathVariable Long id) {
+        return pageService.findById(id)
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    public ResponseEntity<PageResponseDto> createPage(
+            @Valid @RequestBody PageCreateDto dto) {
+        PageResponseDto created = pageService.create(dto);
+        return ResponseEntity.status(HttpStatus.CREATED)
+            .body(created);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PageResponseDto> updatePage(
+            @PathVariable Long id,
+            @Valid @RequestBody PageUpdateDto dto) {
+        return pageService.update(id, dto)
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePage(@PathVariable Long id) {
+        if (pageService.delete(id)) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+}
+</example>
+
+## Service Layer Patterns
+
+### Business Logic Separation
+- Keep controllers thin, move logic to services
+- Use @Service annotation for service classes
+- Implement proper transaction boundaries
+- Handle business exceptions appropriately
+
+### Dependency Injection
+- Use constructor injection (with @RequiredArgsConstructor from Lombok)
+- Avoid field injection (@Autowired on fields)
+- Avoid setter injection unless necessary
+- Prefer final fields for immutability
+
+<example>
+// Good: Service with proper transaction management
+@Service
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
+public class PageService {
+    private final PageRepository pageRepository;
+    private final ConfluenceService confluenceService;
+
+    public List<PageResponseDto> findAll(String status, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        if (status != null) {
+            return pageRepository.findByStatus(status, pageable)
+                .stream()
+                .map(PageResponseDto::from)
+                .toList();
+        }
+        return pageRepository.findAll(pageable)
+            .stream()
+            .map(PageResponseDto::from)
+            .toList();
+    }
+
+    @Transactional
+    public PageResponseDto create(PageCreateDto dto) {
+        Page page = Page.builder()
+            .title(dto.getTitle())
+            .content(dto.getContent())
+            .status("DRAFT")
+            .build();
+        Page saved = pageRepository.save(page);
+        return PageResponseDto.from(saved);
+    }
+
+    @Transactional
+    public Optional<PageResponseDto> update(Long id, PageUpdateDto dto) {
+        return pageRepository.findById(id)
+            .map(page -> {
+                page.setTitle(dto.getTitle());
+                page.setContent(dto.getContent());
+                return PageResponseDto.from(pageRepository.save(page));
+            });
+    }
+}
+</example>
+
+## Exception Handling
+
+### Global Exception Handler
+- Use @ControllerAdvice for global exception handling
+- Handle different exception types appropriately
+- Return proper error responses with correct status codes
+- Log exceptions for debugging
+
+<example>
+// Good: Global exception handler
+@ControllerAdvice
+@Slf4j
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNotFound(EntityNotFoundException ex) {
+        log.warn("Entity not found: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            .body(new ErrorResponse("NOT_FOUND", ex.getMessage()));
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponse> handleValidation(MethodArgumentNotValidException ex) {
+        List<String> errors = ex.getBindingResult()
+            .getFieldErrors()
+            .stream()
+            .map(error -> error.getField() + ": " + error.getDefaultMessage())
+            .toList();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ErrorResponse("VALIDATION_ERROR", "Validation failed", errors));
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleGeneric(Exception ex) {
+        log.error("Unexpected error", ex);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(new ErrorResponse("INTERNAL_ERROR", "An unexpected error occurred"));
+    }
+}
+</example>
+
+## Common Pitfalls
+
+- **Entity Exposure**: Never expose JPA entities directly in API responses
+- **Transaction Boundaries**: Don't forget @Transactional for write operations
+- **Validation**: Always validate input with @Valid
+- **Error Handling**: Don't let exceptions bubble up without handling
+- **DTOs**: Always use DTOs, never expose entities directly
