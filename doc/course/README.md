@@ -22,7 +22,7 @@ Markdown and organized by chapters, one folder per chapter.
 1. [01 - Introduction to AI](./01-introduction-to-ai/README.md) - Fundamentals of AI-assisted development
 2. [02 - When to Use AI for Complex Tasks](./02-agents/README.md) - Breaking down complex tasks and multi-step workflows
 3. [03 - Setup Cursor AI](./03-setup-cursor-ai/README.md) - Configure Cursor for effective AI pair programming
-4. [04 - Optional: Enhanced Context with contex 7](./04-setup-contex-7/README.md) - ⚠️ **Optional**: Only if you need
+4. [04 - Optional: Enhanced Context with Context7](./04-setup-context7/README.md) - ⚠️ **Optional**: Only if you need
    enhanced context for large codebases
 5. [05 - AI-Driven Software Development](./05-ai-driven-software-development/README.md) - Practical workflows and
    patterns

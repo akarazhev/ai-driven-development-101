@@ -196,7 +196,7 @@ docker run --rm -p 4200:8080 confluence-frontend
   1. [01. Introduction to AI](doc/course/01-introduction-to-ai/README.md)
   2. [02. Agents](doc/course/02-agents/README.md)
   3. [03. Setup Cursor AI](doc/course/03-setup-cursor-ai/README.md)
-  4. [04. Setup contex 7](doc/course/04-setup-contex-7/README.md)
+  4. [04. Setup Context7](doc/course/04-setup-context7/README.md)
   5. [05. AI-Driven Software Development](doc/course/05-ai-driven-software-development/README.md)
   6. [06. Project: Confluence Publisher App](doc/course/06-project-confluence-publisher-app/README.md)
 

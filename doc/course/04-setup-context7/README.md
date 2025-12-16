@@ -1,15 +1,15 @@
-# 04. Optional: Enhanced Context with contex 7
+# 04. Optional: Enhanced Context with Context7
 
 > **This chapter is optional**. Cursor's built-in context is sufficient for most use cases. Only proceed if you need
 > enhanced context management for large codebases or specific workflows.
 
-This chapter covers setting up contex 7, an optional tool that can enhance context management in Cursor. If you're just
+This chapter covers setting up Context7, an optional tool that can enhance context management in Cursor. If you're just
 starting, you can skip this chapter and return to it later if needed.
 
 ## Learning objectives
 
-- Understand when contex 7 might be useful
-- Install and configure contex 7 (if needed)
+- Understand when Context7 might be useful
+- Install and configure Context7 (if needed)
 - Integrate with Cursor workflows
 - Apply safe configuration practices
 
@@ -19,16 +19,16 @@ starting, you can skip this chapter and return to it later if needed.
 - Understanding of your project structure
 - Optional: Large codebase where enhanced context helps
 
-## When to use contex 7
+## When to use Context7
 
-### ✅ Consider contex 7 if:
+### ✅ Consider Context7 if:
 
 - **Large codebase**: Project with thousands of files where Cursor's context window is limiting
 - **Complex architecture**: Multiple services, microservices, or distributed systems
 - **Cross-repository work**: Need context across multiple repositories
-- **Specific workflows**: Your team has established contex 7 workflows
+- **Specific workflows**: Your team has established Context7 workflows
 
-### ❌ Skip contex 7 if:
+### ❌ Skip Context7 if:
 
 - **Small to medium projects**: Cursor's built-in context is sufficient
 - **Just starting**: Focus on mastering Cursor basics first
@@ -42,7 +42,7 @@ limiting.
 
 ### Step 1: Installation
 
-1. Visit contex 7 documentation for your platform
+1. Visit Context7 documentation for your platform
 2. Follow official installation instructions
 3. Verify installation works
 
@@ -57,7 +57,7 @@ limiting.
 
 ### Step 3: Integration with Cursor
 
-1. Enable contex 7 extension in Cursor (if available)
+1. Enable Context7 extension in Cursor (if available)
 2. Or use CLI/API integration
 3. Test that it works with your workflow
 
@@ -83,7 +83,7 @@ limiting.
 
 ## Troubleshooting
 
-### Issue: contex 7 not working
+### Issue: Context7 not working
 
 **Solutions**:
 
@@ -115,7 +115,7 @@ If you answer "no" to all of these, you can skip this chapter:
 - [ ] Is your codebase very large (10,000+ files)?
 - [ ] Do you work across multiple repositories?
 - [ ] Is Cursor's context window insufficient for your needs?
-- [ ] Does your team already use contex 7?
+- [ ] Does your team already use Context7?
 
 **If all "no"**: Skip to Chapter 05. You can return here later if needed.
 
@@ -132,11 +132,11 @@ For most projects, Cursor's built-in context is sufficient:
 
 ## Exercises (optional)
 
-Only complete these if you're using contex 7:
+Only complete these if you're using Context7:
 
 ### Exercise 1: Basic setup
 
-1. Install contex 7
+1. Install Context7
 2. Configure for your project
 3. Test basic functionality
 
@@ -148,7 +148,7 @@ Only complete these if you're using contex 7:
 
 ## Knowledge check (self-assessment)
 
-If using contex 7, verify:
+If using Context7, verify:
 
 - [ ] Installation complete
 - [ ] Configuration set up
@@ -168,13 +168,13 @@ If using contex 7, verify:
 
 - ✅ You have a very large codebase
 - ✅ You need cross-repository context
-- ✅ Your team requires contex 7
+- ✅ Your team requires Context7
 
 **If unsure**: Skip to Chapter 05. You can always return here later.
 
 ## References
 
-- contex 7 official documentation
+- Context7 official documentation
 - Cursor documentation on context management
 - Your organization's context management policies
 

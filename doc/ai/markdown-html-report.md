@@ -35,7 +35,7 @@ At the time of conversion, the following Markdown files existed under `doc/cours
 4. `doc/course/01-introduction-to-ai/README.md`
 5. `doc/course/02-agents/README.md`
 6. `doc/course/03-setup-cursor-ai/README.md`
-7. `doc/course/04-setup-contex-7/README.md`
+7. `doc/course/04-setup-context7/README.md`
 8. `doc/course/05-ai-driven-software-development/README.md`
 9. `doc/course/06-project-confluence-publisher-app/README.md`
 10. `doc/course/06-project-confluence-publisher-app/06.1-milestone-1-scaffold.md`
@@ -67,7 +67,7 @@ After conversion, the following HTML files exist under `html/course`:
 4. `html/course/01-introduction-to-ai/README.html`
 5. `html/course/02-agents/README.html`
 6. `html/course/03-setup-cursor-ai/README.html`
-7. `html/course/04-setup-contex-7/README.html`
+7. `html/course/04-setup-context7/README.html`
 8. `html/course/05-ai-driven-software-development/README.html`
 9. `html/course/06-project-confluence-publisher-app/README.html`
 10. `html/course/06-project-confluence-publisher-app/06.1-milestone-1-scaffold.html`
@@ -175,8 +175,8 @@ For clarity, here is the explicit mapping applied during conversion:
 - `doc/course/03-setup-cursor-ai/README.md`
   → `html/course/03-setup-cursor-ai/README.html`
 
-- `doc/course/04-setup-contex-7/README.md`
-  → `html/course/04-setup-contex-7/README.html`
+- `doc/course/04-setup-context7/README.md`
+  → `html/course/04-setup-context7/README.html`
 
 - `doc/course/05-ai-driven-software-development/README.md`
   → `html/course/05-ai-driven-software-development/README.html`
