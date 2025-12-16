@@ -36,10 +36,10 @@ COPY --from=build --chown=appuser:appgroup /app/build/libs/confluence-publisher.
 USER appuser
 
 # Default environment variables (can be overridden)
+# Note: APP_PROVIDER is intentionally NOT set here to allow .env file override via CONFLUENCE_PROVIDER
 ENV SPRING_PROFILES_ACTIVE=docker \
     APP_DATABASE_URL=jdbc:sqlite:///data/app.db \
     APP_ATTACHMENT_DIR=/storage/attachments \
-    APP_PROVIDER=confluence-stub \
     APP_SCHEDULER_INTERVAL_SECONDS=5
 
 EXPOSE 8080
