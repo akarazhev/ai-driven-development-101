@@ -218,3 +218,6 @@ frontend/.vite/
 
 # Development
 dev
+
+# MacOS
+.DS_Store
