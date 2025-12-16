@@ -3,7 +3,11 @@
 ## Context
 
 You are working on a **Confluence Publisher** Spring Boot application that currently uses a stub provider for publishing
-pages. The application needs to be updated to support real integration with Atlassian Confluence Cloud via REST API.
+pages. The application needs to be updated to support real integration with **Atlassian Confluence Server/Data Center**
+via REST API.
+
+> **Important**: This integration targets Confluence Server/Data Center (on-premise), NOT Confluence Cloud. The API
+> endpoints and authentication differ significantly.
 
 ## Project Structure
 
@@ -77,18 +81,19 @@ public BaseProvider getProvider() {
 
 ## Task
 
-Implement a production-ready `ConfluenceCloudProvider` class that integrates with the real Confluence Cloud REST API.
+Implement a production-ready `ConfluenceServerProvider` class that integrates with the real Confluence Server/Data
+Center REST API.
 
 ## Requirements
 
-### 1. Create ConfluenceCloudProvider
+### 1. Create ConfluenceServerProvider
 
-Create a new provider class `ConfluenceCloudProvider.java` in the `provider` package that:
+Create a new provider class `ConfluenceServerProvider.java` in the `provider` package that:
 
 - Implements `BaseProvider` interface
-- Uses **Confluence Cloud REST API v2** (preferred) or v1 as fallback
-- Authenticates using **Bearer token** (API token with email as username for Basic Auth, or OAuth Bearer token)
-- Base URL format: `https://{domain}.atlassian.net/wiki/api/v2`
+- Uses **Confluence Server REST API v1** (`/rest/api/content`)
+- Authenticates using **Basic Auth** (username + Personal Access Token)
+- Base URL format: `https://{domain}/confluence/rest/api`
 
 ### 2. Implement publishPage Method
 
@@ -123,8 +128,8 @@ Return the current status of a Confluence page:
 
 Modify `ProviderFactory.java` to:
 
-- Inject `ConfluenceCloudProvider`
-- Add case `"confluence"` or `"confluence-cloud"` to return the real provider
+- Inject `ConfluenceServerProvider`
+- Add case `"confluence"` or `"confluence-server"` to return the real provider
 - Keep `"stub"` and `"confluence-stub"` for the stub provider
 
 ### 5. Error Handling
@@ -148,34 +153,36 @@ Implement robust error handling:
 - Ensure proper encoding when sending to API
 - Handle large content appropriately
 
-## Confluence REST API Reference
+## Confluence Server REST API Reference
 
 ### Authentication
 
-```
-Authorization: Basic base64(email:api_token)
-```
-
-Or for Bearer token:
+Confluence Server/Data Center uses **Basic Auth** with username and Personal Access Token (PAT):
 
 ```
-Authorization: Bearer <token>
+Authorization: Basic base64(username:personal_access_token)
 ```
 
-### Key Endpoints (API v2)
+### Key Endpoints (REST API v1)
+
+Base URL: `https://{domain}/confluence/rest/api`
 
 **Create Page:**
 
 ```
-POST /wiki/api/v2/pages
+POST /rest/api/content
 {
-  "spaceId": "<space-id>",
-  "status": "current",
+  "type": "page",
   "title": "<title>",
-  "parentId": "<parent-page-id>",  // optional
+  "space": {
+    "key": "<space-key>"
+  },
+  "ancestors": [{"id": "<parent-page-id>"}],  // optional, for child pages
   "body": {
-    "representation": "storage",
-    "value": "<content>"
+    "storage": {
+      "value": "<content>",
+      "representation": "storage"
+    }
   }
 }
 ```
@@ -183,63 +190,82 @@ POST /wiki/api/v2/pages
 **Update Page:**
 
 ```
-PUT /wiki/api/v2/pages/{page-id}
+PUT /rest/api/content/{page-id}
 {
-  "id": "<page-id>",
-  "status": "current",
+  "type": "page",
   "title": "<title>",
   "body": {
-    "representation": "storage",
-    "value": "<content>"
+    "storage": {
+      "value": "<content>",
+      "representation": "storage"
+    }
   },
   "version": {
-    "number": <current-version + 1>,
-    "message": "Updated via Confluence Publisher"
+    "number": <current-version + 1>
   }
 }
 ```
 
-**Get Page by Title:**
+**Get Page by Title in Space:**
 
 ```
-GET /wiki/api/v2/spaces/{space-id}/pages?title=<title>
+GET /rest/api/content?spaceKey=<space-key>&title=<title>&expand=version
 ```
 
 **Get Space by Key:**
 
 ```
-GET /wiki/api/v2/spaces?keys=<space-key>
+GET /rest/api/space?keys=<space-key>
 ```
 
 **Upload Attachment:**
 
 ```
-POST /wiki/api/v2/pages/{page-id}/attachments
+POST /rest/api/content/{page-id}/child/attachment
 Content-Type: multipart/form-data
+X-Atlassian-Token: nocheck
 ```
 
-**Get Page:**
+**Get Page by ID:**
 
 ```
-GET /wiki/api/v2/pages/{page-id}
+GET /rest/api/content/{page-id}?expand=version
+```
+
+**Get Current User (for connection test):**
+
+```
+GET /rest/api/user/current
 ```
 
 ## Configuration
 
 The user will provide:
 
-- **Confluence URL**: e.g., `https://company.atlassian.net`
-- **Username/Email**: The Atlassian account email
-- **API Token/Bearer Token**: Generated from Atlassian account settings
+- **Confluence URL**: e.g., `https://pmc-stage.specific-group.eu/confluence/`
+- **Username**: Confluence username (e.g., `spg.academy`)
+- **API Token**: Personal Access Token (PAT) generated from Confluence profile settings
+- **Space Key**: Target space key (e.g., `SPGAC`)
 
 Update `application.yml` to support:
 
 ```yaml
 app:
-  confluence-url: ${CONFLUENCE_URL:https://your-domain.atlassian.net}
-  confluence-username: ${CONFLUENCE_USERNAME:}
+  confluence-url: ${CONFLUENCE_URL:https://pmc-stage.specific-group.eu/confluence/}
+  confluence-username: ${CONFLUENCE_USERNAME:spg.academy}
   confluence-api-token: ${CONFLUENCE_API_TOKEN:}
+  confluence-default-space: ${CONFLUENCE_SPACE_KEY:SPGAC}
   provider: ${CONFLUENCE_PROVIDER:confluence-stub}
+```
+
+### Environment Variables
+
+```bash
+CONFLUENCE_URL=https://pmc-stage.specific-group.eu/confluence/
+CONFLUENCE_USERNAME=spg.academy
+CONFLUENCE_API_TOKEN=<your-personal-access-token>
+CONFLUENCE_SPACE_KEY=SPGAC
+CONFLUENCE_PROVIDER=confluence
 ```
 
 ## Dependencies
@@ -259,7 +285,7 @@ Add to `build.gradle.kts` if needed:
 
 ## Deliverables
 
-1. `ConfluenceCloudProvider.java` - Main provider implementation
+1. `ConfluenceServerProvider.java` - Main provider implementation for Confluence Server/DC
 2. `ConfluenceApiException.java` - Custom exception class
 3. Updated `ProviderFactory.java` - Provider selection logic
 4. Updated `AppProperties.java` - If additional config needed
@@ -284,3 +310,16 @@ Add to `build.gradle.kts` if needed:
 - Database is SQLite (for local storage, not relevant to Confluence integration)
 - The `parentPageId` in the Page entity stores the Confluence page ID as a Long
 - Attachments are stored locally; paths are relative to `app.attachment-dir` configuration
+- **Target Confluence**: Server/Data Center (NOT Cloud)
+- **API Version**: REST API v1 (`/rest/api/content`)
+- **Authentication**: Basic Auth with username + Personal Access Token
+
+## Key Differences: Confluence Server vs Cloud
+
+| Aspect            | Server/Data Center           | Cloud                            |
+|-------------------|------------------------------|----------------------------------|
+| URL Pattern       | `/confluence/rest/api`       | `/wiki/api/v2`                   |
+| Auth              | Basic (username:PAT)         | Basic (email:api_token) or OAuth |
+| Space Reference   | `space.key`                  | `spaceId`                        |
+| Parent Page       | `ancestors[{id}]`            | `parentId`                       |
+| Attachment Header | `X-Atlassian-Token: nocheck` | Not required                     |
