@@ -92,7 +92,7 @@ Create a new provider class `ConfluenceServerProvider.java` in the `provider` pa
 
 - Implements `BaseProvider` interface
 - Uses **Confluence Server REST API v1** (`/rest/api/content`)
-- Authenticates using **Basic Auth** (username + Personal Access Token)
+- Authenticates using **Bearer Token** with Personal Access Token (PAT)
 - Base URL format: `https://{domain}/confluence/rest/api`
 
 ### 2. Implement publishPage Method
@@ -157,11 +157,13 @@ Implement robust error handling:
 
 ### Authentication
 
-Confluence Server/Data Center uses **Basic Auth** with username and Personal Access Token (PAT):
+Confluence Server/Data Center uses **Bearer Token** authentication with Personal Access Token (PAT):
 
 ```
-Authorization: Basic base64(username:personal_access_token)
+Authorization: Bearer <personal_access_token>
 ```
+
+> **Note**: Do NOT use Basic Auth with username:PAT. The PAT should be sent directly as a Bearer token.
 
 ### Key Endpoints (REST API v1)
 
@@ -312,14 +314,75 @@ Add to `build.gradle.kts` if needed:
 - Attachments are stored locally; paths are relative to `app.attachment-dir` configuration
 - **Target Confluence**: Server/Data Center (NOT Cloud)
 - **API Version**: REST API v1 (`/rest/api/content`)
-- **Authentication**: Basic Auth with username + Personal Access Token
+- **Authentication**: Bearer Token with Personal Access Token (PAT)
 
 ## Key Differences: Confluence Server vs Cloud
 
 | Aspect            | Server/Data Center           | Cloud                            |
 |-------------------|------------------------------|----------------------------------|
 | URL Pattern       | `/confluence/rest/api`       | `/wiki/api/v2`                   |
-| Auth              | Basic (username:PAT)         | Basic (email:api_token) or OAuth |
+| Auth              | Bearer token (PAT)           | Basic (email:api_token) or OAuth |
 | Space Reference   | `space.key`                  | `spaceId`                        |
 | Parent Page       | `ancestors[{id}]`            | `parentId`                       |
 | Attachment Header | `X-Atlassian-Token: nocheck` | Not required                     |
+
+## Docker/Podman Configuration
+
+### Important: Environment Variable Handling
+
+When using Docker/Podman, ensure the **Dockerfile does NOT hardcode** provider-related environment variables that would
+override your `.env` file settings.
+
+**Correct Dockerfile ENV section:**
+
+```dockerfile
+ENV SPRING_PROFILES_ACTIVE=docker \
+    APP_DATABASE_URL=jdbc:sqlite:///data/app.db \
+    APP_ATTACHMENT_DIR=/storage/attachments \
+    APP_SCHEDULER_INTERVAL_SECONDS=5
+# Do NOT set APP_PROVIDER here - let it come from .env via CONFLUENCE_PROVIDER
+```
+
+**Correct application-docker.yml:**
+
+```yaml
+app:
+  provider: ${CONFLUENCE_PROVIDER:confluence-stub}
+```
+
+### .env File Example
+
+```bash
+# Confluence API Configuration
+CONFLUENCE_URL=https://your-confluence-server.com/confluence/
+CONFLUENCE_USERNAME=your-username
+CONFLUENCE_API_TOKEN=your-personal-access-token
+CONFLUENCE_DEFAULT_SPACE=YOURSPACE
+
+# Use "confluence" for real integration, "confluence-stub" for testing
+CONFLUENCE_PROVIDER=confluence
+```
+
+## Implementation Example: RestClient Configuration
+
+```java
+private RestClient createRestClient() {
+    String baseUrl = normalizeBaseUrl(appProperties.getConfluenceUrl());
+    String apiToken = appProperties.getConfluenceApiToken();
+
+    return RestClient.builder()
+            .baseUrl(baseUrl + "/rest/api")
+            .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + apiToken)
+            .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+            .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
+            .build();
+}
+```
+
+## Common Issues and Solutions
+
+| Issue                    | Cause                                  | Solution                                  |
+|--------------------------|----------------------------------------|-------------------------------------------|
+| HTTP 401 Unauthorized    | Wrong auth method                      | Use Bearer token, not Basic Auth          |
+| Stub provider still used | Hardcoded `APP_PROVIDER` in Dockerfile | Remove `APP_PROVIDER` from Dockerfile ENV |
+| Lombok @Builder error    | Using `final` with `@Builder`          | Use `@Builder.Default` annotation instead |
