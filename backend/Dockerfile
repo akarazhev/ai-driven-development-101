@@ -39,7 +39,6 @@ USER appuser
 ENV SPRING_PROFILES_ACTIVE=docker \
     APP_DATABASE_URL=jdbc:sqlite:///data/app.db \
     APP_ATTACHMENT_DIR=/storage/attachments \
-    APP_PROVIDER=confluence-stub \
     APP_SCHEDULER_INTERVAL_SECONDS=5
 
 EXPOSE 8080

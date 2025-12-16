@@ -10,11 +10,13 @@ public class ProviderFactory {
     
     private final AppProperties appProperties;
     private final ConfluenceStubProvider stubProvider;
+    private final ConfluenceServerProvider confluenceServerProvider;
     
     public BaseProvider getProvider() {
         String providerName = appProperties.getProvider().toLowerCase();
         return switch (providerName) {
-            case "stub" -> stubProvider;
+            case "confluence", "confluence-server" -> confluenceServerProvider;
+            case "stub", "confluence-stub" -> stubProvider;
             default -> stubProvider;
         };
     }

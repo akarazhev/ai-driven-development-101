@@ -19,6 +19,7 @@ public class PageResponse {
     private String content;
     private String spaceKey;
     private Long parentPageId;
+    @Builder.Default
     private List<AttachmentInfo> attachments = new ArrayList<>();
     
     @Data

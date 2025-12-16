@@ -18,9 +18,9 @@ app:
   app-name: confluence-publisher
   database-url: jdbc:sqlite:./data/app.db
   attachment-dir: storage/attachments
-  confluence-url: https://your-domain.atlassian.net
-  confluence-username: ${CONFLUENCE_USERNAME:}
-  confluence-default-space: DEV
+  confluence-url: ${CONFLUENCE_URL:https://pmc-stage.specific-group.eu/confluence}
+  confluence-username: ${CONFLUENCE_USERNAME:spg.academy}
+  confluence-default-space: ${CONFLUENCE_SPACE_KEY:SPGAC}
   confluence-api-token: ${CONFLUENCE_API_TOKEN:}
   cors-origins:
     - http://localhost:4200
